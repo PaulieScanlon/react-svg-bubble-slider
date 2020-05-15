@@ -1,1 +1,1 @@
-export { SvgBubbleSlider } from "./components/SvgBubbleSlider";
+export { SvgBubbleSlider } from './components/SvgBubbleSlider'

@@ -1,5 +1,12 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from 'react'
 
-export const SvgBubbleSlider: FunctionComponent = () => {
-  return <div>SvgBubbleSlider</div>;
-};
+interface SvgBubbleSliderProps {
+  /** Some Prop */
+  someProp?: string
+}
+
+export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
+  someProp,
+}: SvgBubbleSliderProps) => {
+  return <div>{`SvgBubbleSlider ${someProp}`}</div>
+}

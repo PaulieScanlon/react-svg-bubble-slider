@@ -4,10 +4,19 @@
   "description": "A React version of Chris Gannon's SVG Bubble Slider",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "prettier": "prettier --config .prettierrc.js --write \"**/*.{json,js,ts,tsx}\"",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix --quiet",
+    "build": "npm run lint && webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006 --ci",
-    "build-storybook": "build-storybook"
+    "storybook:build": "build-storybook"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix && npm run prettier",
+      "pre-push": ""
+    }
   },
   "repository": {
     "type": "git",
@@ -40,7 +49,14 @@
     "@storybook/react": "^5.3.18",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "babel-loader": "^8.1.0",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-react": "^7.20.0",
+    "husky": "^4.2.5",
+    "prettier": "2.0.5",
     "react-docgen-typescript-loader": "^3.7.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.4",

@@ -1,0 +1,43 @@
+{
+  "name": "react-svg-bubble-slider",
+  "version": "0.0.0",
+  "description": "A React version of Chris Gannon's SVG Bubble Slider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006 --ci",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulieScanlon/react-svg-bubble-slider.git"
+  },
+  "keywords": [
+    "React",
+    "Svg",
+    "BubbleSlider"
+  ],
+  "author": "Paul Scanlon",
+  "contributors": [
+    "Chris Gannon"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PaulieScanlon/react-svg-bubble-slider/issues"
+  },
+  "homepage": "https://github.com/PaulieScanlon/react-svg-bubble-slider#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-docs": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
+    "babel-loader": "^8.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

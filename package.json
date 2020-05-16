@@ -2,7 +2,7 @@
   "name": "react-svg-bubble-slider",
   "version": "0.0.0",
   "description": "A React version of Chris Gannon's SVG Bubble Slider",
-  "main": "main.js",
+  "main": "dist/main.js",
   "scripts": {
     "prettier": "prettier --config .prettierrc.js --write \"**/*.{json,js,ts,tsx}\"",
     "lint": "eslint . --ext .ts,.tsx --fix",
@@ -16,7 +16,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint:fix && npm run prettier && npm run test",
-      "pre-push": ""
+      "pre-push": "npm run test"
     }
   },
   "repository": {

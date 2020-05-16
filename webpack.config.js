@@ -1,5 +1,14 @@
+const path = require('path')
+
 module.exports = {
   mode: 'production',
+  entry: './src/index.ts',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js',
+    libraryTarget: 'commonjs2',
+    library: 'react-svg-bubble-slider',
+  },
   devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx'],
@@ -23,7 +32,7 @@ module.exports = {
     ],
   },
   externals: {
-    react: 'React',
+    react: 'react',
     'react-dom': 'ReactDOM',
   },
 }

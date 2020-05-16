@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-interface SvgBubbleSliderProps {
+export interface SvgBubbleSliderProps {
   /** Some Prop */
   someProp?: string
 }
@@ -8,5 +8,14 @@ interface SvgBubbleSliderProps {
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   someProp,
 }: SvgBubbleSliderProps) => {
-  return <div>{`SvgBubbleSlider ${someProp}`}</div>
+  return (
+    <div
+      style={{
+        backgroundColor: 'darkorchid',
+        color: 'white',
+        fontFamily: 'Roboto, Arial, sans-serif',
+        padding: 10,
+      }}
+    >{`SvgBubbleSlider ${someProp ? someProp : ''}`}</div>
+  )
 }

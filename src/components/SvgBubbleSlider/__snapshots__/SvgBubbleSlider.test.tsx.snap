@@ -3,7 +3,7 @@
 exports[`<SvgBubbleSlider /> renders the component 1`] = `
 <DocumentFragment>
   <div
-    style="background-color: darkorchid; color: white; font-family: Roboto, Arial, sans-serif; padding: 10px;"
+    class="css-1xn124f"
   >
     SvgBubbleSlider 
   </div>

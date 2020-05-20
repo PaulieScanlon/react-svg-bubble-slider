@@ -2,10 +2,16 @@
 
 exports[`<SvgBubbleSlider /> renders the component 1`] = `
 <DocumentFragment>
-  <div
-    class="css-1xn124f"
+  <svg
+    class="SvgBubbleSlider "
   >
-    SvgBubbleSlider 
-  </div>
+    <circle
+      class="dot"
+      cx="0"
+      cy="0"
+      fill="hotpink"
+      r="30"
+    />
+  </svg>
 </DocumentFragment>
 `;

@@ -38,9 +38,7 @@
     "url": "https://github.com/PaulieScanlon/react-svg-bubble-slider/issues"
   },
   "homepage": "https://github.com/PaulieScanlon/react-svg-bubble-slider#readme",
-  "dependencies": {
-    "theme-ui": "^0.3.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -65,7 +63,7 @@
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "babel-loader": "^8.1.0",
-    "emotion-theming": "^10.0.27",
+    "css-loader": "^3.5.3",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-react": "^7.20.0",
@@ -75,6 +73,7 @@
     "react-docgen-typescript-loader": "^3.7.2",
     "react-test-renderer": "^16.13.1",
     "source-map-loader": "^0.2.4",
+    "theme-ui": "^0.3.1",
     "ts-jest": "^26.0.0",
     "ts-loader": "^7.0.4",
     "typescript": "^3.9.2",

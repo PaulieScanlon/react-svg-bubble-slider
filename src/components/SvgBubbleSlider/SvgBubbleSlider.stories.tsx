@@ -11,29 +11,12 @@ export default {
 
 export const usage = () => <SvgBubbleSlider />
 
-export const someProp = () => <SvgBubbleSlider someProp="Hello" />
+export const someClass = () => <SvgBubbleSlider someClass="hello-world" />
 
-someProp.story = {
+someClass.story = {
   parameters: {
     docs: {
-      storyDescription: 'The `someProp` ...',
-    },
-  },
-}
-
-export const sx = () => (
-  <SvgBubbleSlider
-    sx={{
-      color: 'secondary',
-      border: '2px solid red',
-    }}
-  />
-)
-
-sx.story = {
-  parameters: {
-    docs: {
-      storyDescription: 'The `sx` can be used to add styles',
+      storyDescription: 'The `someClass` ...',
     },
   },
 }

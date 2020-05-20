@@ -1,23 +1,17 @@
 import React, { FunctionComponent } from 'react'
-import { Box, SxStyleProp } from 'theme-ui'
 export interface SvgBubbleSliderProps {
-  /** Some Prop */
-  someProp?: string
-  /** Theme UI sx prop */
-  sx?: SxStyleProp
+  /** Some class */
+  someClass?: string
 }
 
+import './SvgBubbleSlider.css'
+
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
-  someProp,
-  sx,
+  someClass,
 }: SvgBubbleSliderProps) => {
   return (
-    <Box
-      sx={{
-        color: 'primary',
-        fontFamily: 'body',
-        ...(sx as SxStyleProp),
-      }}
-    >{`SvgBubbleSlider ${someProp ? someProp : ''}`}</Box>
+    <svg className={`SvgBubbleSlider ${someClass ? someClass : ''}`}>
+      <circle className="dot" cx="0" cy="0" r="30" fill="hotpink" />
+    </svg>
   )
 }

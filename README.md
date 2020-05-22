@@ -1,6 +1,6 @@
 # react-svg-bubble-slider
 
-A React version of Chris Gannon's SVG Bubble Slider
+A React version of Chris Gannon's [SVG Bubble Slider](https://codepen.io/chrisgannon/pen/GZNgLw/)
 
 ## demo
 

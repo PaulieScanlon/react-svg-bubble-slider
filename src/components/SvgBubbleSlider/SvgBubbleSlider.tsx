@@ -1,7 +1,11 @@
-import React, { FunctionComponent } from 'react'
-import { useSpring, animated } from 'react-spring'
-import { useDrag, useGesture } from 'react-use-gesture'
-import clamp from 'lodash.clamp'
+import React, {
+  FunctionComponent,
+  RefObject,
+  useRef,
+  useEffect,
+  Fragment,
+} from 'react'
+import { TweenMax, TimelineMax, Linear, Elastic, Power1 } from 'gsap'
 
 import { iconPaths } from './iconPaths'
 export interface SvgBubbleSliderProps {
@@ -11,76 +15,157 @@ export interface SvgBubbleSliderProps {
 
 import './SvgBubbleSlider.css'
 
-const DOT_SIZE = 3
 const ICON_SIZE = 32
+const ICON_FILL = '#ffffff'
+const MULTIPLIER = 4.8
+const SPACER = 60
+
+const DOT_SIZE = 10
+const DOT_FILL = '#FF69B4'
+
+const MIN_DRAG_X = -(iconPaths.length - 1) * SPACER
 
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   someClass,
 }: SvgBubbleSliderProps) => {
-  const boundaries = [100, -100]
+  const dotContainerRef = useRef(null)
+  const iconContainerRef = useRef(null)
 
-  const [{ x }, set] = useSpring(() => ({ x: 0 }))
+  const iconRefs: RefObject<SVGPathElement>[] = []
+  const dotRefs: RefObject<SVGCircleElement>[] = []
 
-  // Set the drag hook and define component movement based on gesture data
-  // const bind = useDrag(({ down, movement: [mx, my] }) => {
-  //   set({ x: down ? mx : 0, y: down ? my : 0 })
-  // })
-  // const bind = useDrag(({ offset: [x, y] }) => {
-  //   // console.log(x)
-  //   return set({ x, y })
-  // })
+  const snapArray: any = []
+  const mtl = new TimelineMax({ paused: true })
 
-  const bind = useGesture({
-    onDrag: ({ movement, memo = [x.getValue()] }) => {
-      const [right, left] = boundaries
-      set({
-        x: clamp(memo[0] + movement[0], left, right),
+  const handlePlayTimeline = () => {
+    mtl.restart()
+  }
+
+  const handleDragSlider = () => {
+    const posX = new WebKitCSSMatrix(
+      window.getComputedStyle(dotContainerRef.current).webkitTransform
+    ).m41
+
+    TweenMax.to(mtl, 0.5, {
+      time: (posX / MIN_DRAG_X) * (mtl.duration() - 2) + 1,
+      ease: Elastic.easeOut.config(2, 0.75),
+    })
+  }
+
+  const handleScrollTimeline = (index: number, name: string) => {
+    console.log('name: ', name)
+
+    TweenMax.to([dotContainerRef.current, iconContainerRef.current], 2, {
+      x: snapArray[index],
+      onUpdate: handleDragSlider,
+      // onComplete: throwComplete,
+      ease: Elastic.easeOut.config(1, 0.85),
+    })
+  }
+
+  useEffect(() => {
+    iconPaths.map((_, index: number) => {
+      // @ts-ignore
+      TweenMax.set(iconRefs[index], {
+        transformOrigin: '50% 50%',
+        scale: 0,
       })
-      return memo
-    },
-  })
+
+      snapArray.push(-index * SPACER)
+
+      const tl = new TimelineMax({})
+
+      tl.to(dotRefs[index], 1, {
+        attr: {
+          r: DOT_SIZE * MULTIPLIER,
+        },
+        ease: Linear.easeNone,
+      })
+        .to(
+          iconRefs[index],
+          1,
+          {
+            alpha: 1,
+            scale: 2,
+            ease: Linear.easeNone,
+          },
+          '-=1'
+        )
+        .to(dotRefs[index], 1, {
+          attr: {
+            r: DOT_SIZE,
+          },
+          ease: Linear.easeNone,
+        })
+        .to(
+          iconRefs[index],
+          1,
+          {
+            alpha: 0.2,
+            scale: 0,
+            ease: Linear.easeNone,
+          },
+          '-=1'
+        )
+      mtl.add(tl, index / 2)
+    })
+    handleScrollTimeline(6, iconPaths[6].name)
+  }, [mtl])
 
   return (
-    <div className="svg-bubble-slider">
-      <animated.div {...bind()} style={{ position: 'absolute', left: x }}>
+    <Fragment>
+      <div className="svg-bubble-slider">
         <svg
           className={`svg ${someClass ? someClass : ''}`}
-          width={iconPaths.length * ICON_SIZE}
-          height={ICON_SIZE}
+          width={DOT_SIZE * iconPaths.length + SPACER * iconPaths.length}
         >
-          <g className="dotGroup">
-            <g className="dotContainer">
-              {iconPaths.map((_, index: number) => {
+          <g
+            className="dotGroup"
+            transform={`matrix(1,0,0,1,${
+              (DOT_SIZE * iconPaths.length + SPACER * iconPaths.length) / 2
+            },${ICON_SIZE * 2})`}
+          >
+            <g ref={dotContainerRef} className="dotContainer">
+              {iconPaths.map((icon, index: number) => {
+                const { name } = icon
                 return (
                   <circle
+                    ref={(ref) => {
+                      dotRefs.push(ref as any)
+                    }}
                     key={index}
                     className="dot"
-                    cx={ICON_SIZE * index + ICON_SIZE / 2}
+                    cx={index * SPACER}
                     cy={ICON_SIZE / 2}
                     r={DOT_SIZE}
-                    fill="hotpink"
+                    fill={DOT_FILL}
+                    onClick={() => handleScrollTimeline(index, name)}
                   />
                 )
               })}
             </g>
-            <g className="iconContainer">
+            <g
+              ref={iconContainerRef as RefObject<any>}
+              className="iconContainer"
+            >
               {iconPaths.map(
                 (icon: { name: string; path: string }, index: number) => {
                   const { name, path } = icon
                   return (
                     <path
-                      className="icon"
-                      style={{
-                        fill: 'rgb(255, 255, 255)',
-                        opacity: 1,
-                        height: '0px',
-                        width: '0px',
-                        transformOrigin: '0px 0px 0px',
+                      ref={(ref) => {
+                        iconRefs.push(ref as any)
                       }}
                       key={index}
+                      className="icon"
+                      fill={ICON_FILL}
                       id={name}
+                      data-index={index}
                       d={path}
-                      transform={`matrix(1,0,0,1,${ICON_SIZE * index},0)`}
+                      opacity={0.2}
+                      transform={`matrix(1,0,0,1,${
+                        index * SPACER - ICON_SIZE / 2
+                      },0)`}
                     />
                   )
                 }
@@ -88,7 +173,14 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
             </g>
           </g>
         </svg>
-      </animated.div>
-    </div>
+        {/* <button
+          // @ts-ignore
+          // onClick={() => clickAnimation.play()}
+          onClick={() => handlePlayTimeline()}
+        >
+          __P__
+        </button> */}
+      </div>
+    </Fragment>
   )
 }

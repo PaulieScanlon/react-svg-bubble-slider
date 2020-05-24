@@ -5,7 +5,7 @@ import React, {
   useEffect,
   Fragment,
 } from 'react'
-import { TweenMax, TimelineMax, Linear, Elastic, Power1 } from 'gsap'
+import { TweenMax, TimelineMax, Linear, Elastic } from 'gsap'
 
 import { iconPaths } from './iconPaths'
 export interface SvgBubbleSliderProps {
@@ -34,18 +34,16 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   const iconRefs: RefObject<SVGPathElement>[] = []
   const dotRefs: RefObject<SVGCircleElement>[] = []
 
-  const snapArray: any = []
+  const snapArray: number[] = []
   const mtl = new TimelineMax({ paused: true })
 
-  const handlePlayTimeline = () => {
-    mtl.restart()
-  }
-
   const handleDragSlider = () => {
-    const posX = new WebKitCSSMatrix(
-      window.getComputedStyle(dotContainerRef.current).webkitTransform
-    ).m41
-
+    const posX = Number(
+      window
+        .getComputedStyle(dotContainerRef.current)
+        .getPropertyValue('transform')
+        .match(/-?[\d]+/g)[4]
+    )
     TweenMax.to(mtl, 0.5, {
       time: (posX / MIN_DRAG_X) * (mtl.duration() - 2) + 1,
       ease: Elastic.easeOut.config(2, 0.75),

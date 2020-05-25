@@ -13,8 +13,8 @@ import { iconPaths } from './iconPaths'
 
 import './SvgBubbleSlider.css'
 export interface SvgBubbleSliderProps {
-  /** Some class */
-  someClass?: string
+  /** A percentage scale */
+  scale?: string
 }
 
 const ICON_SIZE = 32
@@ -26,11 +26,10 @@ const DOT_SIZE = 10
 const DOT_FILL = '#FF69B4'
 
 const MIN_DRAG_X = -(iconPaths.length - 1) * SPACER
-const MASTER_WIDTH = DOT_SIZE * iconPaths.length + SPACER * iconPaths.length
 const VIEWBOX_WIDTH = SPACER * iconPaths.length
 
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
-  someClass,
+  scale = '100%',
 }: SvgBubbleSliderProps) => {
   const dotContainerRef = useRef(null)
   const iconContainerRef = useRef(null)
@@ -143,8 +142,10 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   return (
     <div className="svg-bubble-slider">
       <svg
-        className={`svg ${someClass ? someClass : ''}`}
-        viewBox={`0,0, ${VIEWBOX_WIDTH}, 300`}
+        className="svg"
+        width={scale}
+        height={scale}
+        viewBox={`0,0, ${VIEWBOX_WIDTH}, 150`}
       >
         <defs>
           <filter id="goo" colorInterpolationFilters="sRGB">
@@ -159,9 +160,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
         </defs>
         <g
           className="dot-group"
-          transform={`matrix(1,0,0,1,${
-            (DOT_SIZE * iconPaths.length + SPACER * iconPaths.length) / 2
-          },${ICON_SIZE * 2})`}
+          transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${ICON_SIZE * 2})`}
         >
           <g
             ref={dotContainerRef as RefObject<any>}
@@ -170,8 +169,8 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
           >
             <rect
               className="hit-area"
-              width={MASTER_WIDTH}
-              transform={`matrix(1,0,0,1,0, -${ICON_SIZE * 2})`}
+              width={VIEWBOX_WIDTH}
+              transform={`matrix(1,0,0,1,0, -${ICON_SIZE})`}
             />
             {iconPaths.map((icon, index: number) => {
               const { name } = icon

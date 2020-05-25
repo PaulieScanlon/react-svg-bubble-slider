@@ -11,12 +11,12 @@ export default {
 
 export const usage = () => <SvgBubbleSlider />
 
-export const someClass = () => <SvgBubbleSlider someClass="hello-world" />
+export const scale = () => <SvgBubbleSlider scale="50%" />
 
-someClass.story = {
+scale.story = {
   parameters: {
     docs: {
-      storyDescription: 'The `someClass` ...',
+      storyDescription: 'The `scale` prop can be used to set the size',
     },
   },
 }

@@ -7,15 +7,40 @@ exports[`<SvgBubbleSlider /> renders the component 1`] = `
   >
     <svg
       class="svg "
-      width="910"
+      viewBox="0,0, 780, 300"
     >
+      <defs>
+        <filter
+          color-interpolation-filters="sRGB"
+          id="goo"
+        >
+          <fegaussianblur
+            in="SourceGraphic"
+            result="blur"
+            stdDeviation="8"
+          />
+          <fecolormatrix
+            in="blur"
+            mode="matrix"
+            result="cm"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
+          />
+        </filter>
+      </defs>
       <g
-        class="dotGroup"
+        class="dot-group"
         transform="matrix(1,0,0,1,455,64)"
       >
         <g
-          class="dotContainer"
+          class="dot-container"
+          filter="url(#goo)"
+          style="cursor: grab; user-select: none;"
         >
+          <rect
+            class="hit-area"
+            transform="matrix(1,0,0,1,0, -64)"
+            width="910"
+          />
           <circle
             class="dot"
             cx="0"
@@ -109,7 +134,7 @@ exports[`<SvgBubbleSlider /> renders the component 1`] = `
           />
         </g>
         <g
-          class="iconContainer"
+          class="icon-container"
         >
           <path
             class="icon"

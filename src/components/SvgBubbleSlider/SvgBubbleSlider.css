@@ -12,6 +12,10 @@
   height: 100%;
 }
 
+.icon {
+  pointer-events: none;
+}
+
 .dot {
   cursor: pointer;
 }

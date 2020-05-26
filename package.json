@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/PaulieScanlon/react-svg-bubble-slider#readme",
   "dependencies": {
-    "gsap": "file:gsap-bonus.tgz"
+    "gsap": "^3.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

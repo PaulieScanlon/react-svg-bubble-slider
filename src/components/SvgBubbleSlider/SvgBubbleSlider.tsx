@@ -1,6 +1,6 @@
 import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
 
-import { gsap, TweenMax, TimelineMax, Linear, Elastic, Power1 } from 'gsap'
+import { gsap } from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { InertiaPlugin } from 'gsap/InertiaPlugin'
 
@@ -35,17 +35,18 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   const dotRefs: RefObject<SVGCircleElement>[] = []
 
   const snapArray: number[] = []
-  const mtl = new TimelineMax({ paused: true })
+  const mtl = gsap.timeline({ paused: true })
 
   const handleDragSlider = () => {
     const posX = Number(gsap.getProperty(dotContainerRef.current, 'x'))
 
-    TweenMax.to(mtl, 0.5, {
+    gsap.to(mtl, {
+      duration: 0.5,
       time: (posX / MIN_DRAG_X) * (mtl.duration() - 2) + 1,
-      ease: Elastic.easeOut.config(2, 0.75),
+      ease: 'elastic(2, 0.75)',
     })
 
-    TweenMax.set(iconContainerRef.current, {
+    gsap.set(iconContainerRef.current, {
       x: posX,
     })
   }
@@ -61,54 +62,59 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   }
 
   const handleScrollTimeline = (index: number) => {
-    TweenMax.to([dotContainerRef.current, iconContainerRef.current], 0.8, {
+    gsap.to([dotContainerRef.current, iconContainerRef.current], {
+      duration: 0.8,
       x: snapArray[index],
       onUpdate: handleDragSlider,
       onComplete: handleThrowComplete,
-      ease: Power1.easeOut,
+      ease: 'power1'
     })
   }
 
   useEffect(() => {
     iconPaths.map((_, index: number) => {
-      TweenMax.set(iconRefs[index], {
+      gsap.set(iconRefs[index], {
         transformOrigin: '50% 50%',
         scale: 0,
       })
 
       snapArray.push(-index * SPACER)
 
-      const tl = new TimelineMax({})
+      const tl = gsap.timeline({})
 
-      tl.to(dotRefs[index], 1, {
+      tl.to(dotRefs[index], {
+        duration: 1,
         attr: {
           r: DOT_SIZE * MULTIPLIER,
         },
-        ease: Linear.easeNone,
+        ease: 'linear',
       })
         .to(
           iconRefs[index],
-          1,
+         
           {
+            duration: 1,
             alpha: 1,
             scale: 2,
-            ease: Linear.easeNone,
+            ease: 'linear',
           },
           '-=1'
         )
-        .to(dotRefs[index], 1, {
+        .to(dotRefs[index], {
+          duration: 1,
           attr: {
             r: DOT_SIZE,
           },
-          ease: Linear.easeNone,
+          ease: 'linear',
         })
         .to(
           iconRefs[index],
-          1,
+          
           {
+            duration: 1,
             alpha: 0.2,
             scale: 0,
-            ease: Linear.easeNone,
+            ease: 'linear',
           },
           '-=1'
         )

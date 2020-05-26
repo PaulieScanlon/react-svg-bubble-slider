@@ -15,3 +15,7 @@
 .dot {
   cursor: pointer;
 }
+
+.icon {
+  pointer-events: none;
+}

@@ -111,3 +111,5 @@ refs.md
 
 # GSAP
 gsap-bonus.tgz
+# Local Netlify folder
+.netlify

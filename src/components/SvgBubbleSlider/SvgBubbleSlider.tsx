@@ -2,12 +2,9 @@ import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
 
 import { gsap, TweenMax, TimelineMax, Linear, Elastic, Power1 } from 'gsap'
 import { Draggable } from 'gsap/Draggable'
-// import { Draggable } from 'gsap/dist/Draggable'
-// import ThrowPropsPlugin from 'gsap/ThrowPropsPlugin'
-gsap.registerPlugin(
-  Draggable
-  // ThrowPropsPlugin
-)
+import { InertiaPlugin } from 'gsap/InertiaPlugin'
+
+gsap.registerPlugin(Draggable, InertiaPlugin)
 
 import { iconPaths } from './iconPaths'
 
@@ -58,13 +55,12 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   }
 
   const handleThrowComplete = () => {
-    console.log('handleDragStart')
+    const posX = Number(gsap.getProperty(dotContainerRef.current, 'x'))
+    const landed = Math.ceil(posX / SPACER)
+    console.log('handleThrowComplete', iconPaths[Math.abs(landed)].name)
   }
 
-  const handleScrollTimeline = (index: number, name: string) => {
-    console.log('name: ', name)
-
-    // TweenMax.to([dotContainerRef.current, iconContainerRef.current], 2, {
+  const handleScrollTimeline = (index: number) => {
     TweenMax.to([dotContainerRef.current, iconContainerRef.current], 0.8, {
       x: snapArray[index],
       onUpdate: handleDragSlider,
@@ -118,7 +114,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
         )
       mtl.add(tl, index / 2)
     })
-    handleScrollTimeline(6, iconPaths[6].name)
+    handleScrollTimeline(6)
     Draggable.create(dotContainerRef.current, {
       type: 'x',
       bounds: {
@@ -130,8 +126,8 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
       onDrag: handleDragSlider,
       onDragStart: handleDragStart,
       onThrowUpdate: handleDragSlider,
-      inertia: true,
       onThrowComplete: handleThrowComplete,
+      inertia: true,
       minDuration: 1,
       snap: snapArray,
       overshootTolerance: 0,
@@ -172,23 +168,20 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
               width={VIEWBOX_WIDTH}
               transform={`matrix(1,0,0,1,0, -${ICON_SIZE})`}
             />
-            {iconPaths.map((icon, index: number) => {
-              const { name } = icon
-              return (
-                <circle
-                  ref={(ref) => {
-                    dotRefs.push(ref as any)
-                  }}
-                  key={index}
-                  className="dot"
-                  cx={index * SPACER}
-                  cy={ICON_SIZE / 2}
-                  r={DOT_SIZE}
-                  fill={DOT_FILL}
-                  onClick={() => handleScrollTimeline(index, name)}
-                />
-              )
-            })}
+            {iconPaths.map((_, index: number) => (
+              <circle
+                ref={(ref) => {
+                  dotRefs.push(ref as any)
+                }}
+                key={index}
+                className="dot"
+                cx={index * SPACER}
+                cy={ICON_SIZE / 2}
+                r={DOT_SIZE}
+                fill={DOT_FILL}
+                onClick={() => handleScrollTimeline(index)}
+              />
+            ))}
           </g>
           <g
             ref={iconContainerRef as RefObject<any>}

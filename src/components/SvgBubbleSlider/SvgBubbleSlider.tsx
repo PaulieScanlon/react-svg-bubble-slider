@@ -67,7 +67,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
       x: snapArray[index],
       onUpdate: handleDragSlider,
       onComplete: handleThrowComplete,
-      ease: 'power1'
+      ease: 'power1',
     })
   }
 
@@ -91,7 +91,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
       })
         .to(
           iconRefs[index],
-         
+
           {
             duration: 1,
             alpha: 1,
@@ -109,7 +109,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
         })
         .to(
           iconRefs[index],
-          
+
           {
             duration: 1,
             alpha: 0.2,

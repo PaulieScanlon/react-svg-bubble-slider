@@ -12,7 +12,8 @@
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006 --ci",
     "storybook:build": "build-storybook",
-    "release": "npm run build && npm publish"
+    "release": "npm run build && npm publish",
+    "deploy": "netlify deploy --prod"
   },
   "husky": {
     "hooks": {

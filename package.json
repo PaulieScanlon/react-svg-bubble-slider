@@ -13,7 +13,7 @@
     "storybook": "start-storybook -p 6006 --ci",
     "storybook:build": "build-storybook",
     "release": "npm run build && npm publish",
-    "deploy": "netlify deploy --prod"
+    "deploy": "npm run storybook:build && netlify deploy --prod"
   },
   "husky": {
     "hooks": {

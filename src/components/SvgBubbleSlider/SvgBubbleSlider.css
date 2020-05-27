@@ -6,6 +6,10 @@
   position: relative;
 }
 
+.svg {
+  visibility: hidden;
+}
+
 .hit-area {
   cursor: move;
   fill: rgba(0, 0, 0, 0);
@@ -22,4 +26,8 @@
 
 .icon {
   pointer-events: none;
+}
+
+.svg-bubble-action {
+  text-align: center;
 }

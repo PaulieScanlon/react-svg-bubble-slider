@@ -41,6 +41,8 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     const iconRefs: RefObject<SVGPathElement>[] = []
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
+    const [hasMounted, sethasMounted] = useState(false)
+
     const [snapArray, setSnapArray] = useState([])
 
     const mtl = gsap.timeline({ paused: true })
@@ -65,6 +67,9 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }
 
     const handleThrowComplete = () => {
+      if (!hasMounted) {
+        sethasMounted(true)
+      }
       const posX = Number(gsap.getProperty(dotContainerRef.current, 'x'))
       const landed = Math.ceil(posX / SPACER)
       onAnimationComplete(iconPaths[Math.abs(landed)].name)
@@ -88,16 +93,15 @@ export const Svg: FunctionComponent<SvgProps> = memo(
           scale: 0,
         })
       })
+
       setTimeout(() => {
         gsap.set('svg', {
           visibility: 'visible',
         })
-      }, 500)
-    }, [])
+      }, 5)
 
-    useEffect(() => {
       iconPaths.map((_, index: number) => {
-        let tl = gsap
+        const tl = gsap
           .timeline()
           .to(dotRefs[index], {
             duration: 1,
@@ -126,15 +130,15 @@ export const Svg: FunctionComponent<SvgProps> = memo(
           })
           .to(
             iconRefs[index],
-
             {
               duration: 1,
-              alpha: 0.2,
+              alpha: 0,
               scale: 0,
               ease: 'linear',
             },
             '-=1'
           )
+          .time(2)
 
         setTls((tls) => [...tls, tl])
       })
@@ -142,9 +146,6 @@ export const Svg: FunctionComponent<SvgProps> = memo(
 
     useEffect(() => {
       tls.map((tl, index: number) => mtl.add(tl, index / 2))
-    }, [mtl])
-
-    useEffect(() => {
       Draggable.create(dotContainerRef.current, {
         type: 'x',
         bounds: {
@@ -162,7 +163,17 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         snap: snapArray,
         overshootTolerance: 0,
         dragClickables: true,
-      })[0].enable()
+      })
+    }, [mtl])
+
+    useEffect(() => {
+      if (!hasMounted) {
+        gsap.to([dotContainerRef.current, iconContainerRef.current], 1, {
+          x: snapArray[6],
+          onUpdate: handleDragSlider,
+          ease: 'elastic((1, 0.85)',
+        })
+      }
     }, [mtl])
 
     return (
@@ -231,7 +242,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                     id={name}
                     data-index={index}
                     d={path}
-                    opacity={0.2}
+                    opacity={0}
                     transform={`matrix(1,0,0,1,${
                       index * SPACER - ICON_SIZE / 2
                     },0)`}

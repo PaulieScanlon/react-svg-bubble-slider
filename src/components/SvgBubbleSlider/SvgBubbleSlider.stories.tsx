@@ -15,7 +15,13 @@ export const usage = () => <SvgBubbleSlider />
 
 export const action = () => (
   <SvgBubbleSlider>
-    {({ reaction }) => <Button>{`Post:${reaction}`}</Button>}
+    {({ reaction }) =>
+      reaction && (
+        <Button
+          sx={{ textTransform: 'capitalize' }}
+        >{`Submit ${reaction}`}</Button>
+      )
+    }
   </SvgBubbleSlider>
 )
 

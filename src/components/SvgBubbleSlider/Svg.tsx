@@ -42,11 +42,11 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
     const [snapArray, setSnapArray] = useState([])
-    // const [mtl] = useState(gsap.timeline({ paused: true }))
+
     const mtl = gsap.timeline({ paused: true })
+    const [tls, setTls] = useState([])
 
     const handleDragSlider = () => {
-      // setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
       const posX = Number(gsap.getProperty(dotContainerRef.current, 'x'))
 
       gsap.to(mtl, {
@@ -83,30 +83,29 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     useEffect(() => {
       iconPaths.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
+        gsap.set(iconRefs[index], {
+          transformOrigin: '50% 50%',
+          scale: 0,
+        })
       })
       setTimeout(() => {
         gsap.set('svg', {
           visibility: 'visible',
         })
-        // setCurrentSnapIndex(6)
-      }, 100)
+      }, 500)
     }, [])
 
     useEffect(() => {
       iconPaths.map((_, index: number) => {
-        gsap.set(iconRefs[index], {
-          transformOrigin: '50% 50%',
-          scale: 0,
-        })
-        const tl = gsap.timeline({})
-
-        tl.to(dotRefs[index], {
-          duration: 1,
-          attr: {
-            r: DOT_SIZE * MULTIPLIER,
-          },
-          ease: 'linear',
-        })
+        let tl = gsap
+          .timeline()
+          .to(dotRefs[index], {
+            duration: 1,
+            attr: {
+              r: DOT_SIZE * MULTIPLIER,
+            },
+            ease: 'linear',
+          })
           .to(
             iconRefs[index],
 
@@ -136,8 +135,13 @@ export const Svg: FunctionComponent<SvgProps> = memo(
             },
             '-=1'
           )
-        mtl.add(tl, index / 2)
+
+        setTls((tls) => [...tls, tl])
       })
+    }, [])
+
+    useEffect(() => {
+      tls.map((tl, index: number) => mtl.add(tl, index / 2))
     }, [mtl])
 
     useEffect(() => {

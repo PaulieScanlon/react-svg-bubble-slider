@@ -1,4 +1,10 @@
-import React, { Fragment, FunctionComponent, useState, ReactNode } from 'react'
+import React, {
+  Fragment,
+  FunctionComponent,
+  memo,
+  useState,
+  ReactNode,
+} from 'react'
 
 import { Svg } from './Svg'
 
@@ -15,26 +21,27 @@ export interface SvgBubbleSliderProps {
   children?: ({ reaction }: SvgBubbleActionProps) => ReactNode
 }
 
-export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
-  scale = '100%',
-  children,
-}: SvgBubbleSliderProps) => {
-  const [currentReaction, setCurrentReaction] = useState('')
+export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
+  ({ scale = '100%', children }: SvgBubbleSliderProps) => {
+    const [currentReaction, setCurrentReaction] = useState('')
 
-  return (
-    <Fragment>
-      <div className="svg-bubble-slider">
-        <Svg
-          scale={scale}
-          onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
-        />
-      </div>
-      <div className="svg-bubble-action">
-        {children &&
-          children({
-            reaction: currentReaction,
-          })}
-      </div>
-    </Fragment>
-  )
-}
+    return (
+      <Fragment>
+        <div className="svg-bubble-slider">
+          <Svg
+            scale={scale}
+            onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
+          />
+        </div>
+        <div className="svg-bubble-action">
+          {children &&
+            children({
+              reaction: currentReaction,
+            })}
+        </div>
+      </Fragment>
+    )
+  }
+)
+
+SvgBubbleSlider.displayName = 'SvgBubbleSlider'

@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useRef,
   useState,
+  useMemo,
 } from 'react'
 
 import { gsap } from 'gsap'
@@ -45,7 +46,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
 
     const [snapArray, setSnapArray] = useState([])
 
-    const mtl = gsap.timeline({ paused: true })
+    const mtl = useMemo(() => gsap.timeline({ paused: true }), null)
     const [tls, setTls] = useState([])
 
     const handleDragSlider = () => {
@@ -164,9 +165,6 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         overshootTolerance: 0,
         dragClickables: true,
       })
-    }, [mtl])
-
-    useEffect(() => {
       if (!hasMounted) {
         gsap.to([dotContainerRef.current, iconContainerRef.current], 1, {
           x: snapArray[6],
@@ -256,3 +254,5 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     )
   }
 )
+
+Svg.displayName = 'Svg'

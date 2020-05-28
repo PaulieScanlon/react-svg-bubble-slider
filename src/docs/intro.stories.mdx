@@ -11,12 +11,22 @@ import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
 
 A React version of Chris Gannon's [SVG Bubble Slider](https://codepen.io/chrisgannon/pen/GZNgLw/)
 
+<SvgBubbleSlider>
+  {({ reaction }) =>
+    reaction && (
+      <Button
+        sx={{ textTransform: 'capitalize' }}
+      >{`Submit ${reaction}`}</Button>
+    )
+  }
+</SvgBubbleSlider>
+
 ### Install
 
 <Divider />
 
 ```sh
-npm install react-svg-bubble-slider
+npm install ...
 ```
 
 ### Props
@@ -24,7 +34,5 @@ npm install react-svg-bubble-slider
 <Divider />
 
 You can use props like: <Link onClick={linkTo('Props', 'Scale')}>scale</Link>
-
-<SvgBubbleSlider />
 
 </Box>

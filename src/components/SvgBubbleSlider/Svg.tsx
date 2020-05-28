@@ -5,7 +5,6 @@ import React, {
   useEffect,
   useRef,
   useState,
-  useMemo,
 } from 'react'
 
 import { gsap } from 'gsap'
@@ -42,25 +41,21 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     const iconRefs: RefObject<SVGPathElement>[] = []
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
-    const [hasMounted, sethasMounted] = useState(false)
-
+    const [isMounted, setIsMounted] = useState(false)
+    const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
+    const [mtl, setMtl] = useState({
+      timeline: gsap.timeline({ paused: true }),
+    })
 
-    const mtl = useMemo(() => gsap.timeline({ paused: true }), null)
-    const [tls, setTls] = useState([])
+    // This is a hacky work-around because posX gets updated after we need it...
+    // resulting in landed returning the wrong icon name
+
+    let _x = 0
 
     const handleDragSlider = () => {
-      const posX = Number(gsap.getProperty(dotContainerRef.current, 'x'))
-
-      gsap.to(mtl, {
-        duration: 0.5,
-        time: (posX / MIN_DRAG_X) * (mtl.duration() - 2) + 1,
-        ease: 'elastic(2, 0.75)',
-      })
-
-      gsap.set(iconContainerRef.current, {
-        x: posX,
-      })
+      setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
+      _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
     }
 
     const handleDragStart = () => {
@@ -68,11 +63,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }
 
     const handleThrowComplete = () => {
-      if (!hasMounted) {
-        sethasMounted(true)
-      }
-      const posX = Number(gsap.getProperty(dotContainerRef.current, 'x'))
-      const landed = Math.ceil(posX / SPACER)
+      const landed = Math.ceil(_x / SPACER)
       onAnimationComplete(iconPaths[Math.abs(landed)].name)
     }
 
@@ -87,67 +78,73 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }
 
     useEffect(() => {
+      gsap.set('svg', {
+        visibility: 'visible',
+      })
       iconPaths.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
+        //
         gsap.set(iconRefs[index], {
           transformOrigin: '50% 50%',
           scale: 0,
         })
-      })
-
-      setTimeout(() => {
-        gsap.set('svg', {
-          visibility: 'visible',
+        //
+        setMtl({
+          timeline: (mtl.timeline as any).add(
+            gsap
+              .timeline()
+              .to(dotRefs[index], {
+                duration: 1,
+                attr: {
+                  r: DOT_SIZE * MULTIPLIER,
+                },
+                ease: 'linear',
+              })
+              .to(
+                iconRefs[index],
+                {
+                  duration: 1,
+                  alpha: 1,
+                  scale: 2,
+                  ease: 'linear',
+                },
+                '-=1'
+              )
+              .to(dotRefs[index], {
+                duration: 1,
+                attr: {
+                  r: DOT_SIZE,
+                },
+                ease: 'linear',
+              })
+              .to(
+                iconRefs[index],
+                {
+                  duration: 1,
+                  alpha: 0,
+                  scale: 0,
+                  ease: 'linear',
+                },
+                '-=1'
+              ),
+            index / 2
+          ),
         })
-      }, 5)
-
-      iconPaths.map((_, index: number) => {
-        const tl = gsap
-          .timeline()
-          .to(dotRefs[index], {
-            duration: 1,
-            attr: {
-              r: DOT_SIZE * MULTIPLIER,
-            },
-            ease: 'linear',
-          })
-          .to(
-            iconRefs[index],
-
-            {
-              duration: 1,
-              alpha: 1,
-              scale: 2,
-              ease: 'linear',
-            },
-            '-=1'
-          )
-          .to(dotRefs[index], {
-            duration: 1,
-            attr: {
-              r: DOT_SIZE,
-            },
-            ease: 'linear',
-          })
-          .to(
-            iconRefs[index],
-            {
-              duration: 1,
-              alpha: 0,
-              scale: 0,
-              ease: 'linear',
-            },
-            '-=1'
-          )
-          .time(2)
-
-        setTls((tls) => [...tls, tl])
+      })
+      //
+      gsap.to([dotContainerRef.current, iconContainerRef.current], 2, {
+        x: -(6 * SPACER),
+        onUpdate: handleDragSlider,
+        onComplete: () => {
+          handleThrowComplete()
+          setIsMounted(true)
+        },
+        ease: 'elastic(1, 0.85)',
       })
     }, [])
 
     useEffect(() => {
-      tls.map((tl, index: number) => mtl.add(tl, index / 2))
-      Draggable.create(dotContainerRef.current, {
+      const dragInstance = Draggable.create(dotContainerRef.current, {
         type: 'x',
         bounds: {
           minX: MIN_DRAG_X,
@@ -164,15 +161,24 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         snap: snapArray,
         overshootTolerance: 0,
         dragClickables: true,
-      })
-      if (!hasMounted) {
-        gsap.to([dotContainerRef.current, iconContainerRef.current], 1, {
-          x: snapArray[6],
-          onUpdate: handleDragSlider,
-          ease: 'elastic((1, 0.85)',
-        })
+      })[0].disable()
+
+      if (isMounted) {
+        dragInstance.enable()
       }
-    }, [mtl])
+    }, [isMounted])
+
+    useEffect(() => {
+      gsap.to(mtl.timeline, {
+        duration: 0.5,
+        time: (posX / MIN_DRAG_X) * (mtl.timeline.duration() - 2) + 1,
+        ease: 'elastic(2, 0.75)',
+      })
+
+      gsap.set(iconContainerRef.current, {
+        x: posX,
+      })
+    }, [posX])
 
     return (
       <svg
@@ -207,20 +213,24 @@ export const Svg: FunctionComponent<SvgProps> = memo(
               width={VIEWBOX_WIDTH}
               transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${ICON_SIZE * 2})`}
             />
-            {iconPaths.map((_, index: number) => (
-              <circle
-                ref={(ref) => {
-                  dotRefs.push(ref as any)
-                }}
-                key={index}
-                className="dot"
-                cx={index * SPACER}
-                cy={ICON_SIZE / 2}
-                r={DOT_SIZE}
-                fill={DOT_FILL}
-                onClick={() => handleClick(index)}
-              />
-            ))}
+            {iconPaths.map((icon: { name: string }, index: number) => {
+              const { name } = icon
+              return (
+                <circle
+                  ref={(ref) => {
+                    dotRefs.push(ref as any)
+                  }}
+                  key={index}
+                  className="dot"
+                  cx={index * SPACER}
+                  cy={ICON_SIZE / 2}
+                  r={DOT_SIZE}
+                  fill={DOT_FILL}
+                  id={`dot-${name}-${index}`}
+                  onClick={() => handleClick(index)}
+                />
+              )
+            })}
           </g>
           <g
             ref={iconContainerRef as RefObject<any>}
@@ -237,7 +247,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                     key={index}
                     className="icon"
                     fill={ICON_FILL}
-                    id={name}
+                    id={`icon-${name}-${index}`}
                     data-index={index}
                     d={path}
                     opacity={0}

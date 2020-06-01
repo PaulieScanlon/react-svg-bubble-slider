@@ -4,9 +4,27 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-bottom: 24px;
 }
 
-.svg {
+.svg-speech-bubble {
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.svg-details {
+  margin: 0 auto;
+}
+
+.speech-bubble-label {
+  font-family: 'Passion One', sans-serif;
+  text-transform: uppercase;
+  text-anchor: middle;
+  font-size: 29px;
+}
+
+.svg-icon-bubbles {
   visibility: hidden;
 }
 
@@ -30,4 +48,5 @@
 
 .svg-bubble-action {
   text-align: center;
+  min-height: 35px;
 }

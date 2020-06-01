@@ -5,7 +5,7 @@ export default {
   colors: {
     text: '#282a36',
     background: '#ffffff',
-    primary: '#ff79c6',
+    primary: '#FF69B4',
     secondary: '#8be9fd',
     muted: '#8394ca',
     highlight: '#50fa7b',

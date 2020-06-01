@@ -13,17 +13,8 @@ A React version of Chris Gannon's [SVG Bubble Slider](https://codepen.io/chrisga
 
 <SvgBubbleSlider>
   {({ reaction }) =>
-    reaction && (
-        <Button
-          sx={{
-            textTransform: 'capitalize',
-          }}
-        >
-          {`${reaction}`}
-        </Button>
-    )
-}
-
+    reaction && <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
+  }
 </SvgBubbleSlider>
 
 ### Install
@@ -38,6 +29,6 @@ npm install ...
 
 <Divider />
 
-You can use props like: <Link onClick={linkTo('Props', 'Scale')}>scale</Link>
+You can use props like: <Link onClick={linkTo('Props', 'Children')}>children</Link>
 
 </Box>

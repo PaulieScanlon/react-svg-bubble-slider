@@ -7,38 +7,27 @@ export default {
   title: 'Props',
   parameters: {
     component: SvgBubbleSlider,
-    componentSubtitle: "Hooray it's a SvgBubbleSlider",
+    componentSubtitle: "Hooray it's an SvgBubbleSlider",
   },
 }
 
 export const usage = () => <SvgBubbleSlider />
 
-export const action = () => (
+export const children = () => (
   <SvgBubbleSlider>
     {({ reaction }) =>
       reaction && (
-        <Button
-          sx={{ textTransform: 'capitalize' }}
-        >{`Submit ${reaction}`}</Button>
+        <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
       )
     }
   </SvgBubbleSlider>
 )
 
-action.story = {
+children.story = {
   parameters: {
     docs: {
-      storyDescription: 'The `scale` prop can be used to set the size',
-    },
-  },
-}
-
-export const scale = () => <SvgBubbleSlider scale="50%" />
-
-scale.story = {
-  parameters: {
-    docs: {
-      storyDescription: 'The `scale` prop can be used to set the size',
+      storyDescription:
+        'You can access the current `reaction` via the render prop',
     },
   },
 }

@@ -15,8 +15,6 @@ interface SpeechBubbleProps {
   currentReaction: string
   /** The size of the viewbox */
   viewboxWidth: number
-  //
-  // isMotionComplete: boolean
 }
 
 const SELF_WIDTH = 170
@@ -25,8 +23,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   color,
   currentReaction,
   viewboxWidth,
-  // isMotionComplete,
-}) => {
+}: SpeechBubbleProps) => {
   const speechBubblesRef = useRef(null)
   const [tl] = useState({
     timeline: gsap.timeline(),
@@ -112,3 +109,5 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
     </g>
   )
 }
+
+SpeechBubble.displayName = 'SpeechBubble'

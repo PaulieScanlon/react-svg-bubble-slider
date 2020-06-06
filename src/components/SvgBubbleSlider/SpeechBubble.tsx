@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react'
 
-import { gsap } from 'gsap'
+import gsap from 'gsap'
 
 interface SpeechBubbleProps {
   /** The colors of the speech bubble */

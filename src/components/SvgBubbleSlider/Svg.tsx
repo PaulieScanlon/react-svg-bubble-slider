@@ -8,7 +8,7 @@ import React, {
   Fragment,
 } from 'react'
 
-import { gsap } from 'gsap'
+import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { InertiaPlugin } from 'gsap/InertiaPlugin'
 
@@ -16,7 +16,7 @@ gsap.registerPlugin(Draggable, InertiaPlugin)
 
 import { iconPaths } from './iconPaths'
 
-// import { PopLines } from './PopLines'
+import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
 
 const ICON_SIZE = 32
@@ -45,13 +45,13 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
     const [isMounted, setIsMounted] = useState(false)
+    const [animationState, setAnimationState] = useState(false)
     const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
     const [mtl, setMtl] = useState({
       timeline: gsap.timeline({ paused: true }),
     })
     const [currentReaction, setCurrentReaction] = useState('')
-    // const [isMotionComplete, setIsMotionComplete] = useState(true)
 
     // This is a hacky work-around because posX gets updated after we need it...
     // resulting in landed returning the wrong icon name
@@ -63,27 +63,16 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }
 
     const handleAnimationStart = () => {
-      console.log('handleAnimationStart')
-
-      // gsap.to(popLinesRef.current, {
-      //   duration: 0.5,
-      //   y: -130,
-      //   ease: 'elastic(1, 0.5)',
-      // })
-      // setIsMotionComplete(false)
+      // console.log('handleAnimationStart')
+      setAnimationState(true)
       setCurrentReaction('')
       onAnimationComplete('')
     }
 
     const handleAnimationComplete = () => {
-      console.log('handleAnimationComplete')
-
-      // gsap.set(popLinesRef.current, {
-      //   y: -100,
-      // })
-
+      // console.log('handleAnimationComplete')
       const landed = Math.ceil(_x / SPACER)
-      // setIsMotionComplete(true)
+      setAnimationState(false)
       setCurrentReaction(iconPaths[Math.abs(landed)].name)
       onAnimationComplete(iconPaths[Math.abs(landed)].name)
     }
@@ -224,16 +213,15 @@ export const Svg: FunctionComponent<SvgProps> = memo(
               height="80%"
               viewBox={`0,0, ${VIEWBOX_WIDTH}, 240`}
             >
-              {/* <PopLines
-                ref={popLinesRef as RefObject<any>}
+              <PopLines
+                animationState={animationState}
                 color={DOT_FILL}
                 viewboxWidth={VIEWBOX_WIDTH}
-              /> */}
+              />
               <SpeechBubble
+                currentReaction={currentReaction}
                 color={DOT_FILL}
                 viewboxWidth={VIEWBOX_WIDTH}
-                // isMotionComplete={isMotionComplete}
-                currentReaction={currentReaction}
               />
             </svg>
           </div>

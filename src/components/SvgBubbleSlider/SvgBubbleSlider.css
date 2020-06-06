@@ -28,6 +28,10 @@
   visibility: hidden;
 }
 
+.pop-lines {
+  visibility: hidden;
+}
+
 .hit-area {
   cursor: move;
   fill: rgba(0, 0, 0, 0);

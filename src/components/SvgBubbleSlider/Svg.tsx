@@ -5,15 +5,19 @@ import React, {
   useEffect,
   useRef,
   useState,
+  Fragment,
 } from 'react'
 
-import { gsap } from 'gsap'
+import gsap from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { InertiaPlugin } from 'gsap/InertiaPlugin'
 
 gsap.registerPlugin(Draggable, InertiaPlugin)
 
 import { iconPaths } from './iconPaths'
+
+import { PopLines } from './PopLines'
+import { SpeechBubble } from './SpeechBubble'
 
 const ICON_SIZE = 32
 const ICON_FILL = '#ffffff'
@@ -27,30 +31,30 @@ const MIN_DRAG_X = -(iconPaths.length - 1) * SPACER
 const VIEWBOX_WIDTH = SPACER * iconPaths.length
 
 interface SvgProps {
-  /** A percentage scale */
-  scale: string
   /** Animation callback passes current reaction */
   onAnimationComplete: (reaction: string) => void
 }
 
 export const Svg: FunctionComponent<SvgProps> = memo(
-  ({ scale, onAnimationComplete }: SvgProps) => {
-    const svgRef = useRef(null)
+  ({ onAnimationComplete }: SvgProps) => {
+    const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
+
     const iconRefs: RefObject<SVGPathElement>[] = []
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
     const [isMounted, setIsMounted] = useState(false)
+    const [animationState, setAnimationState] = useState(false)
     const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
     const [mtl, setMtl] = useState({
       timeline: gsap.timeline({ paused: true }),
     })
+    const [currentReaction, setCurrentReaction] = useState('')
 
     // This is a hacky work-around because posX gets updated after we need it...
     // resulting in landed returning the wrong icon name
-
     let _x = 0
 
     const handleDragSlider = () => {
@@ -58,12 +62,18 @@ export const Svg: FunctionComponent<SvgProps> = memo(
       _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
     }
 
-    const handleDragStart = () => {
-      // console.log('handleDragStart')
+    const handleAnimationStart = () => {
+      // console.log('handleAnimationStart')
+      setAnimationState(true)
+      setCurrentReaction('')
+      onAnimationComplete('')
     }
 
-    const handleThrowComplete = () => {
+    const handleAnimationComplete = () => {
+      // console.log('handleAnimationComplete')
       const landed = Math.ceil(_x / SPACER)
+      setAnimationState(false)
+      setCurrentReaction(iconPaths[Math.abs(landed)].name)
       onAnimationComplete(iconPaths[Math.abs(landed)].name)
     }
 
@@ -72,15 +82,16 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         duration: 0.8,
         x: snapArray[index],
         onUpdate: handleDragSlider,
-        onComplete: handleThrowComplete,
+        onComplete: handleAnimationComplete,
         ease: 'power1',
       })
     }
 
     useEffect(() => {
-      gsap.set('svg', {
+      gsap.set(svgIconBubblesRef.current, {
         visibility: 'visible',
       })
+
       iconPaths.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
         //
@@ -136,7 +147,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         x: -(6 * SPACER),
         onUpdate: handleDragSlider,
         onComplete: () => {
-          handleThrowComplete()
+          handleAnimationComplete()
           setIsMounted(true)
         },
         ease: 'elastic(1, 0.85)',
@@ -153,9 +164,9 @@ export const Svg: FunctionComponent<SvgProps> = memo(
           maxY: 0,
         },
         onDrag: handleDragSlider,
-        onDragStart: handleDragStart,
+        onDragStart: handleAnimationStart,
         onThrowUpdate: handleDragSlider,
-        onThrowComplete: handleThrowComplete,
+        onThrowComplete: handleAnimationComplete,
         inertia: true,
         minDuration: 1,
         snap: snapArray,
@@ -181,86 +192,129 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }, [posX])
 
     return (
-      <svg
-        ref={svgRef as RefObject<any>}
-        className="svg"
-        width={scale}
-        height={scale}
-        viewBox={`0,0, ${VIEWBOX_WIDTH}, 150`}
-      >
-        <defs>
-          <filter id="goo" colorInterpolationFilters="sRGB">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
-              result="cm"
-            />
-          </filter>
-        </defs>
-        <g
-          className="dot-group"
-          transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${ICON_SIZE * 2})`}
+      <Fragment>
+        <div
+          style={{
+            position: 'relative',
+            width: VIEWBOX_WIDTH,
+            transform: 'translateY(-100px)',
+          }}
         >
-          <g
-            ref={dotContainerRef as RefObject<any>}
-            className="dot-container"
-            filter="url(#goo)"
+          <div
+            className="svg-speech-bubble"
+            style={{
+              position: 'absolute',
+              width: VIEWBOX_WIDTH,
+            }}
           >
-            <rect
-              className="hit-area"
-              width={VIEWBOX_WIDTH}
-              transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${ICON_SIZE * 2})`}
-            />
-            {iconPaths.map((icon: { name: string }, index: number) => {
-              const { name } = icon
-              return (
-                <circle
-                  ref={(ref) => {
-                    dotRefs.push(ref as any)
-                  }}
-                  key={index}
-                  className="dot"
-                  cx={index * SPACER}
-                  cy={ICON_SIZE / 2}
-                  r={DOT_SIZE}
-                  fill={DOT_FILL}
-                  id={`dot-${name}-${index}`}
-                  onClick={() => handleClick(index)}
-                />
-              )
-            })}
-          </g>
+            <svg
+              className="svg-details"
+              width="80%"
+              height="80%"
+              viewBox={`0,0, ${VIEWBOX_WIDTH}, 240`}
+            >
+              <PopLines
+                animationState={animationState}
+                color={DOT_FILL}
+                viewboxWidth={VIEWBOX_WIDTH}
+              />
+              <SpeechBubble
+                currentReaction={currentReaction}
+                color={DOT_FILL}
+                viewboxWidth={VIEWBOX_WIDTH}
+              />
+            </svg>
+          </div>
+        </div>
+
+        <svg
+          ref={svgIconBubblesRef as RefObject<any>}
+          className="svg-icon-bubbles"
+          width={VIEWBOX_WIDTH}
+          height="100%"
+          viewBox={`0,0, ${VIEWBOX_WIDTH},120`}
+        >
+          <defs>
+            <filter id="goo" colorInterpolationFilters="sRGB">
+              <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="8"
+                result="blur"
+              />
+              <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
+                result="cm"
+              />
+            </filter>
+          </defs>
           <g
-            ref={iconContainerRef as RefObject<any>}
-            className="icon-container"
+            className="dot-group"
+            transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${ICON_SIZE * 2})`}
           >
-            {iconPaths.map(
-              (icon: { name: string; path: string }, index: number) => {
-                const { name, path } = icon
+            <g
+              ref={dotContainerRef as RefObject<any>}
+              className="dot-container"
+              filter="url(#goo)"
+            >
+              <rect
+                className="hit-area"
+                width={VIEWBOX_WIDTH}
+                transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${ICON_SIZE * 2})`}
+              />
+              {iconPaths.map((icon: { name: string }, index: number) => {
+                const { name } = icon
                 return (
-                  <path
+                  <circle
                     ref={(ref) => {
-                      iconRefs.push(ref as any)
+                      dotRefs.push(ref as any)
                     }}
                     key={index}
-                    className="icon"
-                    fill={ICON_FILL}
-                    id={`icon-${name}-${index}`}
-                    data-index={index}
-                    d={path}
-                    opacity={0}
-                    transform={`matrix(1,0,0,1,${
-                      index * SPACER - ICON_SIZE / 2
-                    },0)`}
+                    className="dot"
+                    cx={index * SPACER}
+                    cy={ICON_SIZE / 2}
+                    r={DOT_SIZE}
+                    fill={DOT_FILL}
+                    id={`dot-${name}-${index}`}
+                    onClick={() => {
+                      handleClick(index)
+                      handleAnimationStart()
+                    }}
                   />
                 )
-              }
-            )}
+              })}
+            </g>
+            <g
+              ref={iconContainerRef as RefObject<any>}
+              className="icon-container"
+            >
+              {iconPaths.map(
+                (icon: { name: string; path: string }, index: number) => {
+                  const { name, path } = icon
+                  return (
+                    <path
+                      ref={(ref) => {
+                        iconRefs.push(ref as any)
+                      }}
+                      key={index}
+                      className="icon"
+                      fill={ICON_FILL}
+                      id={`icon-${name}-${index}`}
+                      data-index={index}
+                      d={path}
+                      opacity={0}
+                      transform={`matrix(1,0,0,1,${
+                        index * SPACER - ICON_SIZE / 2
+                      },0)`}
+                    />
+                  )
+                }
+              )}
+            </g>
           </g>
-        </g>
-      </svg>
+        </svg>
+      </Fragment>
     )
   }
 )

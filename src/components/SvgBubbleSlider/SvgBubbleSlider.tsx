@@ -15,21 +15,18 @@ interface SvgBubbleActionProps {
   reaction: string
 }
 export interface SvgBubbleSliderProps {
-  /** A percentage scale */
-  scale?: string
   /** Render prop: Passes reaction and children */
   children?: ({ reaction }: SvgBubbleActionProps) => ReactNode
 }
 
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
-  ({ scale = '100%', children }: SvgBubbleSliderProps) => {
+  ({ children }: SvgBubbleSliderProps) => {
     const [currentReaction, setCurrentReaction] = useState('')
 
     return (
       <Fragment>
         <div className="svg-bubble-slider">
           <Svg
-            scale={scale}
             onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
           />
         </div>

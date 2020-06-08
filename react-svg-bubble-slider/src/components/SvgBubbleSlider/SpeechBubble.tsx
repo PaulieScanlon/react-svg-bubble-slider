@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react'
 
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 
 interface SpeechBubbleProps {
   /** The colors of the speech bubble */
@@ -16,8 +16,6 @@ interface SpeechBubbleProps {
   /** The size of the viewbox */
   viewboxWidth: number
 }
-
-const SELF_WIDTH = 170
 
 export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   color,
@@ -34,8 +32,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
       .set(speechBubblesRef.current, {
         rotation: 45,
         visibility: 'hidden',
-        scaleX: 0,
-        scaleY: 0,
+        scale: 0,
         y: 180,
         transformOrigin: `50% 100%`,
       })
@@ -43,9 +40,8 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         rotation: 0,
         visibility: 'visible',
         ease: 'elastic(1, 0.6)',
-        scaleX: 1,
-        y: -80,
-        x: 0,
+        scale: 0.8,
+        y: -120,
       })
       .to(
         speechBubblesRef.current,
@@ -70,8 +66,9 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
       className="speech-bubble"
       style={{
         transformOrigin: '50% 100%',
+        pointerEvents: 'none',
       }}
-      transform={`matrix(0,0,0,0,${viewboxWidth / 2 - SELF_WIDTH / 2},0)`}
+      transform={`matrix(0,0,0,0,${viewboxWidth / 2},0)`}
     >
       <path
         className="speech-bubble-stroke"
@@ -102,6 +99,10 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         y="67"
         style={{
           fill: color,
+          fontFamily: 'inherit',
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          textAnchor: 'middle',
         }}
       >
         {currentReaction}

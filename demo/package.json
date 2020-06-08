@@ -1,0 +1,21 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "A Gatsby demo for react-svg-bubble-slider",
+  "main": "index.js",
+  "scripts": {
+    "clean": "gatsby clean",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gatsby": "^2.23.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-svg-bubble-slider": "*"
+  }
+}

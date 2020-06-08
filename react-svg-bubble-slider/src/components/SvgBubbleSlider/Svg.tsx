@@ -8,11 +8,9 @@ import React, {
   Fragment,
 } from 'react'
 
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 import { InertiaPlugin } from 'gsap/InertiaPlugin'
-
-gsap.registerPlugin(Draggable, InertiaPlugin)
 
 import { iconPaths } from './iconPaths'
 
@@ -63,14 +61,12 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }
 
     const handleAnimationStart = () => {
-      // console.log('handleAnimationStart')
       setAnimationState(true)
       setCurrentReaction('')
       onAnimationComplete('')
     }
 
     const handleAnimationComplete = () => {
-      // console.log('handleAnimationComplete')
       const landed = Math.ceil(_x / SPACER)
       setAnimationState(false)
       setCurrentReaction(iconPaths[Math.abs(landed)].name)
@@ -88,6 +84,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     }
 
     useEffect(() => {
+      gsap.registerPlugin(Draggable, InertiaPlugin)
       gsap.set(svgIconBubblesRef.current, {
         visibility: 'visible',
       })
@@ -95,6 +92,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
       iconPaths.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
         //
+
         gsap.set(iconRefs[index], {
           transformOrigin: '50% 50%',
           scale: 0,
@@ -103,6 +101,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         setMtl({
           timeline: (mtl.timeline as any).add(
             gsap
+
               .timeline()
               .to(dotRefs[index], {
                 duration: 1,
@@ -143,6 +142,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         })
       })
       //
+
       gsap.to([dotContainerRef.current, iconContainerRef.current], 2, {
         x: -(6 * SPACER),
         onUpdate: handleDragSlider,
@@ -198,6 +198,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
             position: 'relative',
             width: VIEWBOX_WIDTH,
             transform: 'translateY(-100px)',
+            pointerEvents: 'none',
           }}
         >
           <div
@@ -207,12 +208,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
               width: VIEWBOX_WIDTH,
             }}
           >
-            <svg
-              className="svg-details"
-              width="80%"
-              height="80%"
-              viewBox={`0,0, ${VIEWBOX_WIDTH}, 240`}
-            >
+            <svg className="svg-details" viewBox={`0,0, ${VIEWBOX_WIDTH}, 240`}>
               <PopLines
                 animationState={animationState}
                 color={DOT_FILL}
@@ -262,6 +258,11 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                 className="hit-area"
                 width={VIEWBOX_WIDTH}
                 transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${ICON_SIZE * 2})`}
+                style={{
+                  cursor: 'move',
+                  fill: 'rgba(0, 0, 0, 0)',
+                  height: '100%',
+                }}
               />
               {iconPaths.map((icon: { name: string }, index: number) => {
                 const { name } = icon
@@ -280,6 +281,9 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                     onClick={() => {
                       handleClick(index)
                       handleAnimationStart()
+                    }}
+                    style={{
+                      cursor: 'pointer',
                     }}
                   />
                 )
@@ -307,6 +311,9 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                       transform={`matrix(1,0,0,1,${
                         index * SPACER - ICON_SIZE / 2
                       },0)`}
+                      style={{
+                        pointerEvents: 'none',
+                      }}
                     />
                   )
                 }

@@ -103,6 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# Gatsby
+demo/public
+
 # Storybook
 storybook-static
 

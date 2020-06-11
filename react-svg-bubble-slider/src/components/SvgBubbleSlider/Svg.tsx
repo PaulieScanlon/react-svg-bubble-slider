@@ -18,12 +18,11 @@ import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
 
 const ICON_SIZE = 32
-const ICON_FILL = '#ffffff'
+
 const MULTIPLIER = 4.8
 const SPACER = 60
 
 const DOT_SIZE = 10
-const DOT_FILL = '#FF69B4'
 
 const MIN_DRAG_X = -(iconPaths.length - 1) * SPACER
 const VIEWBOX_WIDTH = SPACER * iconPaths.length
@@ -31,10 +30,14 @@ const VIEWBOX_WIDTH = SPACER * iconPaths.length
 interface SvgProps {
   /** Animation callback passes current reaction */
   onAnimationComplete: (reaction: string) => void
+  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
+  primaryColor?: string
+  /** The color of the reaction icons and speech bubble background */
+  secondaryColor?: string
 }
 
 export const Svg: FunctionComponent<SvgProps> = memo(
-  ({ onAnimationComplete }: SvgProps) => {
+  ({ onAnimationComplete, primaryColor, secondaryColor }: SvgProps) => {
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
@@ -203,11 +206,20 @@ export const Svg: FunctionComponent<SvgProps> = memo(
           }}
         >
           <div className="svg-speech-bubble">
-            <svg className="svg-details">
-              <PopLines animationState={animationState} color={DOT_FILL} />
+            <svg
+              className="svg-details"
+              width={`${VIEWBOX_WIDTH / 2}`}
+              height={270}
+              viewBox={`0 0 ${VIEWBOX_WIDTH / 2} 200`}
+            >
+              <PopLines
+                animationState={animationState}
+                primaryColor={primaryColor}
+              />
               <SpeechBubble
                 currentReaction={currentReaction}
-                color={DOT_FILL}
+                primaryColor={primaryColor}
+                secondaryColor={secondaryColor}
               />
             </svg>
           </div>
@@ -222,7 +234,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
             className="svg-icon-bubbles"
             width={VIEWBOX_WIDTH}
             height="100%"
-            viewBox={`0,0, ${VIEWBOX_WIDTH}px,140`}
+            viewBox={`0,0, ${VIEWBOX_WIDTH},140`}
           >
             <defs>
               <filter id="goo" colorInterpolationFilters="sRGB">
@@ -274,7 +286,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                       cx={index * SPACER}
                       cy={ICON_SIZE / 2}
                       r={DOT_SIZE}
-                      fill={DOT_FILL}
+                      fill={primaryColor}
                       id={`dot-${name}-${index}`}
                       onClick={() => {
                         handleClick(index)
@@ -301,7 +313,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                         }}
                         key={index}
                         className="icon"
-                        fill={ICON_FILL}
+                        fill={secondaryColor}
                         id={`icon-${name}-${index}`}
                         data-index={index}
                         d={path}

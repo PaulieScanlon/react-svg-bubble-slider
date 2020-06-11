@@ -2,10 +2,10 @@ import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
 
 import { gsap } from 'gsap'
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
-
+gsap.registerPlugin(DrawSVGPlugin)
 interface PopLinesProps {
-  /** The colors of the speech bubble */
-  color: string
+  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
+  primaryColor?: string
   /** Is the animation happening */
   animationState: boolean
 }
@@ -62,7 +62,7 @@ const lineAttributes = [
 ]
 
 export const PopLines: FunctionComponent<PopLinesProps> = ({
-  color,
+  primaryColor,
   animationState,
 }: PopLinesProps) => {
   const popLinesRef = useRef(null)
@@ -79,14 +79,13 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
           })
         : gsap.set(lineRefs[index], {
             transformOrigin: '50% 50%',
-            drawSVG: '0 100%',
+            drawSVG: '0% 100%',
             scale: 0,
           })
     })
   }, [animationState])
 
   useEffect(() => {
-    gsap.registerPlugin(DrawSVGPlugin)
     gsap.set(popLinesRef.current, {
       visibility: 'visible',
     })
@@ -97,12 +96,12 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
       ref={popLinesRef as RefObject<any>}
       className="pop-lines"
       fill="none"
-      stroke={color}
+      stroke={primaryColor}
       strokeWidth="4"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit="10"
-      transform={`matrix(0.8,0,0,0.8,125,10)`}
+      transform={`matrix(0.8,0,0,0.8,125,0)`}
       style={{
         visibility: 'hidden',
       }}

@@ -9,14 +9,17 @@ import React, {
 import { gsap } from 'gsap'
 
 interface SpeechBubbleProps {
-  /** The colors of the speech bubble */
-  color: string
   /** The name of the current reaction */
   currentReaction: string
+  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
+  primaryColor?: string
+  /** The color of the reaction icons and speech bubble background */
+  secondaryColor?: string
 }
 
 export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
-  color,
+  primaryColor,
+  secondaryColor,
   currentReaction,
 }: SpeechBubbleProps) => {
   const speechBubblesRef = useRef(null)
@@ -38,7 +41,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         visibility: 'visible',
         ease: 'elastic(1, 0.6)',
         scale: 0.8,
-        y: 20,
+        y: -10,
       })
       .to(
         speechBubblesRef.current,
@@ -65,7 +68,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         pointerEvents: 'none',
         visibility: 'hidden',
       }}
-      transform={`matrix(0.8,0,0,0.8,125,100)`}
+      transform={`matrix(0.8,0,0,0.8,125,0)`}
     >
       <path
         className="speech-bubble-stroke"
@@ -78,7 +81,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
 		M69.361,112.063l16.377,28.99l16.562-28.94c37.277-5.125,65.195-27.13,65.195-53.494C167.496,28.456,130.766,4,85.515,4
 		C40.275,4,4,28.456,4,58.619c0,26.291,27.361,48.249,65.361,53.448V112.063z"
         style={{
-          stroke: color,
+          stroke: primaryColor,
         }}
       ></path>
       <path
@@ -87,7 +90,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
 		c37.277-5.125,65.195-27.13,65.195-53.494C167.496,25.456,130.766,1,85.515,1C40.275,1,4,25.456,4,55.619
 		c0,26.291,27.361,48.249,65.361,53.448V109.063z"
         style={{
-          fill: 'rgb(255, 255, 255)',
+          fill: secondaryColor,
         }}
       ></path>
       <text
@@ -95,9 +98,10 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         x="85"
         y="67"
         style={{
-          fill: color,
+          fill: primaryColor,
+          fontSize: 'inherit',
           fontFamily: 'inherit',
-          fontWeight: 'bold',
+          fontWeight: 'inherit',
           textTransform: 'uppercase',
           textAnchor: 'middle',
         }}

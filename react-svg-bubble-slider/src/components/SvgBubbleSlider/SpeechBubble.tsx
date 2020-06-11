@@ -65,6 +65,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
       ref={speechBubblesRef as RefObject<any>}
       className="speech-bubble"
       style={{
+        // color: primaryColor,
         pointerEvents: 'none',
         visibility: 'hidden',
       }}
@@ -72,7 +73,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
     >
       <path
         className="speech-bubble-stroke"
-        fill="none"
+        stroke={primaryColor}
         strokeWidth="14"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -80,29 +81,20 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         d="
 		M69.361,112.063l16.377,28.99l16.562-28.94c37.277-5.125,65.195-27.13,65.195-53.494C167.496,28.456,130.766,4,85.515,4
 		C40.275,4,4,28.456,4,58.619c0,26.291,27.361,48.249,65.361,53.448V112.063z"
-        style={{
-          stroke: primaryColor,
-        }}
       ></path>
       <path
         className="speech-bubble-fill"
         d="M69.361,109.063l16.377,28.99l16.562-28.94
 		c37.277-5.125,65.195-27.13,65.195-53.494C167.496,25.456,130.766,1,85.515,1C40.275,1,4,25.456,4,55.619
-		c0,26.291,27.361,48.249,65.361,53.448V109.063z"
-        style={{
-          fill: secondaryColor,
-        }}
+    c0,26.291,27.361,48.249,65.361,53.448V109.063z"
+        fill={secondaryColor}
       ></path>
       <text
-        className="speech-bubble-label"
+        className="speech-bubble-text"
         x="85"
         y="67"
+        fill={primaryColor}
         style={{
-          fill: primaryColor,
-          fontSize: 'inherit',
-          fontFamily: 'inherit',
-          fontWeight: 'inherit',
-          textTransform: 'uppercase',
           textAnchor: 'middle',
         }}
       >

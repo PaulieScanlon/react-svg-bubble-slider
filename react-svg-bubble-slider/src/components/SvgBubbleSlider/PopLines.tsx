@@ -94,7 +94,6 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
   return (
     <g
       ref={popLinesRef as RefObject<any>}
-      className="pop-lines"
       fill="none"
       stroke={primaryColor}
       strokeWidth="4"
@@ -107,7 +106,12 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
       }}
     >
       {lineAttributes.map((line, index: number) => (
-        <line ref={(ref) => lineRefs.push(ref as any)} key={index} {...line} />
+        <line
+          className="speech-bubble-pop-line"
+          ref={(ref) => lineRefs.push(ref as any)}
+          key={index}
+          {...line}
+        />
       ))}
     </g>
   )

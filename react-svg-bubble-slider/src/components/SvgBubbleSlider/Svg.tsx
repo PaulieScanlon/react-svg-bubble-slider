@@ -282,7 +282,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                         dotRefs.push(ref as any)
                       }}
                       key={index}
-                      className="dot"
+                      className="reaction-dot"
                       cx={index * SPACER}
                       cy={ICON_SIZE / 2}
                       r={DOT_SIZE}
@@ -312,7 +312,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                           iconRefs.push(ref as any)
                         }}
                         key={index}
-                        className="icon"
+                        className="reaction-icon"
                         fill={secondaryColor}
                         id={`icon-${name}-${index}`}
                         data-index={index}

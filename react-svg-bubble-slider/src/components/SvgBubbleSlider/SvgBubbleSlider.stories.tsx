@@ -1,7 +1,7 @@
 import React from 'react'
 import { SvgBubbleSlider } from '.'
 
-import { Button } from 'theme-ui'
+import { Box } from 'theme-ui'
 
 export default {
   title: 'Props',
@@ -16,11 +16,7 @@ export const usage = () => <SvgBubbleSlider />
 
 export const reaction = () => (
   <SvgBubbleSlider>
-    {({ reaction }) =>
-      reaction && (
-        <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
-      )
-    }
+    {({ reaction }) => reaction && <button>{reaction}</button>}
   </SvgBubbleSlider>
 )
 
@@ -39,7 +35,7 @@ primaryColor.story = {
   parameters: {
     docs: {
       storyDescription:
-        'The `primaryColor` prop can be used to change the color of the dots, speech bubble stroke ad speech bubble text and pop lines',
+        'The `primaryColor` prop can be used to change the color of the dots, speech bubble stroke, speech bubble text and pop lines',
     },
   },
 }
@@ -50,18 +46,45 @@ secondaryColor.story = {
   parameters: {
     docs: {
       storyDescription:
-        'The `secondaryColor` prop can be used to change the color of the reaction icons and the speech bubble background',
+        'The `secondaryColor` prop can be used to change the color of the reaction icons and the speech bubble fill',
     },
   },
 }
 
-export const fonts = () => <SvgBubbleSlider />
+export const ThemeUI = () => (
+  <Box
+    sx={{
+      '.speech-bubble-stroke': {
+        stroke: 'muted',
+      },
+      '.speech-bubble-fill': {
+        fill: 'background',
+      },
+      '.speech-bubble-text': {
+        fill: 'muted',
+        fontSize: '24px',
+        textTransform: 'capitalize',
+      },
+      '.speech-bubble-pop-line': {
+        stroke: 'muted',
+      },
+      '.reaction-icon': {
+        fill: 'background',
+      },
+      '.reaction-dot': {
+        fill: 'muted',
+      },
+    }}
+  >
+    <SvgBubbleSlider />
+  </Box>
+)
 
-fonts.story = {
+ThemeUI.story = {
   parameters: {
     docs: {
       storyDescription:
-        'By default `font-family`, `font-weight` and `font-size` for the speech bubble text are set to `inherit`. If you wish to change this you can target the text by using the class name `.speech-bubble-label`',
+        "If you're using Theme UI you can modify styles by referecing them by class name via the sx prop on a Theme UI enabled element",
     },
   },
 }

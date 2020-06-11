@@ -42,7 +42,7 @@
     "gsap-bonus.tgz"
   ],
   "dependencies": {
-    "gsap": "file:./gsap-bonus.tgz"
+    "gsap": "./gsap-bonus.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

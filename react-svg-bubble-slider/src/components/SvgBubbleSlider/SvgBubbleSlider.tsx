@@ -2,8 +2,6 @@ import React, { Fragment, FunctionComponent, useState, ReactNode } from 'react'
 
 import { Svg } from './Svg'
 
-// import from './SvgBubbleSlider.css'
-
 interface SvgBubbleActionProps {
   /** Active reaction */
   reaction: string
@@ -23,12 +21,11 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
       <div
         className="svg-bubble-slider"
         style={{
+          alignItems: 'center',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
           position: 'relative',
-          marginBottom: '24px',
         }}
       >
         <Svg onAnimationComplete={(reaction) => setCurrentReaction(reaction)} />

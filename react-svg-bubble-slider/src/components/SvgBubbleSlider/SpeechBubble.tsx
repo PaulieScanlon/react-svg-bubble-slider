@@ -13,14 +13,11 @@ interface SpeechBubbleProps {
   color: string
   /** The name of the current reaction */
   currentReaction: string
-  /** The size of the viewbox */
-  viewboxWidth: number
 }
 
 export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   color,
   currentReaction,
-  viewboxWidth,
 }: SpeechBubbleProps) => {
   const speechBubblesRef = useRef(null)
   const [tl] = useState({
@@ -33,7 +30,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         rotation: 45,
         visibility: 'hidden',
         scale: 0,
-        y: 180,
+        y: 0,
         transformOrigin: `50% 100%`,
       })
       .to(speechBubblesRef.current, 0.9, {
@@ -41,14 +38,14 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         visibility: 'visible',
         ease: 'elastic(1, 0.6)',
         scale: 0.8,
-        y: -120,
+        y: 20,
       })
       .to(
         speechBubblesRef.current,
         0.6,
         {
           ease: 'easltic(1, 0.6)',
-          scaleY: 1,
+          scale: 1,
         },
         '-=1'
       )
@@ -65,10 +62,10 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
       ref={speechBubblesRef as RefObject<any>}
       className="speech-bubble"
       style={{
-        transformOrigin: '50% 100%',
         pointerEvents: 'none',
+        visibility: 'hidden',
       }}
-      transform={`matrix(0,0,0,0,${viewboxWidth / 2},0)`}
+      transform={`matrix(0.8,0,0,0.8,125,100)`}
     >
       <path
         className="speech-bubble-stroke"

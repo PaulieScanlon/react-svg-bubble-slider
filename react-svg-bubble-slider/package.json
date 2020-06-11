@@ -38,6 +38,9 @@
     "url": "https://github.com/PaulieScanlon/react-svg-bubble-slider/issues"
   },
   "homepage": "https://github.com/PaulieScanlon/react-svg-bubble-slider#readme",
+  "files": [
+    "./gsap-bonus.tgz"
+  ],
   "dependencies": {
     "gsap": "file:./gsap-bonus.tgz"
   },

@@ -205,9 +205,8 @@ export const Svg: FunctionComponent<SvgProps> = memo(
             pointerEvents: 'none',
           }}
         >
-          <div className="svg-speech-bubble">
+          <div>
             <svg
-              className="svg-details"
               width={`${VIEWBOX_WIDTH / 2}`}
               height={270}
               viewBox={`0 0 ${VIEWBOX_WIDTH / 2} 200`}
@@ -252,18 +251,12 @@ export const Svg: FunctionComponent<SvgProps> = memo(
               </filter>
             </defs>
             <g
-              className="dot-group"
               transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${
                 ICON_SIZE * 2
               })`}
             >
-              <g
-                ref={dotContainerRef as RefObject<any>}
-                className="dot-container"
-                filter="url(#goo)"
-              >
+              <g ref={dotContainerRef as RefObject<any>} filter="url(#goo)">
                 <rect
-                  className="hit-area"
                   width={VIEWBOX_WIDTH}
                   transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${
                     ICON_SIZE * 2
@@ -299,10 +292,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                   )
                 })}
               </g>
-              <g
-                ref={iconContainerRef as RefObject<any>}
-                className="icon-container"
-              >
+              <g ref={iconContainerRef as RefObject<any>}>
                 {iconPaths.map(
                   (icon: { name: string; path: string }, index: number) => {
                     const { name, path } = icon

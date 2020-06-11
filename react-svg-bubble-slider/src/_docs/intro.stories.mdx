@@ -17,11 +17,30 @@ Click or drag around to explore all the reactions
 
 <Box sx={{ height: 100 }} />
 
-<SvgBubbleSlider>
-  {({ reaction }) =>
-    reaction && <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
-  }
-</SvgBubbleSlider>
+<Box
+  sx={{
+    '.speech-bubble-text': {
+      fill: 'primary',
+      fontSize: '22px',
+      textTransform: 'capitalize',
+    },
+  }}
+>
+  <SvgBubbleSlider>
+    {({ reaction }) => (
+      <Flex
+        sx={{
+          justifyContent: 'center',
+          height: 35,
+        }}
+      >
+        {reaction && (
+          <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
+        )}
+      </Flex>
+    )}
+  </SvgBubbleSlider>
+</Box>
 
 <Box sx={{ height: 30 }} />
 

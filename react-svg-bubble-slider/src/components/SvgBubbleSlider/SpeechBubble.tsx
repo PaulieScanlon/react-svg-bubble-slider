@@ -63,9 +63,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   return (
     <g
       ref={speechBubblesRef as RefObject<any>}
-      className="speech-bubble"
       style={{
-        // color: primaryColor,
         pointerEvents: 'none',
         visibility: 'hidden',
       }}

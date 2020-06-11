@@ -13,7 +13,8 @@ addDecorator((storyFn) => (
     <Flex
       sx={{
         alignItems: 'flex-end',
-        height: '300px',
+        mb: '30px',
+        height: '270px',
       }}
     >
       <Box

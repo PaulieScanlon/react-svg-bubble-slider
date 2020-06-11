@@ -16,7 +16,11 @@ export const usage = () => <SvgBubbleSlider />
 
 export const reaction = () => (
   <SvgBubbleSlider>
-    {({ reaction }) => reaction && <button>{reaction}</button>}
+    {({ reaction }) => (
+      <div style={{ textAlign: 'center' }}>
+        {reaction && <button>{reaction}</button>}
+      </div>
+    )}
   </SvgBubbleSlider>
 )
 
@@ -73,6 +77,9 @@ export const ThemeUI = () => (
       },
       '.reaction-dot': {
         fill: 'muted',
+      },
+      '.svg-bubble-action': {
+        minHeight: 2,
       },
     }}
   >

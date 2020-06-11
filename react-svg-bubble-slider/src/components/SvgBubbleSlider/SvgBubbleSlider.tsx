@@ -25,7 +25,6 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   return (
     <Fragment>
       <div
-        className="svg-bubble-slider"
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -40,13 +39,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
           secondaryColor={secondaryColor}
         />
       </div>
-      <div
-        className="svg-bubble-action"
-        style={{
-          textAlign: 'center',
-          minHeight: '35px',
-        }}
-      >
+      <div className="svg-bubble-action">
         {children &&
           children({
             reaction: currentReaction,

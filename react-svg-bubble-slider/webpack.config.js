@@ -1,4 +1,5 @@
 const path = require('path')
+const copyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -13,6 +14,16 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
   },
+  plugins: [
+    new copyWebpackPlugin({
+      patterns: [
+        {
+          from: 'gsap-bonus.tgz',
+          to: './',
+        },
+      ],
+    }),
+  ],
   module: {
     rules: [
       {

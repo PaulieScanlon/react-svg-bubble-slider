@@ -195,132 +195,131 @@ export const Svg: FunctionComponent<SvgProps> = memo(
       <Fragment>
         <div
           style={{
-            position: 'relative',
-            width: VIEWBOX_WIDTH,
-            transform: 'translateY(-100px)',
+            bottom: 0,
+            position: 'absolute',
+            height: 270,
+            width: VIEWBOX_WIDTH / 2,
             pointerEvents: 'none',
           }}
         >
-          <div
-            className="svg-speech-bubble"
-            style={{
-              position: 'absolute',
-              width: VIEWBOX_WIDTH,
-            }}
-          >
-            <svg className="svg-details" viewBox={`0,0, ${VIEWBOX_WIDTH}, 240`}>
-              <PopLines
-                animationState={animationState}
-                color={DOT_FILL}
-                viewboxWidth={VIEWBOX_WIDTH}
-              />
+          <div className="svg-speech-bubble">
+            <svg className="svg-details">
+              <PopLines animationState={animationState} color={DOT_FILL} />
               <SpeechBubble
                 currentReaction={currentReaction}
                 color={DOT_FILL}
-                viewboxWidth={VIEWBOX_WIDTH}
               />
             </svg>
           </div>
         </div>
-
-        <svg
-          ref={svgIconBubblesRef as RefObject<any>}
-          className="svg-icon-bubbles"
-          width={VIEWBOX_WIDTH}
-          height="100%"
-          viewBox={`0,0, ${VIEWBOX_WIDTH},120`}
+        <div
+          style={{
+            position: 'relative',
+          }}
         >
-          <defs>
-            <filter id="goo" colorInterpolationFilters="sRGB">
-              <feGaussianBlur
-                in="SourceGraphic"
-                stdDeviation="8"
-                result="blur"
-              />
-              <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
-                result="cm"
-              />
-            </filter>
-          </defs>
-          <g
-            className="dot-group"
-            transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${ICON_SIZE * 2})`}
+          <svg
+            ref={svgIconBubblesRef as RefObject<any>}
+            className="svg-icon-bubbles"
+            width={VIEWBOX_WIDTH}
+            height="100%"
+            viewBox={`0,0, ${VIEWBOX_WIDTH}px,140`}
           >
+            <defs>
+              <filter id="goo" colorInterpolationFilters="sRGB">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="8"
+                  result="blur"
+                />
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
+                  result="cm"
+                />
+              </filter>
+            </defs>
             <g
-              ref={dotContainerRef as RefObject<any>}
-              className="dot-container"
-              filter="url(#goo)"
+              className="dot-group"
+              transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${
+                ICON_SIZE * 2
+              })`}
             >
-              <rect
-                className="hit-area"
-                width={VIEWBOX_WIDTH}
-                transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${ICON_SIZE * 2})`}
-                style={{
-                  cursor: 'move',
-                  fill: 'rgba(0, 0, 0, 0)',
-                  height: '100%',
-                }}
-              />
-              {iconPaths.map((icon: { name: string }, index: number) => {
-                const { name } = icon
-                return (
-                  <circle
-                    ref={(ref) => {
-                      dotRefs.push(ref as any)
-                    }}
-                    key={index}
-                    className="dot"
-                    cx={index * SPACER}
-                    cy={ICON_SIZE / 2}
-                    r={DOT_SIZE}
-                    fill={DOT_FILL}
-                    id={`dot-${name}-${index}`}
-                    onClick={() => {
-                      handleClick(index)
-                      handleAnimationStart()
-                    }}
-                    style={{
-                      cursor: 'pointer',
-                    }}
-                  />
-                )
-              })}
-            </g>
-            <g
-              ref={iconContainerRef as RefObject<any>}
-              className="icon-container"
-            >
-              {iconPaths.map(
-                (icon: { name: string; path: string }, index: number) => {
-                  const { name, path } = icon
+              <g
+                ref={dotContainerRef as RefObject<any>}
+                className="dot-container"
+                filter="url(#goo)"
+              >
+                <rect
+                  className="hit-area"
+                  width={VIEWBOX_WIDTH}
+                  transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${
+                    ICON_SIZE * 2
+                  })`}
+                  style={{
+                    cursor: 'move',
+                    fill: 'rgba(0, 0, 0, 0)',
+                    height: '100%',
+                  }}
+                />
+                {iconPaths.map((icon: { name: string }, index: number) => {
+                  const { name } = icon
                   return (
-                    <path
+                    <circle
                       ref={(ref) => {
-                        iconRefs.push(ref as any)
+                        dotRefs.push(ref as any)
                       }}
                       key={index}
-                      className="icon"
-                      fill={ICON_FILL}
-                      id={`icon-${name}-${index}`}
-                      data-index={index}
-                      d={path}
-                      opacity={0}
-                      transform={`matrix(1,0,0,1,${
-                        index * SPACER - ICON_SIZE / 2
-                      },0)`}
+                      className="dot"
+                      cx={index * SPACER}
+                      cy={ICON_SIZE / 2}
+                      r={DOT_SIZE}
+                      fill={DOT_FILL}
+                      id={`dot-${name}-${index}`}
+                      onClick={() => {
+                        handleClick(index)
+                        handleAnimationStart()
+                      }}
                       style={{
-                        pointerEvents: 'none',
+                        cursor: 'pointer',
                       }}
                     />
                   )
-                }
-              )}
+                })}
+              </g>
+              <g
+                ref={iconContainerRef as RefObject<any>}
+                className="icon-container"
+              >
+                {iconPaths.map(
+                  (icon: { name: string; path: string }, index: number) => {
+                    const { name, path } = icon
+                    return (
+                      <path
+                        ref={(ref) => {
+                          iconRefs.push(ref as any)
+                        }}
+                        key={index}
+                        className="icon"
+                        fill={ICON_FILL}
+                        id={`icon-${name}-${index}`}
+                        data-index={index}
+                        d={path}
+                        opacity={0}
+                        transform={`matrix(1,0,0,1,${
+                          index * SPACER - ICON_SIZE / 2
+                        },0)`}
+                        style={{
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    )
+                  }
+                )}
+              </g>
             </g>
-          </g>
-        </svg>
+          </svg>
+        </div>
       </Fragment>
     )
   }

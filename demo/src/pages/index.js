@@ -1,17 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { SvgBubbleSlider } from "react-svg-bubble-slider";
-// import { Test } from "react-svg-bubble-slider";
-
-// import gsap from "gsap";
-// import { Draggable } from "gsap/Draggable";
-// import { InertiaPlugin } from "gsap/InertiaPlugin";
 
 const IndexPage = () => {
-  useEffect(() => {
-    // gsap.registerPlugin(Draggable, InertiaPlugin);
-  });
-
   return (
     <div>
       <div>
@@ -42,8 +33,9 @@ const IndexPage = () => {
         ultrices diam molestie lobortis imperdiet sit amet urna. Integer
         tincidunt ut magna sed fringilla.
       </div>
-      <SvgBubbleSlider />
-      {/* <Test /> */}
+      <SvgBubbleSlider>
+        {({ reaction }) => reaction && <button>{reaction}</button>}
+      </SvgBubbleSlider>
     </div>
   );
 };

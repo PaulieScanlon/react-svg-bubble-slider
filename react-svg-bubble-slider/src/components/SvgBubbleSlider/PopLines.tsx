@@ -6,13 +6,9 @@ import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
 interface PopLinesProps {
   /** The colors of the speech bubble */
   color: string
-  /** The size of the viewbox */
-  viewboxWidth: number
   /** Is the animation happening */
   animationState: boolean
 }
-
-const SELF_WIDTH = 170
 
 const lineAttributes = [
   {
@@ -67,7 +63,6 @@ const lineAttributes = [
 
 export const PopLines: FunctionComponent<PopLinesProps> = ({
   color,
-  viewboxWidth,
   animationState,
 }: PopLinesProps) => {
   const popLinesRef = useRef(null)
@@ -77,8 +72,8 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
   useEffect(() => {
     lineRefs.map((_, index: number) => {
       animationState
-        ? gsap.to(lineRefs[index], 0.3, {
-            scale: 2,
+        ? gsap.to(lineRefs[index], 0.2, {
+            scale: 2.2,
             drawSVG: '100% 100%',
             ease: 'linear',
           })
@@ -107,7 +102,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit="10"
-      transform={`matrix(1,0,0,1,${viewboxWidth / 2 - SELF_WIDTH / 2},10)`}
+      transform={`matrix(0.8,0,0,0.8,125,10)`}
       style={{
         visibility: 'hidden',
       }}

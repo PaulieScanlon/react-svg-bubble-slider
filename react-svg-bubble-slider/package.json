@@ -1,6 +1,6 @@
 {
   "name": "react-svg-bubble-slider",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "description": "A React version of Chris Gannon's SVG Bubble Slider",
   "main": "dist/main.js",
   "scripts": {
@@ -38,8 +38,11 @@
     "url": "https://github.com/PaulieScanlon/react-svg-bubble-slider/issues"
   },
   "homepage": "https://github.com/PaulieScanlon/react-svg-bubble-slider#readme",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
-    "gsap": "./gsap-bonus.tgz"
+    "gsap": "./dist/gsap-bonus.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

@@ -15,7 +15,6 @@
   "dependencies": {
     "gatsby": "^2.23.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-svg-bubble-slider": "*"
+    "react-dom": "^16.13.1"
   }
 }

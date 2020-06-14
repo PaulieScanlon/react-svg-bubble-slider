@@ -1,13 +1,13 @@
 {
   "name": "react-svg-bubble-slider",
-  "version": "0.0.20",
+  "version": "0.0.28",
   "description": "A React version of Chris Gannon's SVG Bubble Slider",
   "main": "dist/main.js",
   "scripts": {
     "prettier": "prettier --config .prettierrc.js --write \"**/*.{json,js,ts,tsx}\"",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:fix": "eslint . --ext .ts,.tsx --fix --quiet",
-    "build": "npm run lint && webpack && node copy-gsap.js",
+    "build": "npm run lint && webpack",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006 --ci",
@@ -39,10 +39,11 @@
   },
   "homepage": "https://github.com/PaulieScanlon/react-svg-bubble-slider#readme",
   "files": [
-    "dist"
+    "dist",
+    "gsap-bonus.tgz"
   ],
   "dependencies": {
-    "gsap": "./dist/gsap-bonus.tgz"
+    "gsap": "/gsap-bonus.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

@@ -114,3 +114,6 @@ refs.md
 
 # Local Netlify folder
 .netlify
+
+# GSAP
+react-svg-bubble-slider/src/gsap

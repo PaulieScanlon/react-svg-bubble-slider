@@ -8,9 +8,16 @@ import React, {
   Fragment,
 } from 'react'
 
-import { gsap } from 'gsap'
-import { Draggable } from 'gsap/Draggable'
-import { InertiaPlugin } from 'gsap/InertiaPlugin'
+// @ts-ignore
+import { gsap } from '../../gsap'
+// @ts-ignore
+import { Draggable } from '../../gsap/Draggable'
+// @ts-ignore
+import { InertiaPlugin } from '../../gsap/InertiaPlugin'
+
+// import { gsap } from 'gsap'
+// import { Draggable } from 'gsap/Draggable'
+// import { InertiaPlugin } from 'gsap/InertiaPlugin'
 
 import { iconPaths } from './iconPaths'
 

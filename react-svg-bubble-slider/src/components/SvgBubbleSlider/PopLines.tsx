@@ -1,8 +1,15 @@
 import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
 
-import { gsap } from 'gsap'
-import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+// import { gsap } from 'gsap'
+// import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+
+// @ts-ignore
+import { gsap } from '../../gsap'
+// @ts-ignore
+import { DrawSVGPlugin } from '../../gsap/DrawSVGPlugin'
+
 gsap.registerPlugin(DrawSVGPlugin)
+
 interface PopLinesProps {
   /** The color of the dots, speech bubble background and speech bubble text and pop lines */
   primaryColor?: string

@@ -1,6 +1,6 @@
 {
   "name": "react-svg-bubble-slider",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "A React version of Chris Gannon's SVG Bubble Slider",
   "main": "dist/main.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "gsap-bonus.tgz"
   ],
   "dependencies": {
-    "gsap": "file:./gsap-bonus.tgz"
+    "gsap": "file:gsap-bonus.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

@@ -6,8 +6,6 @@ import React, {
   useState,
 } from 'react'
 
-// import { gsap } from 'gsap'
-
 // @ts-ignore
 import { gsap } from '../../gsap'
 
@@ -43,7 +41,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         rotation: 0,
         visibility: 'visible',
         ease: 'elastic(1, 0.6)',
-        scale: 0.8,
+        scale: 1,
         y: -10,
       })
       .to(

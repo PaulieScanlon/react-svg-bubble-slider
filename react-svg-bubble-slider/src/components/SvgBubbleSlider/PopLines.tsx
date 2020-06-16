@@ -1,8 +1,5 @@
 import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
 
-// import { gsap } from 'gsap'
-// import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
-
 // @ts-ignore
 import { gsap } from '../../gsap'
 // @ts-ignore
@@ -107,7 +104,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit="10"
-      transform={`matrix(0.8,0,0,0.8,125,0)`}
+      transform={`matrix(1,0,0,1,105,-30)`}
       style={{
         visibility: 'hidden',
       }}

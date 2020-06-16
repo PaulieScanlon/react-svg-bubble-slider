@@ -46,6 +46,10 @@ const SomeComponent = () => {
 export default SomeComponent;
 ```
 
+If you're using **react-svg-bubble-slider** in your project i'd love to hear from you [@pauliescanlon](https://twitter.com/PaulieScanlon)
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P31B7G8)
+
 ### Thanks 🙏
 
 Thanks have to go to Chris Gannon for creating the original [SVG Bubble Slider](https://codepen.io/chrisgannon/pen/GZNgLw/)

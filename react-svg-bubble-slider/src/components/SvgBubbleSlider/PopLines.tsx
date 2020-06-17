@@ -76,7 +76,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
     lineRefs.map((_, index: number) => {
       animationState
         ? gsap.to(lineRefs[index], 0.2, {
-            scale: 2.2,
+            scale: 2,
             drawSVG: '100% 100%',
             ease: 'linear',
           })
@@ -103,7 +103,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit="10"
-      transform={`matrix(1,0,0,1,105,-30)`}
+      transform={`matrix(1,0,0,1,70,20)`}
       style={{
         visibility: 'hidden',
       }}

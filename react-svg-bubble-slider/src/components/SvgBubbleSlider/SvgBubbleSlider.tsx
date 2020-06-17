@@ -13,12 +13,15 @@ export interface SvgBubbleSliderProps {
   primaryColor?: string
   /** The color of the reaction icons and speech bubble background */
   secondaryColor?: string
+  /** Names of icons to include */
+  icons?: string[]
 }
 
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   children,
   primaryColor = '#ff69B4',
   secondaryColor = '#ffffff',
+  icons,
 }: SvgBubbleSliderProps) => {
   const [currentReaction, setCurrentReaction] = useState('')
 
@@ -37,6 +40,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
           onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
           primaryColor={primaryColor}
           secondaryColor={secondaryColor}
+          icons={icons}
         />
       </div>
       <div className="svg-bubble-action">

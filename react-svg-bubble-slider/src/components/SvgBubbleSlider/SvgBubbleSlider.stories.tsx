@@ -14,6 +14,19 @@ export default {
 
 export const usage = () => <SvgBubbleSlider />
 
+export const icons = () => (
+  <SvgBubbleSlider icons={['angry', 'sad', 'smile', 'happy']} />
+)
+
+icons.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'Use the `icons` prop to provide a custom list of icons',
+    },
+  },
+}
+
 export const reaction = () => (
   <SvgBubbleSlider>
     {({ reaction }) => (

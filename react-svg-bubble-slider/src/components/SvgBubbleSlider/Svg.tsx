@@ -26,9 +26,6 @@ const SPACER = 60
 
 const DOT_SIZE = 10
 
-const MIN_DRAG_X = -(iconPaths.length - 1) * SPACER
-const VIEWBOX_WIDTH = SPACER * iconPaths.length
-
 interface SvgProps {
   /** Animation callback passes current reaction */
   onAnimationComplete: (reaction: string) => void
@@ -36,10 +33,28 @@ interface SvgProps {
   primaryColor?: string
   /** The color of the reaction icons and speech bubble background */
   secondaryColor?: string
+  /** Names of icons to include */
+  icons?: any[]
 }
 
 export const Svg: FunctionComponent<SvgProps> = memo(
-  ({ onAnimationComplete, primaryColor, secondaryColor }: SvgProps) => {
+  ({ onAnimationComplete, primaryColor, secondaryColor, icons }: SvgProps) => {
+    let iconsToUse = icons
+      ? iconPaths
+          .map((icon) => icon)
+          .filter((icon) => icons.includes(icon.name))
+          .sort((a, b) => icons.indexOf(a.name) - icons.indexOf(b.name))
+      : iconPaths
+
+    const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
+    const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE
+
+    if (iconsToUse.length < 4)
+      throw new Error('You must have at lease four icon paths')
+
+    if (iconsToUse.length % 2)
+      throw new Error('Icon paths must be an equal number')
+
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
@@ -74,8 +89,8 @@ export const Svg: FunctionComponent<SvgProps> = memo(
     const handleAnimationComplete = () => {
       const landed = Math.ceil(_x / SPACER)
       setAnimationState(false)
-      setCurrentReaction(iconPaths[Math.abs(landed)].name)
-      onAnimationComplete(iconPaths[Math.abs(landed)].name)
+      setCurrentReaction(iconsToUse[Math.abs(landed)].name)
+      onAnimationComplete(iconsToUse[Math.abs(landed)].name)
     }
 
     const handleClick = (index: number) => {
@@ -94,7 +109,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
         visibility: 'visible',
       })
 
-      iconPaths.map((_, index: number) => {
+      iconsToUse.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
         //
 
@@ -149,7 +164,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
       //
 
       gsap.to([dotContainerRef.current, iconContainerRef.current], 2, {
-        x: -(6 * SPACER),
+        x: -((iconsToUse.length / 2) * SPACER),
         onUpdate: handleDragSlider,
         onComplete: () => {
           handleAnimationComplete()
@@ -202,16 +217,12 @@ export const Svg: FunctionComponent<SvgProps> = memo(
           style={{
             bottom: 0,
             position: 'absolute',
-            height: 270,
+            height: 290,
             pointerEvents: 'none',
           }}
         >
           <div>
-            <svg
-              width={320}
-              height={270}
-              viewBox={`0 0 ${VIEWBOX_WIDTH / 2} 200`}
-            >
+            <svg width={320} height={290} viewBox={`0 0 320 290`}>
               <PopLines
                 animationState={animationState}
                 primaryColor={primaryColor}
@@ -240,7 +251,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
               className="svg-icon-bubbles"
               width={VIEWBOX_WIDTH}
               height="100%"
-              viewBox={`0,0, ${VIEWBOX_WIDTH},140`}
+              viewBox={`0,0, ${VIEWBOX_WIDTH},150`}
             >
               <defs>
                 <filter id="goo" colorInterpolationFilters="sRGB">
@@ -259,7 +270,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
               </defs>
               <g
                 transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${
-                  ICON_SIZE * 2
+                  ICON_SIZE * 2.2
                 })`}
               >
                 <g ref={dotContainerRef as RefObject<any>} filter="url(#goo)">
@@ -274,7 +285,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                       height: '100%',
                     }}
                   />
-                  {iconPaths.map((icon: { name: string }, index: number) => {
+                  {iconsToUse.map((icon: { name: string }, index: number) => {
                     const { name } = icon
                     return (
                       <circle
@@ -300,7 +311,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                   })}
                 </g>
                 <g ref={iconContainerRef as RefObject<any>}>
-                  {iconPaths.map(
+                  {iconsToUse.map(
                     (icon: { name: string; path: string }, index: number) => {
                       const { name, path } = icon
                       return (

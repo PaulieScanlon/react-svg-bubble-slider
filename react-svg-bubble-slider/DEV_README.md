@@ -1,8 +1,8 @@
-# Deploy
+## Deploy
 
-The deploy method is manual because the gsap-bonus.tgz can't live on GitHub and if Netlify handles the build it'll fail because it can't find gsap-bonus.tgz.
+The deploy method is manual because the un-packed gsap bonus files can't live on GitHub and if Netlify handles the built it'll fail because it can't find the gsap bones files.
 
-Instead deploying Storybook is now a manaul procoess.
+Instead deploying Storybook is now a manual process.
 
 ```sh
 yarn deploy
@@ -10,4 +10,24 @@ yarn deploy
 
 Which will run `storybook:build` and then `netlify deploy --prod`
 
+#### TODO
+
 Might want to also add that deploy script to the `release` script to ensure the Storybook build is always correct for the version on `npm`
+
+## Development
+
+To develop react-svg-bubble-slider you'll need to have have signed up / paid for [Club Greensock](https://greensock.com/club/) membership.
+
+Once you have the gsap-bonus.tgz file you'll need to un-pack it
+
+```sh
+tar -xzf gsap-bonus.tgz
+```
+
+Create a directory called `gsap-bonus` in `src` and copy over the following files:
+
+`DrawSVGPlugin.js`
+`InertiaPlugin.js`
+`utils/VelocityTracker.js`
+
+These are the only "Bonus" plugins we need. They will get bundled into the `main.js` when Webpack creates the npm package

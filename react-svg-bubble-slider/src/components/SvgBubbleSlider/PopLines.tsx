@@ -1,9 +1,8 @@
 import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
 
+import { gsap } from 'gsap'
 // @ts-ignore
-import { gsap } from '../../gsap'
-// @ts-ignore
-import { DrawSVGPlugin } from '../../gsap/DrawSVGPlugin'
+import { DrawSVGPlugin } from '../../gsap-bonus/DrawSVGPlugin'
 
 gsap.registerPlugin(DrawSVGPlugin)
 

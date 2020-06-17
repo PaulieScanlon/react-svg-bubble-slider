@@ -6,8 +6,7 @@ import React, {
   useState,
 } from 'react'
 
-// @ts-ignore
-import { gsap } from '../../gsap'
+import { gsap } from 'gsap'
 
 interface SpeechBubbleProps {
   /** The name of the current reaction */

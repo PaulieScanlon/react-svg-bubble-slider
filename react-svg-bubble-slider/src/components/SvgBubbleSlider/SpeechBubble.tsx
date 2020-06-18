@@ -8,6 +8,8 @@ import React, {
 
 import { gsap } from 'gsap'
 
+const START_Y = 60
+
 interface SpeechBubbleProps {
   /** The name of the current reaction */
   currentReaction: string
@@ -33,15 +35,15 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         rotation: 45,
         visibility: 'hidden',
         scale: 0,
-        y: 0,
+        y: START_Y,
         transformOrigin: `50% 100%`,
       })
       .to(speechBubblesRef.current, 0.9, {
         rotation: 0,
         visibility: 'visible',
         ease: 'elastic(1, 0.6)',
-        scale: 1,
-        y: -10,
+        scale: 0.9,
+        y: 40,
       })
       .to(
         speechBubblesRef.current,
@@ -67,7 +69,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         pointerEvents: 'none',
         visibility: 'hidden',
       }}
-      transform={`matrix(0.8,0,0,0.8,125,0)`}
+      transform={`matrix(0.8,0,0,0.8,91.5,${START_Y})`}
     >
       <path
         className="speech-bubble-stroke"

@@ -1,22 +1,22 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { linkTo } from '@storybook/addon-links'
 
-import { iconPaths } from '../components/SvgBubbleSlider/iconPaths'
+import { mainIconPaths } from '../components/SvgBubbleSlider/mainIconPaths'
 
 <Meta title="Icons" />
 
 # Icons
 
-Here's a list of all the icon names you can use.
+Here's a list of all the icons you can use.
 
-To provide a custom array of icons for you Svg Bubble Slider see <Link onClick={linkTo('Props', 'Icons')}>Icons</Link> in the Props menu
+To provide a restricted array of icons for your Svg Bubble Slider see <Link onClick={linkTo('Props', 'Icon Paths')}>Icon Paths</Link> in the Props menu
 
 <Flex
   sx={{
     flexWrap: 'wrap',
   }}
 >
-  {iconPaths.map((icon, index) => {
+  {mainIconPaths.map((icon, index) => {
     const { name, path } = icon
     return (
       <Flex

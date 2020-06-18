@@ -8,21 +8,21 @@ export default {
   parameters: {
     component: SvgBubbleSlider,
     componentSubtitle:
-      'Have a browse of the props to see how you customise SvgBubbleSlider. You can see the usage by clicking on "Show code"',
+      'Have a browse of the props to see how you can customise SvgBubbleSlider. You can see the usage by clicking on "Show code" in the bottom right of the preview panel 👇',
   },
 }
 
 export const usage = () => <SvgBubbleSlider />
 
-export const icons = () => (
-  <SvgBubbleSlider icons={['angry', 'sad', 'smile', 'happy']} />
+export const iconPaths = () => (
+  <SvgBubbleSlider iconPaths={['angry', 'sad', 'smile', 'happy']} />
 )
 
-icons.story = {
+iconPaths.story = {
   parameters: {
     docs: {
       storyDescription:
-        'Use the `icons` prop to provide a custom list of icons',
+        'Use the `iconPaths` prop to provide a restricted list of icons to display',
     },
   },
 }

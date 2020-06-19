@@ -1,21 +1,8 @@
-import React, { Fragment, FunctionComponent, useState, ReactNode } from 'react'
+import React, { Fragment, FunctionComponent, useState } from 'react'
+
+import { SvgBubbleSliderProps, ReactionType } from './types'
 
 import { Svg } from './Svg'
-
-interface SvgBubbleActionProps {
-  /** Active reaction */
-  reaction: string
-}
-export interface SvgBubbleSliderProps {
-  /** Render prop: Passes reaction and children */
-  children?: ({ reaction }: SvgBubbleActionProps) => ReactNode
-  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
-  primaryColor?: string
-  /** The color of the reaction icons and speech bubble background */
-  secondaryColor?: string
-  /** Names of icons to include */
-  icons?: string[]
-}
 
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   children,
@@ -23,7 +10,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   secondaryColor = '#ffffff',
   icons,
 }: SvgBubbleSliderProps) => {
-  const [currentReaction, setCurrentReaction] = useState('')
+  const [currentReaction, setCurrentReaction] = useState<any>('')
 
   return (
     <Fragment>

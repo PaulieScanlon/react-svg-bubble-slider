@@ -14,6 +14,7 @@ import { Draggable } from 'gsap/Draggable'
 // @ts-ignore
 import { InertiaPlugin } from '../../gsap-bonus/InertiaPlugin'
 
+import { SvgProps } from './types'
 import { iconPaths } from './iconPaths'
 
 import { PopLines } from './PopLines'
@@ -25,17 +26,6 @@ const MULTIPLIER = 4.8
 const SPACER = 60
 
 const DOT_SIZE = 10
-
-interface SvgProps {
-  /** Animation callback passes current reaction */
-  onAnimationComplete: (reaction: string) => void
-  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
-  primaryColor?: string
-  /** The color of the reaction icons and speech bubble background */
-  secondaryColor?: string
-  /** Names of icons to include */
-  icons?: any[]
-}
 
 export const Svg: FunctionComponent<SvgProps> = memo(
   ({ onAnimationComplete, primaryColor, secondaryColor, icons }: SvgProps) => {
@@ -228,7 +218,7 @@ export const Svg: FunctionComponent<SvgProps> = memo(
                 primaryColor={primaryColor}
               />
               <SpeechBubble
-                currentReaction={currentReaction}
+                currentReaction={currentReaction as any}
                 primaryColor={primaryColor}
                 secondaryColor={secondaryColor}
               />

@@ -8,16 +8,9 @@ import React, {
 
 import { gsap } from 'gsap'
 
-const START_Y = 60
+import { SpeechBubbleProps } from './types'
 
-interface SpeechBubbleProps {
-  /** The name of the current reaction */
-  currentReaction: string
-  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
-  primaryColor?: string
-  /** The color of the reaction icons and speech bubble background */
-  secondaryColor?: string
-}
+const START_Y = 60
 
 export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   primaryColor,

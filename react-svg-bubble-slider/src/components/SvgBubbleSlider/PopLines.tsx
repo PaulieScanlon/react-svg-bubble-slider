@@ -6,12 +6,7 @@ import { DrawSVGPlugin } from '../../gsap-bonus/DrawSVGPlugin'
 
 gsap.registerPlugin(DrawSVGPlugin)
 
-interface PopLinesProps {
-  /** The color of the dots, speech bubble background and speech bubble text and pop lines */
-  primaryColor?: string
-  /** Is the animation happening */
-  animationState: boolean
-}
+import { PopLinesProps } from './types'
 
 const lineAttributes = [
   {

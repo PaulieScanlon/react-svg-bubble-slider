@@ -1,7 +1,14 @@
 import React from 'react'
+import { action } from '@storybook/addon-actions'
+
+import { ReactionType } from '../SvgBubbleSlider/types'
 import { SvgBubbleSlider } from '.'
 
 import { Box } from 'theme-ui'
+
+const handleReaction = (reaction: ReactionType) => {
+  action('handleReaction')(reaction)
+}
 
 export default {
   title: 'Props',
@@ -28,13 +35,17 @@ icons.story = {
 }
 
 export const reaction = () => (
-  <SvgBubbleSlider>
-    {({ reaction }) => (
-      <div style={{ textAlign: 'center' }}>
-        {reaction && <button>{reaction}</button>}
-      </div>
-    )}
-  </SvgBubbleSlider>
+  <div style={{ position: 'relative', top: 38 }}>
+    <SvgBubbleSlider>
+      {({ reaction }: any) => (
+        <div style={{ textAlign: 'center', height: 44 }}>
+          {reaction && (
+            <button onClick={() => handleReaction(reaction)}>{reaction}</button>
+          )}
+        </div>
+      )}
+    </SvgBubbleSlider>
+  </div>
 )
 
 reaction.story = {
@@ -104,7 +115,7 @@ ThemeUI.story = {
   parameters: {
     docs: {
       storyDescription:
-        "If you're using Theme UI you can modify styles by referecing them by class name via the sx prop on a Theme UI enabled element",
+        "If you're using Theme UI modify styles by referencing them by class name via the sx prop on a Theme UI enabled element",
     },
   },
 }

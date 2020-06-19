@@ -14,15 +14,15 @@ export default {
 
 export const usage = () => <SvgBubbleSlider />
 
-export const iconPaths = () => (
-  <SvgBubbleSlider iconPaths={['angry', 'sad', 'smile', 'happy']} />
+export const icons = () => (
+  <SvgBubbleSlider icons={['angry', 'sad', 'smile', 'happy']} />
 )
 
-iconPaths.story = {
+icons.story = {
   parameters: {
     docs: {
       storyDescription:
-        'Use the `iconPaths` prop to provide a restricted list of icons to display',
+        'Use the `icons` prop to provide a restricted list of icons to display',
     },
   },
 }

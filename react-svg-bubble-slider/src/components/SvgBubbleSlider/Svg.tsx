@@ -14,7 +14,7 @@ import { Draggable } from 'gsap/Draggable'
 // @ts-ignore
 import { InertiaPlugin } from '../../gsap-bonus/InertiaPlugin'
 
-import { mainIconPaths } from './mainIconPaths'
+import { iconPaths } from './iconPaths'
 
 import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
@@ -33,23 +33,18 @@ interface SvgProps {
   primaryColor?: string
   /** The color of the reaction icons and speech bubble background */
   secondaryColor?: string
-  /** Names of iconPaths to include */
-  iconPaths?: any[]
+  /** Names of icons to include */
+  icons?: any[]
 }
 
 export const Svg: FunctionComponent<SvgProps> = memo(
-  ({
-    onAnimationComplete,
-    primaryColor,
-    secondaryColor,
-    iconPaths,
-  }: SvgProps) => {
-    const iconsToUse = iconPaths
-      ? mainIconPaths
+  ({ onAnimationComplete, primaryColor, secondaryColor, icons }: SvgProps) => {
+    const iconsToUse = icons
+      ? iconPaths
           .map((icon) => icon)
-          .filter((icon) => iconPaths.includes(icon.name))
-          .sort((a, b) => iconPaths.indexOf(a.name) - iconPaths.indexOf(b.name))
-      : mainIconPaths
+          .filter((icon) => icons.includes(icon.name))
+          .sort((a, b) => icons.indexOf(a.name) - icons.indexOf(b.name))
+      : iconPaths
 
     const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
     const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE

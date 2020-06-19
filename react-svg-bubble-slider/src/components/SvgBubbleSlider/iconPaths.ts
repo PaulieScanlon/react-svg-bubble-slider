@@ -1,4 +1,4 @@
-export const mainIconPaths = [
+export const iconPaths = [
   {
     name: 'happy',
     path:

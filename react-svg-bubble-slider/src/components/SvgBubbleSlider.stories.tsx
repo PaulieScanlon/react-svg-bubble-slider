@@ -1,10 +1,10 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 
-import { ReactionType } from '../SvgBubbleSlider/types'
-import { SvgBubbleSlider } from '.'
+import { ReactionType } from './SvgBubbleSlider/types'
+import { SvgBubbleSlider } from './SvgBubbleSlider'
 
-import { Box } from 'theme-ui'
+import { Flex, Box } from 'theme-ui'
 
 const handleReaction = (reaction: ReactionType) => {
   action('handleReaction')(reaction)
@@ -12,6 +12,28 @@ const handleReaction = (reaction: ReactionType) => {
 
 export default {
   title: 'Props',
+  decorators: [
+    (storyFn: any) => {
+      return (
+        <Flex
+          sx={{
+            textAlign: 'center',
+            alignItems: 'flex-end',
+            my: '30px',
+            height: '270px',
+          }}
+        >
+          <Box
+            sx={{
+              width: '100%',
+            }}
+          >
+            {storyFn()}
+          </Box>
+        </Flex>
+      )
+    },
+  ],
   parameters: {
     component: SvgBubbleSlider,
     componentSubtitle:

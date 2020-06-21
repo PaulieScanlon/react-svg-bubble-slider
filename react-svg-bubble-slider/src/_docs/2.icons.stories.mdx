@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { linkTo } from '@storybook/addon-links'
 
+import { SvgIcon } from '../components/SvgIcon'
 import { iconPaths } from '../components/SvgBubbleSlider/iconPaths'
 
 <Meta title="Icons" />
@@ -32,22 +33,7 @@ To provide a restricted array of icons for your Svg Bubble Slider see <Link onCl
           width: ['50%', '25%'],
         }}
       >
-        <Box
-          as="svg"
-          width="64"
-          height="64"
-          viewBox="0,0,64,64"
-          sx={{
-            fill: 'primary',
-          }}
-        >
-          <Box
-            as="path"
-            d={path}
-            transformOrigin="50% 50%"
-            transform={`matrix(2,0,0,2,0,0)`}
-          />
-        </Box>
+        <SvgIcon name={name} size={64} />
         <Text
           sx={{
             color: 'darkGray',

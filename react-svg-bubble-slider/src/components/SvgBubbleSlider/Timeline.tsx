@@ -14,7 +14,7 @@ import { Draggable } from 'gsap/Draggable'
 // @ts-ignore
 import { InertiaPlugin } from '../../gsap-bonus/InertiaPlugin'
 
-import { SvgProps } from './types'
+import { TimelineProps } from './types'
 import { iconPaths } from './iconPaths'
 
 import { PopLines } from './PopLines'
@@ -27,8 +27,13 @@ const SPACER = 60
 
 const DOT_SIZE = 10
 
-export const Svg: FunctionComponent<SvgProps> = memo(
-  ({ onAnimationComplete, primaryColor, secondaryColor, icons }: SvgProps) => {
+export const Timeline: FunctionComponent<TimelineProps> = memo(
+  ({
+    onAnimationComplete,
+    primaryColor,
+    secondaryColor,
+    icons,
+  }: TimelineProps) => {
     const iconsToUse = icons
       ? iconPaths
           .map((icon) => icon)
@@ -336,4 +341,4 @@ export const Svg: FunctionComponent<SvgProps> = memo(
   }
 )
 
-Svg.displayName = 'Svg'
+Timeline.displayName = 'Timeline'

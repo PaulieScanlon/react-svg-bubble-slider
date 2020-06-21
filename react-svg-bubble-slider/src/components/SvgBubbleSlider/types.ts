@@ -19,7 +19,7 @@ export interface SvgBubbleSliderProps extends coreProps {
   children?: ({ reaction }: ReactionType) => ReactNode
 }
 
-export interface SvgProps extends coreProps {
+export interface TimelineProps extends coreProps {
   /** Animation callback passes current reaction */
   onAnimationComplete: (reaction: string) => void
 }

@@ -33,9 +33,11 @@ const IndexPage = () => {
         ultrices diam molestie lobortis imperdiet sit amet urna. Integer
         tincidunt ut magna sed fringilla.
       </div>
-      <SvgBubbleSlider>
-        {({ reaction }) => reaction && <button>{reaction}</button>}
-      </SvgBubbleSlider>
+      <div style={{ textAlign: "center" }}>
+        <SvgBubbleSlider>
+          {({ reaction }) => reaction && <button>{reaction}</button>}
+        </SvgBubbleSlider>
+      </div>
     </div>
   );
 };

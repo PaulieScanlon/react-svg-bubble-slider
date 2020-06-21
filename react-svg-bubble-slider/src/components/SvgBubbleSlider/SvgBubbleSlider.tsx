@@ -1,13 +1,14 @@
 import React, { Fragment, FunctionComponent, useState } from 'react'
 
-import { SvgBubbleSliderProps, ReactionType } from './types'
+import { SvgBubbleSliderProps } from './types'
+import theme from '../../theme'
 
-import { Svg } from './Svg'
+import { Timeline } from './Timeline'
 
 export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   children,
-  primaryColor = '#ff69B4',
-  secondaryColor = '#ffffff',
+  primaryColor = theme.colors.primary,
+  secondaryColor = theme.colors.background,
   icons,
 }: SvgBubbleSliderProps) => {
   const [currentReaction, setCurrentReaction] = useState<any>('')
@@ -23,7 +24,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
           position: 'relative',
         }}
       >
-        <Svg
+        <Timeline
           onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
           primaryColor={primaryColor}
           secondaryColor={secondaryColor}

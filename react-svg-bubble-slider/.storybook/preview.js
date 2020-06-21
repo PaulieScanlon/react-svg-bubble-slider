@@ -9,23 +9,7 @@ import { DocsContainer } from '@storybook/addon-docs/blocks'
 import theme from '../src/theme'
 
 addDecorator((storyFn) => (
-  <ThemeProvider theme={theme}>
-    <Flex
-      sx={{
-        alignItems: 'flex-end',
-        mb: '30px',
-        height: '270px',
-      }}
-    >
-      <Box
-        sx={{
-          width: '100%',
-        }}
-      >
-        {storyFn()}
-      </Box>
-    </Flex>
-  </ThemeProvider>
+  <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>
 ))
 
 addParameters({

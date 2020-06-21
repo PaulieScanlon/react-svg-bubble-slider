@@ -11,7 +11,7 @@ export default {
     highlight: '#50fa7b',
     gray: '#F9F9F9',
     darkGray: '#999999',
-    accent: '#F1F8FF',
+    accent: '#ffd5ea',
     darken: '#323442',
   },
 
@@ -29,11 +29,23 @@ export default {
     },
   },
 
+  text: {
+    small: {
+      textAlign: 'center',
+      fontWeight: 'bold',
+      mt: 2,
+      color: 'primary',
+    },
+  },
+
   styles: {
     a: {
       color: 'primary',
       cursor: 'pointer',
       fontWeight: 'bold',
+    },
+    hr: {
+      my: 4,
     },
   },
 }

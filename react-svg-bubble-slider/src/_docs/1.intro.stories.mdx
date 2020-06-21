@@ -2,6 +2,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
 import { linkTo } from '@storybook/addon-links'
 
 import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
+import { SvgIcon } from '../components/SvgIcon'
 
 <Meta title="Intro" component={SvgBubbleSlider} />
 
@@ -15,7 +16,7 @@ SvgBubbleSlider comes equipped with 14 reactions. You can access the current <Li
 
 Click or drag around to explore all the reactions
 
-<Box sx={{ height: 100 }} />
+<Box sx={{ height: 110 }} />
 
 <Box
   sx={{
@@ -70,15 +71,101 @@ const SomeComponent = () => {
   return (
     <div>
       ...
-      <SvgBubbleSlider>
-        {({ reaction }) => reaction && <button>{reaction}</button>}
-      </SvgBubbleSlider>
+      <SvgBubbleSlider />
     </div>
   )
 }
 
 export default SomeComponent
 ```
+
+<Divider />
+
+### SvgIcon 😃 😠 😥
+
+In addition to allowing users to leave a reaction you may wish to display how many reactions have been left. One way to do this is to use the `SvgIcon` and display the count underneath it.
+
+<Box sx={{ height: 110 }} />
+
+<Box
+  sx={{
+    '.speech-bubble-text': {
+      fill: 'primary',
+      fontSize: '22px',
+      textTransform: 'capitalize',
+    },
+  }}
+>
+  <SvgBubbleSlider
+    icons={['angry', 'sad', 'neutral', 'smile', 'happy', 'cool']}
+  >
+    {({ reaction }) => (
+      <Flex
+        sx={{
+          justifyContent: 'center',
+          height: 35,
+        }}
+      >
+        {reaction && (
+          <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
+        )}
+      </Flex>
+    )}
+  </SvgBubbleSlider>
+</Box>
+
+<Box sx={{ height: 40 }} />
+
+<Flex
+  sx={{
+    justifyContent: 'space-around',
+    margin: 'auto',
+    maxWidth: ['100%', '40%', '30%'],
+    flexWrap: 'wrap',
+    '.svg-icon': {
+      color: 'accent',
+    },
+  }}
+>
+  <Flex sx={{ flexDirection: 'column' }}>
+    <SvgIcon name="angry" />
+    <Text as="small" variant="small">
+      13
+    </Text>
+  </Flex>
+  <Flex sx={{ flexDirection: 'column' }}>
+    <SvgIcon name="sad" />
+    <Text as="small" variant="small">
+      7
+    </Text>
+  </Flex>
+  <Flex sx={{ flexDirection: 'column' }}>
+    <SvgIcon name="neutral" />
+    <Text as="small" variant="small">
+      1
+    </Text>
+  </Flex>
+  <Flex sx={{ flexDirection: 'column' }}>
+    <SvgIcon name="smile" />
+    <Text as="small" variant="small">
+      22
+    </Text>
+  </Flex>
+  <Flex sx={{ flexDirection: 'column' }}>
+    <SvgIcon name="happy" />
+    <Text as="small" variant="small">
+      31
+    </Text>
+  </Flex>
+  <Flex sx={{ flexDirection: 'column' }}>
+    <SvgIcon name="cool" />
+    <Text as="small" variant="small">
+      85
+    </Text>
+  </Flex>
+</Flex>
+
+<Box sx={{ height: 30 }} />
 
 <Divider />
 

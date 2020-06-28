@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
 
@@ -29,17 +29,20 @@ icons.story = {
 }
 
 export const reaction = () => (
-  <div style={{ position: 'relative', top: 38 }}>
-    <SvgBubbleSlider>
-      {({ reaction }: any) => (
-        <div style={{ textAlign: 'center', height: 100 }}>
-          {reaction && (
-            <button onClick={() => console.log(reaction)}>{reaction}</button>
-          )}
-        </div>
-      )}
-    </SvgBubbleSlider>
-  </div>
+  <SvgBubbleSlider>
+    {({ reaction }: any) => (
+      <Fragment>
+        {reaction && (
+          <button
+            style={{ display: 'block', margin: 'auto' }}
+            onClick={() => console.log(reaction)}
+          >
+            {reaction}
+          </button>
+        )}
+      </Fragment>
+    )}
+  </SvgBubbleSlider>
 )
 
 reaction.story = {

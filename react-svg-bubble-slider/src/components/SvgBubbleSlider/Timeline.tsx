@@ -211,127 +211,129 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     }, [posX])
 
     return (
-      <Fragment>
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          margin: 'auto',
+          position: 'relative',
+          overflow: 'hidden',
+          width: '100%',
+        }}
+      >
         <div
           style={{
-            alignItems: 'center',
             display: 'flex',
-            justifyContent: 'center',
             margin: 'auto',
-            position: 'relative',
-            overflowX: 'hidden',
-            width: '100%',
           }}
         >
-          <div>
-            <svg
-              ref={svgIconBubblesRef as RefObject<any>}
-              className="svg-icon-bubbles"
-              width={VIEWBOX_WIDTH}
-              height={VIEWBOX_HEIGHT}
-              viewBox={`0,0, ${VIEWBOX_WIDTH},${VIEWBOX_HEIGHT}`}
-            >
-              <defs>
-                <filter id="goo" colorInterpolationFilters="sRGB">
-                  <feGaussianBlur
-                    in="SourceGraphic"
-                    stdDeviation="8"
-                    result="blur"
-                  />
-                  <feColorMatrix
-                    in="blur"
-                    mode="matrix"
-                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
-                    result="cm"
-                  />
-                </filter>
-              </defs>
-              {showSpeechBubble && (
-                <Fragment>
-                  <PopLines
-                    viewBoxWidth={VIEWBOX_WIDTH}
-                    animationState={animationState}
-                    primaryColor={primaryColor}
-                  />
-                  <SpeechBubble
-                    viewBoxWidth={VIEWBOX_WIDTH}
-                    currentReaction={currentReaction as any}
-                    primaryColor={primaryColor}
-                    secondaryColor={secondaryColor}
-                  />
-                </Fragment>
-              )}
+          <svg
+            ref={svgIconBubblesRef as RefObject<any>}
+            width={VIEWBOX_WIDTH}
+            height={VIEWBOX_HEIGHT}
+            viewBox={`0,0, ${VIEWBOX_WIDTH},${VIEWBOX_HEIGHT}`}
+          >
+            <defs>
+              <filter id="goo" colorInterpolationFilters="sRGB">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="8"
+                  result="blur"
+                />
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
+                  result="cm"
+                />
+              </filter>
+            </defs>
+            {showSpeechBubble && (
+              <Fragment>
+                <PopLines
+                  viewBoxWidth={VIEWBOX_WIDTH}
+                  animationState={animationState}
+                  primaryColor={primaryColor}
+                />
+                <SpeechBubble
+                  viewBoxWidth={VIEWBOX_WIDTH}
+                  currentReaction={currentReaction as any}
+                  primaryColor={primaryColor}
+                  secondaryColor={secondaryColor}
+                />
+              </Fragment>
+            )}
 
-              <g transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2} ${START_Y})`}>
-                <g ref={dotContainerRef as RefObject<any>} filter="url(#goo)">
-                  <rect
-                    width={VIEWBOX_WIDTH}
-                    transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${
-                      ICON_SIZE * 2
-                    })`}
-                    style={{
-                      cursor: 'move',
-                      fill: 'rgba(0, 0, 0, 0)',
-                      height: '100%',
-                    }}
-                  />
-                  {iconsToUse.map((icon: { name: string }, index: number) => {
-                    const { name } = icon
+            <g transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2} ${START_Y})`}>
+              <g ref={dotContainerRef as RefObject<any>} filter="url(#goo)">
+                <rect
+                  width={VIEWBOX_WIDTH}
+                  transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${
+                    ICON_SIZE * 2
+                  })`}
+                  style={{
+                    cursor: 'move',
+                    fill: 'rgba(0, 0, 0, 0)',
+                    height: '100%',
+                  }}
+                />
+                {iconsToUse.map((icon: { name: string }, index: number) => {
+                  const { name } = icon
+                  return (
+                    <circle
+                      ref={(ref) => {
+                        dotRefs.push(ref as any)
+                      }}
+                      key={index}
+                      className="reaction-dot"
+                      cx={index * SPACER}
+                      cy={ICON_SIZE / 2}
+                      r={DOT_SIZE}
+                      fill={primaryColor}
+                      id={`dot-${name}-${index}`}
+                      onClick={() => {
+                        handleClick(index)
+                        handleAnimationStart()
+                      }}
+                      style={{
+                        cursor: 'pointer',
+                      }}
+                    />
+                  )
+                })}
+              </g>
+              <g ref={iconContainerRef as RefObject<any>}>
+                {iconsToUse.map(
+                  (icon: { name: string; path: string }, index: number) => {
+                    const { name, path } = icon
                     return (
-                      <circle
+                      <path
                         ref={(ref) => {
-                          dotRefs.push(ref as any)
+                          iconRefs.push(ref as any)
                         }}
                         key={index}
-                        className="reaction-dot"
-                        cx={index * SPACER}
-                        cy={ICON_SIZE / 2}
-                        r={DOT_SIZE}
-                        fill={primaryColor}
-                        id={`dot-${name}-${index}`}
-                        onClick={() => {
-                          handleClick(index)
-                          handleAnimationStart()
-                        }}
+                        className="reaction-icon"
+                        fill={secondaryColor}
+                        id={`icon-${name}-${index}`}
+                        data-index={index}
+                        d={path}
+                        opacity={0}
+                        transform={`matrix(1,0,0,1,${
+                          index * SPACER - ICON_SIZE / 2
+                        },0)`}
                         style={{
-                          cursor: 'pointer',
+                          pointerEvents: 'none',
                         }}
                       />
                     )
-                  })}
-                </g>
-                <g ref={iconContainerRef as RefObject<any>}>
-                  {iconsToUse.map(
-                    (icon: { name: string; path: string }, index: number) => {
-                      const { name, path } = icon
-                      return (
-                        <path
-                          ref={(ref) => {
-                            iconRefs.push(ref as any)
-                          }}
-                          key={index}
-                          className="reaction-icon"
-                          fill={secondaryColor}
-                          id={`icon-${name}-${index}`}
-                          data-index={index}
-                          d={path}
-                          opacity={0}
-                          transform={`matrix(1,0,0,1,${
-                            index * SPACER - ICON_SIZE / 2
-                          },0)`}
-                          style={{
-                            pointerEvents: 'none',
-                          }}
-                        />
-                      )
-                    }
-                  )}
-                </g>
+                  }
+                )}
               </g>
-            </svg>
-          </div>
+            </g>
+          </svg>
         </div>
-      </Fragment>
+      </div>
     )
   }
 )

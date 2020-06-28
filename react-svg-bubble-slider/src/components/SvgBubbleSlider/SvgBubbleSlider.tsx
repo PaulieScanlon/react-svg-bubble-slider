@@ -17,12 +17,13 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   return (
     <Fragment>
       <div
+        className="react-svg-bubble-slider"
         style={{
-          alignItems: 'center',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           position: 'relative',
+          width: '100%',
         }}
       >
         <Timeline

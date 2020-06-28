@@ -1,39 +1,11 @@
 import React from 'react'
-import { action } from '@storybook/addon-actions'
 
-import { ReactionType } from './SvgBubbleSlider/types'
-import { SvgBubbleSlider } from './SvgBubbleSlider'
+import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
 
 import { Flex, Box } from 'theme-ui'
 
-const handleReaction = (reaction: ReactionType) => {
-  action('handleReaction')(reaction)
-}
-
 export default {
-  title: 'Props',
-  decorators: [
-    (storyFn: any) => {
-      return (
-        <Flex
-          sx={{
-            textAlign: 'center',
-            alignItems: 'flex-end',
-            my: '30px',
-            height: '270px',
-          }}
-        >
-          <Box
-            sx={{
-              width: '100%',
-            }}
-          >
-            {storyFn()}
-          </Box>
-        </Flex>
-      )
-    },
-  ],
+  title: 'SvgBubbleSlider',
   parameters: {
     component: SvgBubbleSlider,
     componentSubtitle:
@@ -60,9 +32,9 @@ export const reaction = () => (
   <div style={{ position: 'relative', top: 38 }}>
     <SvgBubbleSlider>
       {({ reaction }: any) => (
-        <div style={{ textAlign: 'center', height: 44 }}>
+        <div style={{ textAlign: 'center', height: 100 }}>
           {reaction && (
-            <button onClick={() => handleReaction(reaction)}>{reaction}</button>
+            <button onClick={() => console.log(reaction)}>{reaction}</button>
           )}
         </div>
       )}
@@ -75,6 +47,19 @@ reaction.story = {
     docs: {
       storyDescription:
         'You can access the current `reaction` via the render prop',
+    },
+  },
+}
+
+export const showSpeechBubble = () => (
+  <SvgBubbleSlider showSpeechBubble={false} />
+)
+
+showSpeechBubble.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'The `showSpeechBubble` prop can be used to show or hide the speech bubble',
     },
   },
 }

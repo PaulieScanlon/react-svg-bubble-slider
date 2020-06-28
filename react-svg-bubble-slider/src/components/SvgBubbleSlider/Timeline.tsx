@@ -33,6 +33,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     primaryColor,
     secondaryColor,
     icons,
+    showSpeechBubble = true,
   }: TimelineProps) => {
     const iconsToUse = icons
       ? iconPaths
@@ -43,6 +44,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
     const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE
+
+    const VIEWBOX_HEIGHT = showSpeechBubble ? 290 : 120
+    const START_Y = showSpeechBubble ? 215 : 45
 
     if (iconsToUse.length < 4)
       throw new Error('You must have at lease four icon paths')
@@ -210,28 +214,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
       <Fragment>
         <div
           style={{
-            bottom: 0,
-            position: 'absolute',
-            height: 290,
-            pointerEvents: 'none',
-          }}
-        >
-          <div>
-            <svg width={320} height={290} viewBox={`0 0 320 290`}>
-              <PopLines
-                animationState={animationState}
-                primaryColor={primaryColor}
-              />
-              <SpeechBubble
-                currentReaction={currentReaction as any}
-                primaryColor={primaryColor}
-                secondaryColor={secondaryColor}
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          style={{
+            alignItems: 'center',
             display: 'flex',
             justifyContent: 'center',
             margin: 'auto',
@@ -245,8 +228,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
               ref={svgIconBubblesRef as RefObject<any>}
               className="svg-icon-bubbles"
               width={VIEWBOX_WIDTH}
-              height="100%"
-              viewBox={`0,0, ${VIEWBOX_WIDTH},150`}
+              height={VIEWBOX_HEIGHT}
+              viewBox={`0,0, ${VIEWBOX_WIDTH},${VIEWBOX_HEIGHT}`}
             >
               <defs>
                 <filter id="goo" colorInterpolationFilters="sRGB">
@@ -263,11 +246,23 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                   />
                 </filter>
               </defs>
-              <g
-                transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2},${
-                  ICON_SIZE * 2.2
-                })`}
-              >
+              {showSpeechBubble && (
+                <Fragment>
+                  <PopLines
+                    viewBoxWidth={VIEWBOX_WIDTH}
+                    animationState={animationState}
+                    primaryColor={primaryColor}
+                  />
+                  <SpeechBubble
+                    viewBoxWidth={VIEWBOX_WIDTH}
+                    currentReaction={currentReaction as any}
+                    primaryColor={primaryColor}
+                    secondaryColor={secondaryColor}
+                  />
+                </Fragment>
+              )}
+
+              <g transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2} ${START_Y})`}>
                 <g ref={dotContainerRef as RefObject<any>} filter="url(#goo)">
                   <rect
                     width={VIEWBOX_WIDTH}

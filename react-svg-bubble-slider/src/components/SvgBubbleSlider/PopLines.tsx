@@ -8,6 +8,8 @@ gsap.registerPlugin(DrawSVGPlugin)
 
 import { PopLinesProps } from './types'
 
+const START_Y = 15
+
 const lineAttributes = [
   {
     x1: '107.923',
@@ -61,6 +63,7 @@ const lineAttributes = [
 
 export const PopLines: FunctionComponent<PopLinesProps> = ({
   primaryColor,
+  viewBoxWidth,
   animationState,
 }: PopLinesProps) => {
   const popLinesRef = useRef(null)
@@ -98,7 +101,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit="10"
-      transform={`matrix(1,0,0,1,70,20)`}
+      transform={`matrix(1,0,0,1,${viewBoxWidth / 2 - 88},${START_Y})`}
       style={{
         visibility: 'hidden',
       }}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SvgIcon } from './SvgIcon'
+import { SvgIcon } from '../components/SvgIcon'
 
 import { Flex, Box } from 'theme-ui'
 

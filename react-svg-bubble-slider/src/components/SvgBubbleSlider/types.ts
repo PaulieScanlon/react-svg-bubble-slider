@@ -1,6 +1,8 @@
 import { ReactNode } from 'react'
 
 interface coreProps {
+  /** Boolean to control visibility of speech bubble */
+  showSpeechBubble?: boolean
   /** The color of the dots, speech bubble background, speech bubble text and pop lines */
   primaryColor?: string
   /** The color of the reaction icons and speech bubble background */
@@ -27,9 +29,13 @@ export interface TimelineProps extends coreProps {
 export interface SpeechBubbleProps extends coreProps {
   /** The name of the current reaction */
   currentReaction: string
+  /** The width of the ViewBox */
+  viewBoxWidth: number
 }
 
 export interface PopLinesProps extends coreProps {
   /** Is the animation happening */
   animationState: boolean
+  /** The width of the ViewBox */
+  viewBoxWidth: number
 }

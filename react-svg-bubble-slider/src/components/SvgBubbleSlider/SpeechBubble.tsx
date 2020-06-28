@@ -10,11 +10,12 @@ import { gsap } from 'gsap'
 
 import { SpeechBubbleProps } from './types'
 
-const START_Y = 60
+const START_Y = 100
 
 export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   primaryColor,
   secondaryColor,
+  viewBoxWidth,
   currentReaction,
 }: SpeechBubbleProps) => {
   const speechBubblesRef = useRef(null)
@@ -36,7 +37,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         visibility: 'visible',
         ease: 'elastic(1, 0.6)',
         scale: 0.9,
-        y: 40,
+        y: 45,
       })
       .to(
         speechBubblesRef.current,
@@ -62,7 +63,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
         pointerEvents: 'none',
         visibility: 'hidden',
       }}
-      transform={`matrix(0.8,0,0,0.8,91.5,${START_Y})`}
+      transform={`matrix(0.8,0,0,0.8,${viewBoxWidth / 2 - 68},${START_Y})`}
     >
       <path
         className="speech-bubble-stroke"

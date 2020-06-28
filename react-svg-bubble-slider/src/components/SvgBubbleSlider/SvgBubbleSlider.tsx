@@ -10,6 +10,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
   primaryColor = theme.colors.primary,
   secondaryColor = theme.colors.background,
   icons,
+  showSpeechBubble,
 }: SvgBubbleSliderProps) => {
   const [currentReaction, setCurrentReaction] = useState<any>('')
 
@@ -29,6 +30,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
           primaryColor={primaryColor}
           secondaryColor={secondaryColor}
           icons={icons}
+          showSpeechBubble={showSpeechBubble}
         />
       </div>
       <div className="svg-bubble-action">

@@ -16,7 +16,7 @@ export default {
 export const usage = () => <SvgBubbleSlider />
 
 export const icons = () => (
-  <SvgBubbleSlider icons={['angry', 'sad', 'smile', 'happy']} />
+  <SvgBubbleSlider icons={['sad', 'happy', 'neutral']} />
 )
 
 icons.story = {
@@ -31,7 +31,7 @@ icons.story = {
 export const reaction = () => (
   <SvgBubbleSlider>
     {({ reaction }: any) => (
-      <Fragment>
+      <div style={{ height: 60 }}>
         {reaction && (
           <button
             style={{ display: 'block', margin: 'auto' }}
@@ -40,7 +40,7 @@ export const reaction = () => (
             {reaction}
           </button>
         )}
-      </Fragment>
+      </div>
     )}
   </SvgBubbleSlider>
 )

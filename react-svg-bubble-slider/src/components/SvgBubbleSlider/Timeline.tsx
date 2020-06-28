@@ -48,11 +48,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     const VIEWBOX_HEIGHT = showSpeechBubble ? 290 : 120
     const START_Y = showSpeechBubble ? 215 : 45
 
-    if (iconsToUse.length < 4)
-      throw new Error('You must have at lease four icon paths')
-
-    if (iconsToUse.length % 2)
-      throw new Error('Icon paths must be an equal number')
+    if (iconsToUse.length < 3)
+      throw new Error('You must have at lease three icons')
 
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
@@ -62,6 +59,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
     const [isMounted, setIsMounted] = useState(false)
+    const [isUnmounted, setIsUnmounted] = useState(false)
     const [animationState, setAnimationState] = useState(false)
     const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
@@ -87,9 +85,11 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const handleAnimationComplete = () => {
       const landed = Math.ceil(_x / SPACER)
-      setAnimationState(false)
-      setCurrentReaction(iconsToUse[Math.abs(landed)].name)
-      onAnimationComplete(iconsToUse[Math.abs(landed)].name)
+      if (!isUnmounted) {
+        setAnimationState(false)
+        setCurrentReaction(iconsToUse[Math.abs(landed)].name)
+        onAnimationComplete(iconsToUse[Math.abs(landed)].name)
+      }
     }
 
     const handleClick = (index: number) => {
@@ -100,6 +100,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         onComplete: handleAnimationComplete,
         ease: 'power1',
       })
+      if (iconsToUse[index].name !== currentReaction) {
+        handleAnimationStart()
+      }
     }
 
     useEffect(() => {
@@ -110,13 +113,12 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
       iconsToUse.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
-        //
 
         gsap.set(iconRefs[index], {
           transformOrigin: '50% 50%',
           scale: 0,
         })
-        //
+
         setMtl({
           timeline: (mtl.timeline as any).add(
             gsap
@@ -160,17 +162,24 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
           ),
         })
       })
-      //
 
       gsap.to([dotContainerRef.current, iconContainerRef.current], 2, {
-        x: -((iconsToUse.length / 2) * SPACER),
+        x: -(Math.floor(iconsToUse.length / 2) * SPACER),
         onUpdate: handleDragSlider,
         onComplete: () => {
-          handleAnimationComplete()
-          setIsMounted(true)
+          if (!isUnmounted) {
+            handleAnimationComplete()
+            setIsMounted(true)
+          }
         },
         ease: 'elastic(1, 0.85)',
       })
+    }, [])
+
+    useEffect(() => {
+      return () => {
+        setIsUnmounted(true)
+      }
     }, [])
 
     useEffect(() => {
@@ -233,6 +242,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
             width={VIEWBOX_WIDTH}
             height={VIEWBOX_HEIGHT}
             viewBox={`0,0, ${VIEWBOX_WIDTH},${VIEWBOX_HEIGHT}`}
+            style={{
+              minWidth: 280,
+            }}
           >
             <defs>
               <filter id="goo" colorInterpolationFilters="sRGB">
@@ -294,7 +306,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       id={`dot-${name}-${index}`}
                       onClick={() => {
                         handleClick(index)
-                        handleAnimationStart()
                       }}
                       style={{
                         cursor: 'pointer',

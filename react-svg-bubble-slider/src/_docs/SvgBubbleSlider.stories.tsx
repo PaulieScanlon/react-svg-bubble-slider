@@ -6,6 +6,23 @@ import { Flex, Box } from 'theme-ui'
 
 export default {
   title: 'SvgBubbleSlider',
+  decorators: [
+    (storyfn) => {
+      return (
+        <Box
+          sx={{
+            '.svg-timeline': {
+              ':focus': {
+                outlineColor: 'primary',
+              },
+            },
+          }}
+        >
+          {storyfn()}
+        </Box>
+      )
+    },
+  ],
   parameters: {
     component: SvgBubbleSlider,
     componentSubtitle:

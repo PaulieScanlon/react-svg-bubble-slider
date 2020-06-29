@@ -60,13 +60,16 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const [isMounted, setIsMounted] = useState(false)
     const [isUnmounted, setIsUnmounted] = useState(false)
-    const [animationState, setAnimationState] = useState(false)
+    const [isAnimationComplete, setIsAnimationComplete] = useState(false)
     const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
     const [mtl, setMtl] = useState({
       timeline: gsap.timeline({ paused: true }),
     })
-    const [currentReaction, setCurrentReaction] = useState('')
+    const [currentReaction, setCurrentReaction] = useState({
+      index: 0,
+      name: '',
+    })
 
     // This is a hacky work-around because posX gets updated after we need it...
     // resulting in landed returning the wrong icon name
@@ -78,29 +81,33 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     }
 
     const handleAnimationStart = () => {
-      setAnimationState(true)
-      setCurrentReaction('')
+      setIsAnimationComplete(false)
       onAnimationComplete('')
     }
 
     const handleAnimationComplete = () => {
-      const landed = Math.ceil(_x / SPACER)
+      const index = Math.abs(_x / SPACER)
+      const name = iconsToUse[Math.abs(index)].name
+
       if (!isUnmounted) {
-        setAnimationState(false)
-        setCurrentReaction(iconsToUse[Math.abs(landed)].name)
-        onAnimationComplete(iconsToUse[Math.abs(landed)].name)
+        setIsAnimationComplete(true)
+        setCurrentReaction({ index: index, name: name })
+        onAnimationComplete(name)
       }
     }
 
     const handleClick = (index: number) => {
-      gsap.to([dotContainerRef.current, iconContainerRef.current], {
-        duration: 0.8,
-        x: snapArray[index],
-        onUpdate: handleDragSlider,
-        onComplete: handleAnimationComplete,
-        ease: 'power1',
-      })
-      if (iconsToUse[index].name !== currentReaction) {
+      if (isAnimationComplete) {
+        gsap.to([dotContainerRef.current, iconContainerRef.current], {
+          duration: 0.8,
+          x: snapArray[index],
+          onUpdate: handleDragSlider,
+          onComplete: handleAnimationComplete,
+          ease: 'power1',
+        })
+      }
+
+      if (index !== currentReaction.index) {
         handleAnimationStart()
       }
     }
@@ -265,12 +272,14 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
               <Fragment>
                 <PopLines
                   viewBoxWidth={VIEWBOX_WIDTH}
-                  animationState={animationState}
+                  isAnimationComplete={isAnimationComplete}
+                  currentReaction={currentReaction.name}
                   primaryColor={primaryColor}
                 />
                 <SpeechBubble
                   viewBoxWidth={VIEWBOX_WIDTH}
-                  currentReaction={currentReaction as any}
+                  isAnimationComplete={isAnimationComplete}
+                  currentReaction={currentReaction.name}
                   primaryColor={primaryColor}
                   secondaryColor={secondaryColor}
                 />

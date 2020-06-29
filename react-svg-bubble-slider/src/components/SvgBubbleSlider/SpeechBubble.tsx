@@ -10,17 +10,18 @@ import { gsap } from 'gsap'
 
 import { SpeechBubbleProps } from './types'
 
-const START_Y = 100
+const START_Y = 80
 
 export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   primaryColor,
   secondaryColor,
   viewBoxWidth,
   currentReaction,
+  isAnimationComplete,
 }: SpeechBubbleProps) => {
   const speechBubblesRef = useRef(null)
   const [tl] = useState({
-    timeline: gsap.timeline(),
+    timeline: gsap.timeline({ paused: true }),
   })
 
   useEffect(() => {
@@ -51,10 +52,10 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({
   }, [])
 
   useEffect(() => {
-    currentReaction.length > 0
+    isAnimationComplete
       ? tl.timeline.play()
       : tl.timeline.pause() && tl.timeline.seek(0)
-  }, [currentReaction])
+  }, [isAnimationComplete])
 
   return (
     <g

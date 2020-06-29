@@ -26,16 +26,15 @@ export interface TimelineProps extends coreProps {
   onAnimationComplete: (reaction: string) => void
 }
 
-export interface SpeechBubbleProps extends coreProps {
+interface subProps {
+  /** Is the animation happening */
+  isAnimationComplete?: boolean
   /** The name of the current reaction */
   currentReaction: string
   /** The width of the ViewBox */
   viewBoxWidth: number
 }
 
-export interface PopLinesProps extends coreProps {
-  /** Is the animation happening */
-  animationState: boolean
-  /** The width of the ViewBox */
-  viewBoxWidth: number
-}
+export interface SpeechBubbleProps extends coreProps, subProps {}
+
+export interface PopLinesProps extends coreProps, subProps {}

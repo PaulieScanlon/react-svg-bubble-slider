@@ -64,7 +64,8 @@ const lineAttributes = [
 export const PopLines: FunctionComponent<PopLinesProps> = ({
   primaryColor,
   viewBoxWidth,
-  animationState,
+  currentReaction,
+  isAnimationComplete,
 }: PopLinesProps) => {
   const popLinesRef = useRef(null)
 
@@ -72,7 +73,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
 
   useEffect(() => {
     lineRefs.map((_, index: number) => {
-      animationState
+      currentReaction.length && !isAnimationComplete
         ? gsap.to(lineRefs[index], 0.2, {
             scale: 2,
             drawSVG: '100% 100%',
@@ -84,7 +85,7 @@ export const PopLines: FunctionComponent<PopLinesProps> = ({
             scale: 0,
           })
     })
-  }, [animationState])
+  }, [currentReaction, isAnimationComplete])
 
   useEffect(() => {
     gsap.set(popLinesRef.current, {

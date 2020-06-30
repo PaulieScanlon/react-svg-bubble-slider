@@ -1,4 +1,10 @@
-import React, { FunctionComponent, RefObject, useRef, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  memo,
+  RefObject,
+  useRef,
+  useEffect,
+} from 'react'
 
 import { gsap } from 'gsap'
 // @ts-ignore
@@ -61,62 +67,64 @@ const lineAttributes = [
   },
 ]
 
-export const PopLines: FunctionComponent<PopLinesProps> = ({
-  primaryColor,
-  viewBoxWidth,
-  currentReaction,
-  isAnimationComplete,
-}: PopLinesProps) => {
-  const popLinesRef = useRef(null)
+export const PopLines: FunctionComponent<PopLinesProps> = memo(
+  ({
+    primaryColor,
+    viewBoxWidth,
+    currentReaction,
+    isAnimationComplete,
+  }: PopLinesProps) => {
+    const popLinesRef = useRef(null)
 
-  const lineRefs: RefObject<SVGPathElement>[] = []
+    const lineRefs: RefObject<SVGPathElement>[] = []
 
-  useEffect(() => {
-    lineRefs.map((_, index: number) => {
-      currentReaction.length && !isAnimationComplete
-        ? gsap.to(lineRefs[index], 0.2, {
-            scale: 2,
-            drawSVG: '100% 100%',
-            ease: 'linear',
-          })
-        : gsap.set(lineRefs[index], {
-            transformOrigin: '50% 50%',
-            drawSVG: '0% 100%',
-            scale: 0,
-          })
-    })
-  }, [currentReaction, isAnimationComplete])
+    useEffect(() => {
+      lineRefs.map((_, index: number) => {
+        currentReaction.length && !isAnimationComplete
+          ? gsap.to(lineRefs[index], 0.2, {
+              scale: 2,
+              drawSVG: '100% 100%',
+              ease: 'linear',
+            })
+          : gsap.set(lineRefs[index], {
+              transformOrigin: '50% 50%',
+              drawSVG: '0% 100%',
+              scale: 0,
+            })
+      })
+    }, [currentReaction, isAnimationComplete])
 
-  useEffect(() => {
-    gsap.set(popLinesRef.current, {
-      visibility: 'visible',
-    })
-  }, [])
+    useEffect(() => {
+      gsap.set(popLinesRef.current, {
+        visibility: 'visible',
+      })
+    }, [])
 
-  return (
-    <g
-      ref={popLinesRef as RefObject<any>}
-      fill="none"
-      stroke={primaryColor}
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeMiterlimit="10"
-      transform={`matrix(1,0,0,1,${viewBoxWidth / 2 - 88},${START_Y})`}
-      style={{
-        visibility: 'hidden',
-      }}
-    >
-      {lineAttributes.map((line, index: number) => (
-        <line
-          className="speech-bubble-pop-line"
-          ref={(ref) => lineRefs.push(ref as any)}
-          key={index}
-          {...line}
-        />
-      ))}
-    </g>
-  )
-}
+    return (
+      <g
+        ref={popLinesRef as RefObject<any>}
+        fill="none"
+        stroke={primaryColor}
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
+        transform={`matrix(1,0,0,1,${viewBoxWidth / 2 - 88},${START_Y})`}
+        style={{
+          visibility: 'hidden',
+        }}
+      >
+        {lineAttributes.map((line, index: number) => (
+          <line
+            className="speech-bubble-pop-line"
+            ref={(ref) => lineRefs.push(ref as any)}
+            key={index}
+            {...line}
+          />
+        ))}
+      </g>
+    )
+  }
+)
 
 PopLines.displayName = 'PopLines'

@@ -33,7 +33,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     primaryColor,
     secondaryColor,
     icons,
-    showSpeechBubble = true,
+    showSpeechBubble,
+    scale,
   }: TimelineProps) => {
     const iconsToUse = icons
       ? iconPaths
@@ -47,6 +48,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const VIEWBOX_HEIGHT = showSpeechBubble ? 290 : 120
     const START_Y = showSpeechBubble ? 215 : 45
+
+    const SIZE_WIDTH = VIEWBOX_WIDTH * scale
+    const SIZE_HEIGHT = VIEWBOX_HEIGHT * scale
 
     if (iconsToUse.length < 3)
       throw new Error('You must have at lease three icons')
@@ -246,8 +250,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         >
           <svg
             ref={svgIconBubblesRef as RefObject<any>}
-            width={VIEWBOX_WIDTH}
-            height={VIEWBOX_HEIGHT}
+            width={SIZE_WIDTH}
+            height={SIZE_HEIGHT}
             viewBox={`0,0, ${VIEWBOX_WIDTH},${VIEWBOX_HEIGHT}`}
             style={{
               minWidth: 280,

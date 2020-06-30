@@ -1,45 +1,51 @@
-import React, { Fragment, FunctionComponent, useState } from 'react'
+import React, { memo, Fragment, FunctionComponent, useState } from 'react'
 
 import { SvgBubbleSliderProps } from './types'
 import theme from '../../theme'
 
 import { Timeline } from './Timeline'
 
-export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = ({
-  children,
-  primaryColor = theme.colors.primary,
-  secondaryColor = theme.colors.background,
-  icons,
-  showSpeechBubble,
-}: SvgBubbleSliderProps) => {
-  const [currentReaction, setCurrentReaction] = useState<any>('')
+export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
+  ({
+    children,
+    primaryColor = theme.colors.primary,
+    secondaryColor = theme.colors.background,
+    icons,
+    showSpeechBubble = true,
+    scale = 1,
+  }: SvgBubbleSliderProps) => {
+    const [currentReaction, setCurrentReaction] = useState<any>('')
 
-  return (
-    <Fragment>
-      <div
-        className="react-svg-bubble-slider"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          position: 'relative',
-          width: '100%',
-        }}
-      >
-        <Timeline
-          onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
-          primaryColor={primaryColor}
-          secondaryColor={secondaryColor}
-          icons={icons}
-          showSpeechBubble={showSpeechBubble}
-        />
-      </div>
-      <div className="svg-bubble-action">
-        {children &&
-          children({
-            reaction: currentReaction,
-          })}
-      </div>
-    </Fragment>
-  )
-}
+    return (
+      <Fragment>
+        <div
+          className="react-svg-bubble-slider"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            position: 'relative',
+            width: '100%',
+          }}
+        >
+          <Timeline
+            onAnimationComplete={(reaction) => setCurrentReaction(reaction)}
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
+            icons={icons}
+            showSpeechBubble={showSpeechBubble}
+            scale={scale}
+          />
+        </div>
+        <div className="svg-bubble-action">
+          {children &&
+            children({
+              reaction: currentReaction,
+            })}
+        </div>
+      </Fragment>
+    )
+  }
+)
+
+SvgBubbleSlider.displayName = 'SvgBubbleSlider'

@@ -30,8 +30,8 @@ Click or drag around to explore all the reactions
       <Flex
         sx={{
           justifyContent: 'center',
-          minHeight: 66,
-          pt: 4,
+          minHeight: 48,
+          pt: 2,
         }}
       >
         {reaction && (
@@ -82,8 +82,6 @@ export default SomeComponent
 
 In addition to allowing users to leave a reaction you may wish to display how many reactions have been left. One way to do this is to use the `SvgIcon` and display the count underneath it.
 
-<Box sx={{ height: 110 }} />
-
 <Box
   sx={{
     '.speech-bubble-text': {
@@ -93,15 +91,13 @@ In addition to allowing users to leave a reaction you may wish to display how ma
     },
   }}
 >
-  <SvgBubbleSlider
-    icons={['angry', 'sad', 'neutral', 'smile', 'happy', 'cool']}
-  >
+  <SvgBubbleSlider icons={['angry', 'smile', 'neutral']}>
     {({ reaction }) => (
       <Flex
         sx={{
           justifyContent: 'center',
-          minHeight: 66,
-          pt: 4,
+          minHeight: 48,
+          pt: 2,
         }}
       >
         {reaction && (
@@ -112,14 +108,14 @@ In addition to allowing users to leave a reaction you may wish to display how ma
   </SvgBubbleSlider>
 </Box>
 
-<Box sx={{ height: 40 }} />
+<Box sx={{ height: 20 }} />
 
 <Flex
   sx={{
     justifyContent: 'space-around',
     margin: 'auto',
-    maxWidth: ['100%', '40%', '30%'],
     flexWrap: 'wrap',
+    maxWidth: 120,
     '.svg-icon': {
       color: 'accent',
     },
@@ -132,9 +128,9 @@ In addition to allowing users to leave a reaction you may wish to display how ma
     </Text>
   </Flex>
   <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="sad" />
+    <SvgIcon name="smile" />
     <Text as="small" variant="small">
-      7
+      22
     </Text>
   </Flex>
   <Flex sx={{ flexDirection: 'column' }}>
@@ -143,27 +139,7 @@ In addition to allowing users to leave a reaction you may wish to display how ma
       1
     </Text>
   </Flex>
-  <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="smile" />
-    <Text as="small" variant="small">
-      22
-    </Text>
-  </Flex>
-  <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="happy" />
-    <Text as="small" variant="small">
-      31
-    </Text>
-  </Flex>
-  <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="cool" />
-    <Text as="small" variant="small">
-      85
-    </Text>
-  </Flex>
 </Flex>
-
-<Box sx={{ height: 30 }} />
 
 <Divider />
 

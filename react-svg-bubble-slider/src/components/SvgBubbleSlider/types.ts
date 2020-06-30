@@ -9,6 +9,8 @@ interface coreProps {
   secondaryColor?: string
   /** Names of icons to include */
   icons?: string[]
+  /** The main scale */
+  scale?: number
 }
 
 export interface ReactionType {

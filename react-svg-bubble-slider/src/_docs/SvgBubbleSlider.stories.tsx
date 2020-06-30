@@ -26,7 +26,7 @@ export default {
   parameters: {
     component: SvgBubbleSlider,
     componentSubtitle:
-      'Have a browse of the props to see how you can customise SvgBubbleSlider. You can see the usage by clicking on "Show code" in the bottom right of the preview panel 👇',
+      'Have a browse of the props to see how you can customise React Svg Bubble Slider. You can see the usage by clicking on "Show code" in the bottom right of the preview panel 👇',
   },
 }
 
@@ -84,6 +84,17 @@ showSpeechBubble.story = {
   },
 }
 
+export const scale = () => <SvgBubbleSlider scale={0.6} />
+
+scale.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'The `scale` prop can be used to adjust the size of React Svg Bubble Slider',
+    },
+  },
+}
+
 export const primaryColor = () => <SvgBubbleSlider primaryColor="#4fc3f7" />
 
 primaryColor.story = {
@@ -95,7 +106,7 @@ primaryColor.story = {
   },
 }
 
-export const secondaryColor = () => <SvgBubbleSlider secondaryColor="#ffebee" />
+export const secondaryColor = () => <SvgBubbleSlider secondaryColor="#114848" />
 
 secondaryColor.story = {
   parameters: {

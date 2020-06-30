@@ -12,7 +12,7 @@ Click or drag around to explore all the reactions
 
 ## demo 👀
 
-https://react-svg-bubble-slider.netlify.app/
+https://react-svg-bubble-slider.netlify.app/?path=/docs/intro--page
 
 ### Getting Started 🚀
 
@@ -28,9 +28,9 @@ To use SvgBubbleSlider import it and add it to your React component's render met
 
 ```javascript
 // some-component.js/.tsx
-import React from "react";
+import React from 'react';
 
-import { SvgBubbleSlider } from "react-svg-bubble-slider";
+import { SvgBubbleSlider } from 'react-svg-bubble-slider';
 
 const SomeComponent = () => {
   return (

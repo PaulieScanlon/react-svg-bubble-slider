@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
 
-import { Flex, Box } from 'theme-ui'
+import { Box } from 'theme-ui'
 
 export default {
   title: 'SvgBubbleSlider',
@@ -13,7 +13,7 @@ export default {
           sx={{
             '.svg-timeline': {
               ':focus': {
-                outlineColor: 'primary',
+                outlineColor: 'accent',
               },
             },
           }}
@@ -48,7 +48,7 @@ icons.story = {
 export const reaction = () => (
   <SvgBubbleSlider>
     {({ reaction }: any) => (
-      <div style={{ height: 60 }}>
+      <div style={{ height: 60, paddingTop: 16 }}>
         {reaction && (
           <button
             style={{ display: 'block', margin: 'auto' }}
@@ -120,6 +120,11 @@ secondaryColor.story = {
 export const ThemeUI = () => (
   <Box
     sx={{
+      '.svg-timeline': {
+        ':focus': {
+          outlineColor: 'mutedAccent',
+        },
+      },
       '.speech-bubble-stroke': {
         stroke: 'muted',
       },

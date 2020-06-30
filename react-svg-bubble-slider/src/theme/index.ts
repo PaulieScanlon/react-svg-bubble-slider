@@ -16,6 +16,7 @@ export default {
     gray: '#F9F9F9',
     darkGray: '#999999',
     accent: '#ffd5ea',
+    mutedAccent: '#d1d8ec',
     darken: '#323442',
   },
 
@@ -30,6 +31,9 @@ export default {
   buttons: {
     primary: {
       cursor: 'pointer',
+      ':focus': {
+        outlineColor: 'secondary',
+      },
     },
   },
 
@@ -52,11 +56,6 @@ export default {
     heading: 800,
   },
   styles: {
-    a: {
-      color: 'primary',
-      cursor: 'pointer',
-      fontWeight: 'bold',
-    },
     hr: {
       my: 4,
     },

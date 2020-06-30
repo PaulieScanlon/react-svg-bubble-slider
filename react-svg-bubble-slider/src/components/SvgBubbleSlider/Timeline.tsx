@@ -55,6 +55,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     if (iconsToUse.length < 3)
       throw new Error('You must have at lease three icons')
 
+    const svgTimelineRef = useRef(null)
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
@@ -97,14 +98,17 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         setIsAnimationComplete(true)
         setCurrentReaction({ index: index, name: name })
         onAnimationComplete(name)
+        // svgTimelineRef.current.addEventListener('keydown', handleKeyDown)
       }
     }
 
-    const handleClick = (index: number) => {
+    const doAnimation = (index: number) => {
+      // svgTimelineRef.current.removeEventListener('keydown', handleKeyDown)
       if (isAnimationComplete) {
         gsap.to([dotContainerRef.current, iconContainerRef.current], {
           duration: 0.8,
           x: snapArray[index],
+          onStart: handleAnimationStart,
           onUpdate: handleDragSlider,
           onComplete: handleAnimationComplete,
           ease: 'power1',
@@ -116,11 +120,27 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
       }
     }
 
+    const handleClick = (index: number) => {
+      if (index !== currentReaction.index) {
+        doAnimation(index)
+      }
+    }
+
+    // const handleKeyDown = (event: KeyboardEvent) => {
+    //   const { key } = event
+    //   if (
+    //     key === 'ArrowRight' &&
+    //     currentReaction.index < iconsToUse.length - 1
+    //   ) {
+    //     doAnimation((currentReaction.index += 1))
+    //   }
+    //   if (key === 'ArrowLeft' && currentReaction.index > 0) {
+    //     doAnimation((currentReaction.index -= 1))
+    //   }
+    // }
+
     useEffect(() => {
       gsap.registerPlugin(Draggable, InertiaPlugin)
-      gsap.set(svgIconBubblesRef.current, {
-        visibility: 'visible',
-      })
 
       iconsToUse.map((_, index: number) => {
         setSnapArray((snapArray) => [...snapArray, -index * SPACER])
@@ -216,6 +236,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
       if (isMounted) {
         dragInstance.enable()
       }
+      // svgTimelineRef.current.addEventListener('keydown', handleKeyDown)
     }, [isMounted])
 
     useEffect(() => {
@@ -232,6 +253,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     return (
       <div
+        ref={svgTimelineRef as RefObject<any>}
+        className="svg-timeline"
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -241,6 +264,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
           overflow: 'hidden',
           width: '100%',
         }}
+        // tabIndex={1}
       >
         <div
           style={{
@@ -298,7 +322,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                     ICON_SIZE * 2
                   })`}
                   style={{
-                    cursor: 'move',
+                    cursor: isAnimationComplete ? 'move' : 'none',
+                    pointerEvents: isAnimationComplete ? 'inherit' : 'none',
                     fill: 'rgba(0, 0, 0, 0)',
                     height: '100%',
                   }}
@@ -322,6 +347,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       }}
                       style={{
                         cursor: 'pointer',
+                        pointerEvents:
+                          index !== currentReaction.index ? 'inherit' : 'none',
                       }}
                     />
                   )

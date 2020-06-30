@@ -1,6 +1,10 @@
+const fontFamily =
+  '"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif'
+
 export default {
   fonts: {
-    body: 'Roboto, Arial, sans-serif',
+    body: fontFamily,
+    heading: fontFamily,
   },
   colors: {
     text: '#282a36',
@@ -38,6 +42,15 @@ export default {
     },
   },
 
+  lineHeights: {
+    body: 'normal',
+    heading: 'normal',
+  },
+
+  fontWeights: {
+    body: 400,
+    heading: 800,
+  },
   styles: {
     a: {
       color: 'primary',

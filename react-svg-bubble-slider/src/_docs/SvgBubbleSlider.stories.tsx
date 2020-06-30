@@ -26,7 +26,7 @@ export default {
   parameters: {
     component: SvgBubbleSlider,
     componentSubtitle:
-      'Have a browse of the props to see how you can customise React Svg Bubble Slider. You can see the usage by clicking on "Show code" in the bottom right of the preview panel 👇',
+      'Have a browse of the props to see how you can customise SvgBubbleSlider. You can see the usage by clicking on "Show code" in the bottom right of the preview panel 👇',
   },
 }
 
@@ -90,7 +90,7 @@ scale.story = {
   parameters: {
     docs: {
       storyDescription:
-        'The `scale` prop can be used to adjust the size of React Svg Bubble Slider',
+        'The `scale` prop can be used to adjust the size of SvgBubbleSlider',
     },
   },
 }

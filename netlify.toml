@@ -1,17 +1,2 @@
 [build]
   publish = "react-svg-bubble-slider/storybook-static"
-
-[[redirects]]
-  from = "/"
-  to = "/?path=/docs/intro--page"
-  force = true
-
-[[redirects]]
-  from = "/?path=/story/*"
-  to = "/?path=/docs/intro--page"
-  force = true
-
-[[redirects]]
-  from = "/?path=/story/intro--page"
-  to = "/?path=/docs/intro--page"
-  force = true

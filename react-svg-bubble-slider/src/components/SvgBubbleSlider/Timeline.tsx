@@ -98,8 +98,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     }
 
     const handleAnimationComplete = () => {
-      let index = Math.abs(_x / SPACER)
-      let name = iconsToUse[Math.abs(index)].name
+      const index = Math.abs(_x / SPACER)
+      const name = iconsToUse[Math.abs(index)].name
       if (isMounted) {
         setIsAnimating(false)
         setCurrentReaction({ index: index, name: name })
@@ -122,7 +122,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const handleKeydown = (event: KeyboardEvent) => {
       const { key } = event
-      console.log(key)
       if (
         key === 'ArrowRight' &&
         currentReaction.index < iconsToUse.length - 1

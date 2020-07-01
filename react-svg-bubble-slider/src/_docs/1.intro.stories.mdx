@@ -45,6 +45,11 @@ Click or drag around to explore all the reactions
 
 <Box
   sx={{
+    '.svg-timeline': {
+      ':focus': {
+        outlineColor: 'accent',
+      },
+    },
     '.speech-bubble-text': {
       fill: 'primary',
       fontSize: '22px',
@@ -61,9 +66,9 @@ Click or drag around to explore all the reactions
           pt: 2,
         }}
       >
-        {reaction && (
-          <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
-        )}
+        <Button sx={{ textTransform: 'capitalize' }}>
+          {reaction ? reaction : '?'}
+        </Button>
       </Flex>
     )}
   </SvgBubbleSlider>
@@ -111,6 +116,11 @@ In addition to allowing users to leave a reaction you may wish to display how ma
 
 <Box
   sx={{
+    '.svg-timeline': {
+      ':focus': {
+        outlineColor: 'accent',
+      },
+    },
     '.speech-bubble-text': {
       fill: 'primary',
       fontSize: '22px',
@@ -127,9 +137,9 @@ In addition to allowing users to leave a reaction you may wish to display how ma
           pt: 2,
         }}
       >
-        {reaction && (
-          <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
-        )}
+        <Button sx={{ textTransform: 'capitalize' }}>
+          {reaction ? reaction : '?'}
+        </Button>
       </Flex>
     )}
   </SvgBubbleSlider>

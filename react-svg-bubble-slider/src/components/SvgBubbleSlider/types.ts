@@ -30,7 +30,7 @@ export interface TimelineProps extends coreProps {
 
 interface subProps {
   /** Is the animation happening */
-  isAnimationComplete?: boolean
+  isAnimating?: boolean
   /** The name of the current reaction */
   currentReaction: string
   /** The width of the ViewBox */

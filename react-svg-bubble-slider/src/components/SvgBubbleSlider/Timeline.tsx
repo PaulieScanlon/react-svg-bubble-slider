@@ -276,6 +276,11 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
           overflow: 'hidden',
           width: '100%',
         }}
+        role="slider"
+        aria-valuemin={0}
+        aria-valuemax={iconsToUse.length - 1}
+        aria-valuenow={currentReaction.index}
+        aria-valuetext={currentReaction.name}
         tabIndex={0}
       >
         <div

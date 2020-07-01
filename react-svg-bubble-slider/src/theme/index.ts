@@ -10,7 +10,7 @@ export default {
     text: '#282a36',
     background: '#ffffff',
     primary: '#FF69B4',
-    secondary: '#8be9fd',
+    secondary: '#1EA7FD',
     muted: '#8394ca',
     highlight: '#50fa7b',
     gray: '#F9F9F9',
@@ -57,6 +57,13 @@ export default {
     heading: 800,
   },
   styles: {
+    a: {
+      fontWeight: 'bold',
+      color: 'secondary',
+      ':focus': {
+        outlineColor: 'primary',
+      },
+    },
     hr: {
       my: 4,
     },

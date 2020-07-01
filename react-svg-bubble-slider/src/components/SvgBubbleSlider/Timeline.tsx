@@ -123,8 +123,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     const handleKeydown = (event: KeyboardEvent) => {
       const { key } = event
       if (
-        key === 'ArrowRight' &&
-        currentReaction.index < iconsToUse.length - 1
+        (key === 'ArrowRight' &&
+          currentReaction.index < iconsToUse.length - 1) ||
+        (key === 'ArrowUp' && currentReaction.index < iconsToUse.length - 1)
       ) {
         handleAnimation(
           (currentReaction.index += 1),
@@ -133,12 +134,23 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         )
       }
 
-      if (key === 'ArrowLeft' && currentReaction.index > 0) {
+      if (key === 'Home' && currentReaction.index > 0) {
+        handleAnimation(0, EVENT_DURATION, EVENT_EASE)
+      }
+
+      if (
+        (key === 'ArrowLeft' && currentReaction.index > 0) ||
+        (key === 'ArrowDown' && currentReaction.index > 0)
+      ) {
         handleAnimation(
           (currentReaction.index -= 1),
           EVENT_DURATION,
           EVENT_EASE
         )
+      }
+
+      if (key === 'End' && currentReaction.index < iconsToUse.length - 1) {
+        handleAnimation(iconsToUse.length - 1, EVENT_DURATION, EVENT_EASE)
       }
     }
 
@@ -264,7 +276,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
           overflow: 'hidden',
           width: '100%',
         }}
-        tabIndex={1}
+        tabIndex={0}
       >
         <div
           style={{

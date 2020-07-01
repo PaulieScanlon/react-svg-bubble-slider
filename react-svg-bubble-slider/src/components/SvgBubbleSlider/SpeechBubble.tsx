@@ -19,7 +19,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = memo(
     secondaryColor,
     viewBoxWidth,
     currentReaction,
-    isAnimationComplete,
+    isAnimating,
   }: SpeechBubbleProps) => {
     const speechBubblesRef = useRef(null)
     const [tl] = useState({
@@ -54,10 +54,10 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = memo(
     }, [])
 
     useEffect(() => {
-      isAnimationComplete
+      !isAnimating
         ? tl.timeline.play()
         : tl.timeline.pause() && tl.timeline.seek(0)
-    }, [isAnimationComplete])
+    }, [isAnimating])
 
     return (
       <g

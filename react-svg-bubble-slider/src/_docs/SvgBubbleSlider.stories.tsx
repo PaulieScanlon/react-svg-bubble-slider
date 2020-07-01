@@ -49,14 +49,12 @@ export const reaction = () => (
   <SvgBubbleSlider>
     {({ reaction }: any) => (
       <div style={{ height: 60, paddingTop: 16 }}>
-        {reaction && (
-          <button
-            style={{ display: 'block', margin: 'auto' }}
-            onClick={() => console.log(reaction)}
-          >
-            {reaction}
-          </button>
-        )}
+        <button
+          style={{ display: 'block', margin: 'auto' }}
+          onClick={() => console.log(reaction)}
+        >
+          {reaction ? reaction : '?'}
+        </button>
       </div>
     )}
   </SvgBubbleSlider>

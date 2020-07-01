@@ -27,6 +27,9 @@ const SPACER = 60
 
 const DOT_SIZE = 10
 
+const EVENT_DURATION = 0.8
+const EVENT_EASE = 'power1'
+
 export const Timeline: FunctionComponent<TimelineProps> = memo(
   ({
     onAnimationComplete,
@@ -55,7 +58,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     if (iconsToUse.length < 3)
       throw new Error('You must have at lease three icons')
 
-    const svgTimelineRef = useRef(null)
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
@@ -64,8 +66,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
     const [isMounted, setIsMounted] = useState(false)
-    const [isUnmounted, setIsUnmounted] = useState(false)
-    const [isAnimationComplete, setIsAnimationComplete] = useState(false)
+    const [isAnimating, setIsAnimating] = useState(true)
+
     const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
     const [mtl, setMtl] = useState({
@@ -77,67 +79,69 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     })
 
     // This is a hacky work-around because posX gets updated after we need it...
-    // resulting in landed returning the wrong icon name
+    // resulting in handleAnimationComplete returning the wrong icon index / name
     let _x = 0
 
     const handleDragSlider = () => {
-      setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
-      _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
-    }
-
-    const handleAnimationStart = () => {
-      setIsAnimationComplete(false)
-      onAnimationComplete('')
-    }
-
-    const handleAnimationComplete = () => {
-      const index = Math.abs(_x / SPACER)
-      const name = iconsToUse[Math.abs(index)].name
-
-      if (!isUnmounted) {
-        setIsAnimationComplete(true)
-        setCurrentReaction({ index: index, name: name })
-        onAnimationComplete(name)
-        // svgTimelineRef.current.addEventListener('keydown', handleKeyDown)
+      if (isMounted) {
+        setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
+        _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
       }
     }
 
-    const doAnimation = (index: number) => {
-      // svgTimelineRef.current.removeEventListener('keydown', handleKeyDown)
-      if (isAnimationComplete) {
+    const handleAnimationStart = () => {
+      if (isMounted) {
+        setIsAnimating(true)
+        setCurrentReaction({ index: null, name: '' })
+        onAnimationComplete('')
+      }
+    }
+
+    const handleAnimationComplete = () => {
+      let index = Math.abs(_x / SPACER)
+      let name = iconsToUse[Math.abs(index)].name
+      if (isMounted) {
+        setIsAnimating(false)
+        setCurrentReaction({ index: index, name: name })
+        onAnimationComplete(name)
+      }
+    }
+
+    const handleAnimation = (index: number, duration: number, ease: string) => {
+      if (!isAnimating) {
         gsap.to([dotContainerRef.current, iconContainerRef.current], {
-          duration: 0.8,
+          duration: duration,
           x: snapArray[index],
           onStart: handleAnimationStart,
           onUpdate: handleDragSlider,
           onComplete: handleAnimationComplete,
-          ease: 'power1',
+          ease: ease,
         })
       }
-
-      if (index !== currentReaction.index) {
-        handleAnimationStart()
-      }
     }
 
-    const handleClick = (index: number) => {
-      if (index !== currentReaction.index) {
-        doAnimation(index)
+    const handleKeydown = (event: KeyboardEvent) => {
+      const { key } = event
+      console.log(key)
+      if (
+        key === 'ArrowRight' &&
+        currentReaction.index < iconsToUse.length - 1
+      ) {
+        handleAnimation(
+          (currentReaction.index += 1),
+          EVENT_DURATION,
+          EVENT_EASE
+        )
+      }
+
+      if (key === 'ArrowLeft' && currentReaction.index > 0) {
+        handleAnimation(
+          (currentReaction.index -= 1),
+          EVENT_DURATION,
+          EVENT_EASE
+        )
       }
     }
-
-    // const handleKeyDown = (event: KeyboardEvent) => {
-    //   const { key } = event
-    //   if (
-    //     key === 'ArrowRight' &&
-    //     currentReaction.index < iconsToUse.length - 1
-    //   ) {
-    //     doAnimation((currentReaction.index += 1))
-    //   }
-    //   if (key === 'ArrowLeft' && currentReaction.index > 0) {
-    //     doAnimation((currentReaction.index -= 1))
-    //   }
-    // }
 
     useEffect(() => {
       gsap.registerPlugin(Draggable, InertiaPlugin)
@@ -194,23 +198,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         })
       })
 
-      gsap.to([dotContainerRef.current, iconContainerRef.current], 2, {
-        x: -(Math.floor(iconsToUse.length / 2) * SPACER),
-        onUpdate: handleDragSlider,
-        onComplete: () => {
-          if (!isUnmounted) {
-            handleAnimationComplete()
-            setIsMounted(true)
-          }
-        },
-        ease: 'elastic(1, 0.85)',
-      })
-    }, [])
-
-    useEffect(() => {
-      return () => {
-        setIsUnmounted(true)
-      }
+      setIsMounted(true)
+      setIsAnimating(false)
     }, [])
 
     useEffect(() => {
@@ -222,6 +211,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
           minY: 0,
           maxY: 0,
         },
+        onStart: handleAnimationStart,
         onDrag: handleDragSlider,
         onDragStart: handleAnimationStart,
         onThrowUpdate: handleDragSlider,
@@ -235,26 +225,37 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
       if (isMounted) {
         dragInstance.enable()
+        handleAnimation(
+          Math.floor(iconsToUse.length / 2),
+          2,
+          'elastic(1, 0.88)'
+        )
       }
-      // svgTimelineRef.current.addEventListener('keydown', handleKeyDown)
     }, [isMounted])
 
     useEffect(() => {
-      gsap.to(mtl.timeline, {
-        duration: 0.5,
-        time: (posX / MIN_DRAG_X) * (mtl.timeline.duration() - 2) + 1,
-        ease: 'elastic(2, 0.75)',
-      })
-
-      gsap.set(iconContainerRef.current, {
-        x: posX,
-      })
+      if (isMounted) {
+        gsap.to(mtl.timeline, {
+          duration: 0.5,
+          time: (posX / MIN_DRAG_X) * (mtl.timeline.duration() - 2) + 1,
+          ease: 'elastic(2, 0.75)',
+        })
+        gsap.set(iconContainerRef.current, {
+          x: posX,
+        })
+      }
     }, [posX])
+
+    useEffect(() => {
+      return () => {
+        setIsMounted(false)
+      }
+    }, [])
 
     return (
       <div
-        ref={svgTimelineRef as RefObject<any>}
         className="svg-timeline"
+        onKeyDown={(event: any) => handleKeydown(event)}
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -264,7 +265,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
           overflow: 'hidden',
           width: '100%',
         }}
-        // tabIndex={1}
+        tabIndex={1}
       >
         <div
           style={{
@@ -296,17 +297,17 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                 />
               </filter>
             </defs>
-            {showSpeechBubble && (
+            {showSpeechBubble && isMounted && (
               <Fragment>
                 <PopLines
                   viewBoxWidth={VIEWBOX_WIDTH}
-                  isAnimationComplete={isAnimationComplete}
+                  isAnimating={isAnimating}
                   currentReaction={currentReaction.name}
                   primaryColor={primaryColor}
                 />
                 <SpeechBubble
                   viewBoxWidth={VIEWBOX_WIDTH}
-                  isAnimationComplete={isAnimationComplete}
+                  isAnimating={isAnimating}
                   currentReaction={currentReaction.name}
                   primaryColor={primaryColor}
                   secondaryColor={secondaryColor}
@@ -315,15 +316,20 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
             )}
 
             <g transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2} ${START_Y})`}>
-              <g ref={dotContainerRef as RefObject<any>} filter="url(#goo)">
+              <g
+                ref={dotContainerRef as RefObject<any>}
+                filter="url(#goo)"
+                style={{
+                  cursor: isAnimating ? 'not-allowed' : 'move',
+                  pointerEvents: isAnimating ? 'none' : 'initial',
+                }}
+              >
                 <rect
                   width={VIEWBOX_WIDTH}
                   transform={`matrix(1,0,0,1,-${DOT_SIZE * 2},-${
                     ICON_SIZE * 2
                   })`}
                   style={{
-                    cursor: isAnimationComplete ? 'move' : 'none',
-                    pointerEvents: isAnimationComplete ? 'inherit' : 'none',
                     fill: 'rgba(0, 0, 0, 0)',
                     height: '100%',
                   }}
@@ -343,12 +349,15 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       fill={primaryColor}
                       id={`dot-${name}-${index}`}
                       onClick={() => {
-                        handleClick(index)
+                        index !== currentReaction.index &&
+                          handleAnimation(index, EVENT_DURATION, EVENT_EASE)
                       }}
                       style={{
-                        cursor: 'pointer',
-                        pointerEvents:
-                          index !== currentReaction.index ? 'inherit' : 'none',
+                        cursor: isAnimating
+                          ? 'not-allowed'
+                          : currentReaction.index === index
+                          ? 'move'
+                          : 'pointer',
                       }}
                     />
                   )

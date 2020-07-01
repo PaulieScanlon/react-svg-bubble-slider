@@ -31,6 +31,7 @@ export default {
   buttons: {
     primary: {
       cursor: 'pointer',
+      minWidth: 120,
       ':focus': {
         outlineColor: 'secondary',
       },

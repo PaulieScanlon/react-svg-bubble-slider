@@ -66,9 +66,9 @@ Click or drag around to explore all the reactions
           pt: 2,
         }}
       >
-        {reaction && (
-          <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
-        )}
+        <Button sx={{ textTransform: 'capitalize' }}>
+          {reaction ? reaction : '?'}
+        </Button>
       </Flex>
     )}
   </SvgBubbleSlider>
@@ -137,9 +137,9 @@ In addition to allowing users to leave a reaction you may wish to display how ma
           pt: 2,
         }}
       >
-        {reaction && (
-          <Button sx={{ textTransform: 'capitalize' }}>{reaction}</Button>
-        )}
+        <Button sx={{ textTransform: 'capitalize' }}>
+          {reaction ? reaction : '?'}
+        </Button>
       </Flex>
     )}
   </SvgBubbleSlider>

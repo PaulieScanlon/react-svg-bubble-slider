@@ -2,6 +2,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
 import { SvgIcon } from '../components/SvgIcon'
+import IconCount from './IconCount'
 
 <Meta title="Intro" component={SvgBubbleSlider} />
 
@@ -66,7 +67,10 @@ Click, drag or use your keyboard arrows to explore all the reactions.
           pt: 2,
         }}
       >
-        <Button sx={{ textTransform: 'capitalize' }}>
+        <Button
+          disabled={!reaction ? true : false}
+          sx={{ textTransform: 'capitalize' }}
+        >
           {reaction ? reaction : '?'}
         </Button>
       </Flex>
@@ -137,7 +141,10 @@ In addition to allowing users to leave a reaction you may wish to display how ma
           pt: 2,
         }}
       >
-        <Button sx={{ textTransform: 'capitalize' }}>
+        <Button
+          disabled={!reaction ? true : false}
+          sx={{ textTransform: 'capitalize' }}
+        >
           {reaction ? reaction : '?'}
         </Button>
       </Flex>
@@ -145,37 +152,19 @@ In addition to allowing users to leave a reaction you may wish to display how ma
   </SvgBubbleSlider>
 </Box>
 
-<Box sx={{ height: 20 }} />
+<Box sx={{ height: 30 }} />
 
 <Flex
   sx={{
     justifyContent: 'space-around',
     margin: 'auto',
     flexWrap: 'wrap',
-    maxWidth: 120,
-    '.svg-icon': {
-      color: 'accent',
-    },
+    maxWidth: 260,
   }}
 >
-  <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="angry" />
-    <Text as="small" variant="small">
-      13
-    </Text>
-  </Flex>
-  <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="smile" />
-    <Text as="small" variant="small">
-      22
-    </Text>
-  </Flex>
-  <Flex sx={{ flexDirection: 'column' }}>
-    <SvgIcon name="neutral" />
-    <Text as="small" variant="small">
-      1
-    </Text>
-  </Flex>
+  <IconCount name="angry" count={13} />
+  <IconCount name="smile" count={22} />
+  <IconCount name="neutral" count={1} />
 </Flex>
 
 </Box>

@@ -31,7 +31,13 @@ export default {
   buttons: {
     primary: {
       cursor: 'pointer',
+      fontWeight: 'bold',
       minWidth: 120,
+      ':disabled': {
+        color: 'primary',
+        backgroundColor: 'accent',
+        cursor: 'not-allowed',
+      },
       ':focus': {
         outlineColor: 'secondary',
       },

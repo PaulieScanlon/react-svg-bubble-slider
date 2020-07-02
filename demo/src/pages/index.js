@@ -31,7 +31,7 @@ const IndexPage = () => {
         libero, mattis ac lorem et, iaculis egestas arcu. Etiam sodales vitae
         nisi in gravida. Integer sit amet scelerisque sem. Ut sit amet dui
         ultrices diam molestie lobortis imperdiet sit amet urna. Integer
-        tincidunt ut magna sed.
+        tincidunt ut magna.
       </div>
       <div style={{ textAlign: 'center' }}>
         <SvgBubbleSlider>

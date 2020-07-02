@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { SvgBubbleSlider } from "react-svg-bubble-slider";
+import { SvgBubbleSlider } from 'react-svg-bubble-slider';
 
 const IndexPage = () => {
   return (
@@ -31,9 +31,9 @@ const IndexPage = () => {
         libero, mattis ac lorem et, iaculis egestas arcu. Etiam sodales vitae
         nisi in gravida. Integer sit amet scelerisque sem. Ut sit amet dui
         ultrices diam molestie lobortis imperdiet sit amet urna. Integer
-        tincidunt ut magna sed fringilla.
+        tincidunt ut magna sed.
       </div>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: 'center' }}>
         <SvgBubbleSlider>
           {({ reaction }) => reaction && <button>{reaction}</button>}
         </SvgBubbleSlider>

@@ -8,6 +8,7 @@
     "build": "yarn workspace react-svg-bubble-slider build",
     "test": "yarn workspace react-svg-bubble-slider test",
     "test:watch": "yarn workspace react-svg-bubble-slider test:watch",
+    "test:coverage": "yarn workspace react-svg-bubble-slider test:coverage",
     "storybook": "yarn workspace react-svg-bubble-slider storybook",
     "storybook:build": "yarn workspace react-svg-bubble-slider storybook:build",
     "release": "node copy-readme.js && yarn workspace react-svg-bubble-slider release",

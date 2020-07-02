@@ -333,7 +333,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
             <g transform={`matrix(1,0,0,1,${VIEWBOX_WIDTH / 2} ${START_Y})`}>
               <g
-                ref={dotContainerRef as RefObject<any>}
+                ref={dotContainerRef as RefObject<SVGSVGElement>}
                 filter="url(#goo)"
                 style={{
                   cursor: isAnimating ? 'not-allowed' : 'move',
@@ -379,7 +379,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                   )
                 })}
               </g>
-              <g ref={iconContainerRef as RefObject<any>}>
+              <g ref={iconContainerRef as RefObject<SVGSVGElement>}>
                 {iconsToUse.map(
                   (icon: { name: string; path: string }, index: number) => {
                     const { name, path } = icon

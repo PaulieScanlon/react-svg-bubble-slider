@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import { SvgBubbleSlider } from '../components/SvgBubbleSlider'
 
@@ -7,7 +7,7 @@ import { Box } from 'theme-ui'
 export default {
   title: 'SvgBubbleSlider',
   decorators: [
-    (storyfn) => {
+    (storyfn: any) => {
       return (
         <Box
           sx={{

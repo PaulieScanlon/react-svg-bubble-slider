@@ -11,7 +11,7 @@ jobs:
       - run: git submodule sync
       - run: git submodule update --init
       - run: yarn install
-      - run: yarn test
+      - run: yarn test -u
 
 workflows:
   build-and-test:

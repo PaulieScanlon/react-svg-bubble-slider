@@ -2,18 +2,24 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.1
 jobs:
-  build-and-test:
+  Build_Step:
     executor:
       name: node/default
     steps:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+
+  Test_Step:
+    executor:
+      name: node/default
+    steps:
+      - run: npm install
+      - run: npm test
+
 workflows:
-  build-and-test:
+  version: 2
+  Example_Workflow:
     jobs:
-      - build-and-test
+      - Build_Step
+      - Test_Step

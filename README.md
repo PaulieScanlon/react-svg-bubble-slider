@@ -2,7 +2,11 @@
 <img src="https://react-svg-bubble-slider.netlify.app/react-svg-bubble-slider-og-image.jpg" alt="React Svg Buobble Slider" />
 </a>
 
-[![PaulieScanlon](https://circleci.com/gh/PaulieScanlon/react-svg-bubble-slider.svg?style=shield)](https://app.circleci.com/pipelines/github/PaulieScanlon)
+[![circle-ci](https://circleci.com/gh/PaulieScanlon/react-svg-bubble-slider.svg?style=shield)](https://app.circleci.com/pipelines/github/PaulieScanlon)
+
+[![npm](https://img.shields.io/npm/dw/react-svg-bubble-slider)](https://img.shields.io/npm/dw/react-svg-bubble-slider)
+
+[![github-stars](https://img.shields.io/github/stars/pauliescanlon/react-svg-bubble-slider?style=social)](https://img.shields.io/github/stars/pauliescanlon/react-svg-bubble-slider?style=social)
 
 # SvgBubbleSlider
 

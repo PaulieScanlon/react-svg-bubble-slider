@@ -7,6 +7,7 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - run: git clone --recursive https://github.com/PaulieScanlon/gsap-bonus
       - run: git submodule sync
       - run: git submodule update --init
       - run: yarn install

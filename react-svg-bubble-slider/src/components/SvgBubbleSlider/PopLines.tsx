@@ -8,7 +8,7 @@ import React, {
 
 import { gsap } from 'gsap'
 // @ts-ignore
-import { DrawSVGPlugin } from '../../../gsap-bonus/DrawSVGPlugin'
+import { DrawSVGPlugin } from '../../../../gsap-bonus/DrawSVGPlugin'
 
 gsap.registerPlugin(DrawSVGPlugin)
 

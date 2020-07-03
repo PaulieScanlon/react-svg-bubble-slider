@@ -24,7 +24,7 @@ Once you have the gsap-bonus.tgz file you'll need to un-pack it
 tar -xzf gsap-bonus.tgz
 ```
 
-Create a directory called `gsap-bonus` in the `react/svg-bubble-slider/react-svg-bubble-slider/` and copy over the following files:
+Create a directory called `gsap-bonus` in the root of `react-svg-bubble-slider/` and copy over the following files:
 
 `DrawSVGPlugin.js`
 `InertiaPlugin.js`
@@ -35,7 +35,7 @@ These are the only "Bonus" plugins we need. They will get bundled into the `main
 Or using git a submodule you should be able to add the bonus files from the private remote git repo
 
 ```sh
-git submodule add https://github.com/PaulieScanlon/gsap-bonus --name gsap-bonus
+git clone --recursive https://github.com/PaulieScanlon/gsap-bonus
 ```
 
 Next i think you'll need to initialize the submodule: more on that [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules)

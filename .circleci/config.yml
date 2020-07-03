@@ -2,25 +2,17 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.1
 jobs:
-  Build_Step:
+  build-and-test:
     executor:
       name: node/default
-    working_directory: ~/react-svg-bubble-slider/react-svg-bubble-slider
     steps:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-
-  Test_Step:
-    executor:
-      name: node/default
-    steps:
-      - run: npm install
-      - run: npm test
+      - run: yarn install
+      - run: yarn test
 
 workflows:
-  version: 2
-  Example_Workflow:
+  build-and-test:
     jobs:
-      - Build_Step
-      - Test_Step
+      - build-and-test

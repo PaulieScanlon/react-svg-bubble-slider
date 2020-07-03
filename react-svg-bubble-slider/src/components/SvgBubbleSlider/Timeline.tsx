@@ -12,7 +12,7 @@ import { gsap } from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 
 // @ts-ignore
-import { InertiaPlugin } from '../../gsap-bonus/InertiaPlugin'
+import { InertiaPlugin } from '../../../gsap-bonus/InertiaPlugin'
 
 import { TimelineProps } from './types'
 import { iconPaths } from './iconPaths'

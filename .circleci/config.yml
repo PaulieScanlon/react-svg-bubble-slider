@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-      - node/with-cache:
+      - with-cache:
           steps:
             - run: npm install
             - run: npm test

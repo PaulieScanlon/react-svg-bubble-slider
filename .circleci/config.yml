@@ -5,6 +5,7 @@ jobs:
   Build_Step:
     executor:
       name: node/default
+    working_directory: ~/react-svg-bubble-slider/react-svg-bubble-slider
     steps:
       - checkout
       - run: git submodule sync

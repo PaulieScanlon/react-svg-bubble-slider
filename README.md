@@ -2,6 +2,8 @@
 <img src="https://react-svg-bubble-slider.netlify.app/react-svg-bubble-slider-og-image.jpg" alt="React Svg Buobble Slider" />
 </a>
 
+[![PaulieScanlon](https://circleci.com/gh/PaulieScanlon/react-svg-bubble-slider.svg?style=shield)](https://app.circleci.com/pipelines/github/PaulieScanlon)
+
 # SvgBubbleSlider
 
 SvgBubbleSlider is fun way to add reactions to your blog posts. 😃 😠 😥
@@ -10,9 +12,9 @@ SvgBubbleSlider comes equipped with 13 reactions. You can access the current via
 
 Click or drag around to explore all the reactions
 
-## demo 👀
+## demo 👇
 
-https://react-svg-bubble-slider.netlify.app/?path=/docs/intro--page
+[react-svg-bubble-slider.netlify.app](https://react-svg-bubble-slider.netlify.app/?path=/docs/intro--page)
 
 ### Getting Started 🚀
 

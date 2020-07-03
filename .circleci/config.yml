@@ -9,10 +9,9 @@ jobs:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+      - run: yarn install
+      - run: yarn test
+
 workflows:
   build-and-test:
     jobs:

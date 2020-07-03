@@ -1,0 +1,3 @@
+[submodule "react-svg-bubble-slider/gsap-bonus"]
+	path = react-svg-bubble-slider/gsap-bonus
+	url = https://github.com/PaulieScanlon/gsap-bonus

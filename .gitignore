@@ -116,7 +116,7 @@ refs.md
 .netlify
 
 # GSAP
-react-svg-bubble-slider/src/gsap-bonus
+react-svg-bubble-slider/gsap-bonus
 
 
 .DS_Store

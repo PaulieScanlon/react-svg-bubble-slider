@@ -1,6 +1,9 @@
-<a href="https://react-svg-bubble-slider.netlify.app/" target="_blank">
+<a  href="https://react-svg-bubble-slider.netlify.app/" target="_blank">
 <img src="https://react-svg-bubble-slider.netlify.app/react-svg-bubble-slider-og-image.jpg" alt="React Svg Buobble Slider" />
 </a>
+
+<br />
+<br />
 
 [![circle-ci](https://circleci.com/gh/PaulieScanlon/react-svg-bubble-slider.svg?style=shield)](https://app.circleci.com/pipelines/github/PaulieScanlon)
 

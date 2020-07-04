@@ -55,6 +55,17 @@ color.story = {
   },
 }
 
+export const iconSet = () => <SvgIcon iconSet="twemoji" name="wondering" />
+
+iconSet.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'The `iconSet` prop can be used to which set of emojis to use',
+    },
+  },
+}
+
 export const ThemeUI = () => (
   <Box
     sx={{

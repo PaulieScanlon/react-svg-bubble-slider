@@ -1,20 +1,11 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react'
+import React, { FunctionComponent } from 'react'
 
-import { IconSetOptions, IconSetProps } from '../types'
+import { SvgIconProps, IconSetOptions } from '../types'
 import { iconPaths } from '../SvgBubbleSlider/iconPaths'
 
 import { createIconPathsMarkup } from '../utils'
 
 import theme from '../../theme'
-
-interface SvgIconProps extends IconSetProps, HTMLAttributes<SVGElement> {
-  /** The name of icon */
-  name: string
-  /** The width and height of the icon */
-  size?: number
-  /** The fill color */
-  color?: string
-}
 
 export const SvgIcon: FunctionComponent<SvgIconProps> = ({
   name,

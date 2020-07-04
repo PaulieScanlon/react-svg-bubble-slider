@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, HTMLAttributes } from 'react'
 
 export enum IconSetOptions {
   chrisGannon = 'chrisGannon',
@@ -50,3 +50,12 @@ interface subProps {
 export interface SpeechBubbleProps extends CoreProps, subProps {}
 
 export interface PopLinesProps extends CoreProps, subProps {}
+
+export interface SvgIconProps extends IconSetProps, HTMLAttributes<SVGElement> {
+  /** The name of icon */
+  name: string
+  /** The width and height of the icon */
+  size?: number
+  /** The fill color */
+  color?: string
+}

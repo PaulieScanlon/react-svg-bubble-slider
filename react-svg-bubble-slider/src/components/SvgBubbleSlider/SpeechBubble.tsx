@@ -9,7 +9,7 @@ import React, {
 
 import { gsap } from 'gsap'
 
-import { SpeechBubbleProps } from './types'
+import { SpeechBubbleProps } from '../types'
 
 const START_Y = 80
 

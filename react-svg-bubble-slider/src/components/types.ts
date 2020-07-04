@@ -1,5 +1,9 @@
 import { ReactNode } from 'react'
 
+export enum IconSetOptions {
+  chrisGannon = 'chrisGannon',
+}
+
 interface coreProps {
   /** Boolean to control visibility of speech bubble */
   showSpeechBubble?: boolean
@@ -11,6 +15,8 @@ interface coreProps {
   icons?: string[]
   /** The main scale */
   scale?: number
+  /** The name of the icon set */
+  iconSet?: keyof typeof IconSetOptions
 }
 
 export interface ReactionType {

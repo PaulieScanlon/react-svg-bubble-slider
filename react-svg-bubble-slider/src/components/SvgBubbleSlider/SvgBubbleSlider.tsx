@@ -1,6 +1,6 @@
 import React, { memo, Fragment, FunctionComponent, useState } from 'react'
 
-import { SvgBubbleSliderProps } from './types'
+import { SvgBubbleSliderProps, IconSetOptions } from '../types'
 import theme from '../../theme'
 
 import { Timeline } from './Timeline'
@@ -13,6 +13,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
     icons,
     showSpeechBubble = true,
     scale = 1,
+    iconSet = IconSetOptions.chrisGannon,
   }: SvgBubbleSliderProps) => {
     const [currentReaction, setCurrentReaction] = useState<any>('')
 
@@ -35,6 +36,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
             icons={icons}
             showSpeechBubble={showSpeechBubble}
             scale={scale}
+            iconSet={iconSet}
           />
         </div>
         <div className="svg-bubble-action">

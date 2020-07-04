@@ -14,9 +14,9 @@ import { Draggable } from 'gsap/Draggable'
 // @ts-ignore
 import { InertiaPlugin } from '../../../../gsap-bonus/InertiaPlugin'
 
-import { TimelineProps } from './types'
+import { TimelineProps } from '../types'
 import { iconPaths } from './iconPaths'
-
+import { SvgIcon } from '../SvgIcon'
 import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
 
@@ -38,13 +38,14 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     icons,
     showSpeechBubble,
     scale,
+    iconSet,
   }: TimelineProps) => {
     const iconsToUse = icons
-      ? iconPaths
+      ? iconPaths[iconSet]
           .map((icon) => icon)
           .filter((icon) => icons.includes(icon.name))
           .sort((a, b) => icons.indexOf(a.name) - icons.indexOf(b.name))
-      : iconPaths
+      : iconPaths[iconSet]
 
     const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
     const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE

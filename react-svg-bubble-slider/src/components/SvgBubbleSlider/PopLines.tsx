@@ -12,7 +12,7 @@ import { DrawSVGPlugin } from '../../../../gsap-bonus/DrawSVGPlugin'
 
 gsap.registerPlugin(DrawSVGPlugin)
 
-import { PopLinesProps } from './types'
+import { PopLinesProps } from '../types'
 
 const START_Y = 15
 

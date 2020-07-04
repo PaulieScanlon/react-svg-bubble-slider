@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, HTMLAttributes } from 'react'
 
+import { IconSetOptions } from '../types'
 import { iconPaths } from '../SvgBubbleSlider/iconPaths'
 import theme from '../../theme'
 
-interface SvgIconProps {
+interface SvgIconProps extends HTMLAttributes<SVGElement> {
   /** The name of icon */
   name: string
   /** The width and height of the icon */
@@ -32,7 +33,11 @@ export const SvgIcon: FunctionComponent<SvgIconProps> = ({
       y="0"
     >
       <path
-        d={iconPaths.filter((icon) => icon.name === name)[0].path}
+        d={
+          iconPaths[IconSetOptions.chrisGannon].filter(
+            (icon) => icon.name === name
+          )[0].path
+        }
         fill="currentcolor"
       />
       <path d="M0 0h24v24H0z" fill="none" />

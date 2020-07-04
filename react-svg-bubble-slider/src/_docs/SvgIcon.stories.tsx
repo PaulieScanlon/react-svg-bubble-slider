@@ -75,3 +75,16 @@ ThemeUI.story = {
     },
   },
 }
+
+export const HTMLAttributes = () => (
+  <SvgIcon key={1} className="reaction-icon" name="wondering" id="test-id" />
+)
+
+HTMLAttributes.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'The SvgIcon can accept any valid attributes for `HTMLAttributes<SVGElement>`',
+    },
+  },
+}

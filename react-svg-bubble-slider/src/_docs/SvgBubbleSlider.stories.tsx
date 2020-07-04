@@ -45,6 +45,43 @@ icons.story = {
   },
 }
 
+export const iconSet = () => (
+  <Box
+    sx={{
+      '.svg-timeline': {
+        ':focus': {
+          outlineColor: 'gray',
+        },
+      },
+      '.speech-bubble-stroke': {
+        stroke: 'gray',
+      },
+      '.speech-bubble-text': {
+        fill: 'text',
+        fontSize: '24px',
+        textTransform: 'capitalize',
+      },
+      '.speech-bubble-pop-line': {
+        stroke: 'mutedAccent',
+      },
+      '.reaction-dot': {
+        fill: 'gray',
+      },
+    }}
+  >
+    <SvgBubbleSlider iconSet="twemoji" />
+  </Box>
+)
+
+iconSet.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'Use the `iconSet` prop to change which set of icons to display',
+    },
+  },
+}
+
 export const reaction = () => (
   <SvgBubbleSlider>
     {({ reaction }: any) => (

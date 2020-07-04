@@ -16,9 +16,11 @@ import { InertiaPlugin } from '../../../../gsap-bonus/InertiaPlugin'
 
 import { TimelineProps } from '../types'
 import { iconPaths } from './iconPaths'
-import { SvgIcon } from '../SvgIcon'
+
 import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
+
+import { createIconPathsMarkup } from '../utils'
 
 const ICON_SIZE = 32
 
@@ -381,31 +383,29 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                 })}
               </g>
               <g ref={iconContainerRef as RefObject<SVGSVGElement>}>
-                {iconsToUse.map(
-                  (icon: { name: string; path: string }, index: number) => {
-                    const { name, path } = icon
-                    return (
-                      <path
-                        ref={(ref) => {
-                          iconRefs.push(ref as any)
-                        }}
-                        key={index}
-                        className="reaction-icon"
-                        fill={secondaryColor}
-                        id={`icon-${name}-${index}`}
-                        data-index={index}
-                        d={path}
-                        opacity={0}
-                        transform={`matrix(1,0,0,1,${
-                          index * SPACER - ICON_SIZE / 2
-                        },0)`}
-                        style={{
-                          pointerEvents: 'none',
-                        }}
-                      />
-                    )
-                  }
-                )}
+                {iconsToUse.map((icon: any, index: number) => {
+                  const { name, paths } = icon
+                  return (
+                    <g
+                      ref={(ref) => {
+                        iconRefs.push(ref as any)
+                      }}
+                      key={index}
+                      className="reaction-icon"
+                      fill={secondaryColor}
+                      id={`icon-${name}-${index}`}
+                      data-index={index}
+                      opacity={0}
+                      transform={`matrix(1,0,0,1,${
+                        index * SPACER - ICON_SIZE / 2
+                      },0)`}
+                      style={{
+                        pointerEvents: 'none',
+                      }}
+                      dangerouslySetInnerHTML={createIconPathsMarkup(paths)}
+                    ></g>
+                  )
+                })}
               </g>
             </g>
           </svg>

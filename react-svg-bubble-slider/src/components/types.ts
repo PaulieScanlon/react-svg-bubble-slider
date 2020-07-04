@@ -2,9 +2,10 @@ import { ReactNode } from 'react'
 
 export enum IconSetOptions {
   chrisGannon = 'chrisGannon',
+  twemoji = 'twemoji',
 }
 
-interface coreProps {
+interface CoreProps {
   /** Boolean to control visibility of speech bubble */
   showSpeechBubble?: boolean
   /** The color of the dots, speech bubble background, speech bubble text and pop lines */
@@ -15,6 +16,9 @@ interface coreProps {
   icons?: string[]
   /** The main scale */
   scale?: number
+}
+
+export interface IconSetProps {
   /** The name of the icon set */
   iconSet?: keyof typeof IconSetOptions
 }
@@ -24,12 +28,12 @@ export interface ReactionType {
   reaction: string
 }
 
-export interface SvgBubbleSliderProps extends coreProps {
+export interface SvgBubbleSliderProps extends CoreProps, IconSetProps {
   /** Render prop: Passes reaction and children */
   children?: ({ reaction }: ReactionType) => ReactNode
 }
 
-export interface TimelineProps extends coreProps {
+export interface TimelineProps extends CoreProps, IconSetProps {
   /** Animation callback passes current reaction */
   onAnimationComplete: (reaction: string) => void
 }
@@ -43,6 +47,6 @@ interface subProps {
   viewBoxWidth: number
 }
 
-export interface SpeechBubbleProps extends coreProps, subProps {}
+export interface SpeechBubbleProps extends CoreProps, subProps {}
 
-export interface PopLinesProps extends coreProps, subProps {}
+export interface PopLinesProps extends CoreProps, subProps {}

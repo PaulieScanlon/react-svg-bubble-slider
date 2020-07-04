@@ -11,6 +11,10 @@ Here's a list of all the icons you can use.
 
 To provide a restricted array of icons for your SvgBubbleSlider see <Link href='/?path=/docs/svgbubbleslider--icons'>icons</Link> in the Props menu
 
+## Chris Gannon
+
+This is the list of icons originally designed by Chris Gannon
+
 <Flex
   sx={{
     flexWrap: 'wrap',
@@ -33,6 +37,46 @@ To provide a restricted array of icons for your SvgBubbleSlider see <Link href='
         }}
       >
         <SvgIcon name={name} size={64} />
+        <Text
+          sx={{
+            color: 'darkGray',
+            mt: 3,
+            textAlign: 'center',
+          }}
+        >
+          {name}
+        </Text>
+      </Flex>
+    )
+  })}
+</Flex>
+
+## Twemoji
+
+.. and heres a list of icons open sourced by the good folks at <Link target="_blank" href='https://twemoji.twitter.com/'>Twitter</Link>
+
+<Flex
+  sx={{
+    flexWrap: 'wrap',
+  }}
+>
+  {iconPaths.twemoji.map((icon, index) => {
+    const { name, path } = icon
+    return (
+      <Flex
+        key={index}
+        sx={{
+          alignItems: 'center',
+          boxShadow: 0,
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          px: 4,
+          py: 3,
+          m: 2,
+          width: ['46%', '28%'],
+        }}
+      >
+        <SvgIcon iconSet="twemoji" name={name} size={64} />
         <Text
           sx={{
             color: 'darkGray',

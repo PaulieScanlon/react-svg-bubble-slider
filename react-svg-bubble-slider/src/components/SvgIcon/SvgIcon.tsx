@@ -1,10 +1,13 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react'
 
-import { IconSetOptions } from '../types'
+import { IconSetOptions, IconSetProps } from '../types'
 import { iconPaths } from '../SvgBubbleSlider/iconPaths'
+
+import { createIconPathsMarkup } from '../utils'
+
 import theme from '../../theme'
 
-interface SvgIconProps extends HTMLAttributes<SVGElement> {
+interface SvgIconProps extends IconSetProps, HTMLAttributes<SVGElement> {
   /** The name of icon */
   name: string
   /** The width and height of the icon */
@@ -17,6 +20,7 @@ export const SvgIcon: FunctionComponent<SvgIconProps> = ({
   name,
   size = 32,
   color = theme.colors.primary,
+  iconSet = IconSetOptions.chrisGannon,
 }: SvgIconProps) => {
   if (size < 32) throw new Error('Icon size must be at least 32')
   return (
@@ -32,15 +36,19 @@ export const SvgIcon: FunctionComponent<SvgIconProps> = ({
       x="0"
       y="0"
     >
-      <path
-        d={
-          iconPaths[IconSetOptions.chrisGannon].filter(
-            (icon) => icon.name === name
-          )[0].path
-        }
-        fill="currentcolor"
-      />
-      <path d="M0 0h24v24H0z" fill="none" />
+      {iconPaths[iconSet]
+        .filter((icon) => icon.name === name)
+        .map((icon, index) => {
+          const { paths } = icon
+          return (
+            <g
+              // transform={`matrix(0.8,0,0,0.8,0,0)`}
+              key={index}
+              dangerouslySetInnerHTML={createIconPathsMarkup(paths)}
+              fill="currentcolor"
+            />
+          )
+        })}
     </svg>
   )
 }

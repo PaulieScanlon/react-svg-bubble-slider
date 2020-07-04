@@ -116,23 +116,32 @@ export default SomeComponent
 
 ### SvgIcon 😃 😠 😥
 
-In addition to allowing users to leave a reaction you may wish to display how many reactions have been left. One way to do this is to use the `SvgIcon` and display the count underneath it.
+In addition to allowing users to leave a reaction you may wish to display how many reactions have been left. One way to do this is to use the `SvgIcon` and display the count underneath it. Also, checkout the <Link href='/?path=/docs/svgbubbleslider--icon-set'>iconSets</Link> prop to use an alternative set of icons
 
 <Box
   sx={{
     '.svg-timeline': {
       ':focus': {
-        outlineColor: 'accent',
+        outlineColor: 'gray',
       },
     },
+    '.speech-bubble-stroke': {
+      stroke: 'gray',
+    },
     '.speech-bubble-text': {
-      fill: 'primary',
-      fontSize: '22px',
+      fill: 'text',
+      fontSize: '24px',
       textTransform: 'capitalize',
+    },
+    '.speech-bubble-pop-line': {
+      stroke: 'mutedAccent',
+    },
+    '.reaction-dot': {
+      fill: 'gray',
     },
   }}
 >
-  <SvgBubbleSlider icons={['angry', 'smile', 'neutral']}>
+  <SvgBubbleSlider iconSet="twemoji" icons={['angry', 'smile', 'neutral']}>
     {({ reaction }) => (
       <Flex
         sx={{
@@ -142,6 +151,7 @@ In addition to allowing users to leave a reaction you may wish to display how ma
         }}
       >
         <Button
+          variant="ghost"
           disabled={!reaction ? true : false}
           sx={{ textTransform: 'capitalize' }}
         >
@@ -160,11 +170,20 @@ In addition to allowing users to leave a reaction you may wish to display how ma
     margin: 'auto',
     flexWrap: 'wrap',
     maxWidth: 260,
+    '.count-background': {
+      borderColor: 'gray',
+    },
+    '.count-text': {
+      color: 'emoji',
+    },
+    '.icon-background': {
+      backgroundColor: 'gray',
+    },
   }}
 >
-  <IconCount name="angry" count={13} />
-  <IconCount name="smile" count={22} />
-  <IconCount name="neutral" count={1} />
+  <IconCount iconSet="twemoji" name="angry" count={13} />
+  <IconCount iconSet="twemoji" name="smile" count={22} />
+  <IconCount iconSet="twemoji" name="neutral" count={1} />
 </Flex>
 
 </Box>

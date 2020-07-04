@@ -18,6 +18,8 @@ export default {
     accent: '#ffd5ea',
     mutedAccent: '#d1d8ec',
     darken: '#323442',
+    emoji: '#ffcb4c',
+    brown: '#65471b',
   },
 
   shadows: [
@@ -40,6 +42,21 @@ export default {
       },
       ':focus': {
         outlineColor: 'secondary',
+      },
+    },
+    ghost: {
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      color: 'white',
+      backgroundColor: 'brown',
+      minWidth: 120,
+      ':disabled': {
+        color: 'darkGray',
+        backgroundColor: 'gray',
+        cursor: 'not-allowed',
+      },
+      ':focus': {
+        outlineColor: 'emoji',
       },
     },
   },

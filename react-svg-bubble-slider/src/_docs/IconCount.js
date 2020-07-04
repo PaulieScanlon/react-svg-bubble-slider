@@ -1,9 +1,11 @@
 import React from 'react'
 import { SvgIcon } from '../components/SvgIcon'
 
+import { IconSetOptions } from '../components/types'
+
 import { Flex, Box, Text } from 'theme-ui'
 
-const IconCount = ({ name, count }) => {
+const IconCount = ({ name, count, iconSet = IconSetOptions.chrisGannon }) => {
   return (
     <Flex
       sx={{
@@ -19,6 +21,7 @@ const IconCount = ({ name, count }) => {
         }}
       >
         <Flex
+          className="count-background"
           sx={{
             alignItems: 'center',
             borderColor: 'accent',
@@ -32,12 +35,18 @@ const IconCount = ({ name, count }) => {
             width: 34,
           }}
         >
-          <Text as="small" variant="small" sx={{ m: 0, textAlign: 'center' }}>
+          <Text
+            className="count-text"
+            as="small"
+            variant="small"
+            sx={{ m: 0, textAlign: 'center' }}
+          >
             {count}
           </Text>
         </Flex>
       </Box>
       <Flex
+        className="icon-background"
         sx={{
           alignItems: 'center',
           p: 2,
@@ -45,7 +54,7 @@ const IconCount = ({ name, count }) => {
           borderRadius: '50%',
         }}
       >
-        <SvgIcon name={name} size={40} />
+        <SvgIcon name={name} size={40} iconSet={iconSet} />
       </Flex>
     </Flex>
   )

@@ -22,6 +22,7 @@ import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
 
 import { Path } from './Path'
+import { Defs } from './Defs'
 
 const ICON_SIZE = 32
 
@@ -71,8 +72,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
       name: '',
     })
 
-    const [stateIconPaths, setStateIconPaths] = useState([])
-
     const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
     const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE
 
@@ -85,14 +84,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     if (iconsToUse.length < 3)
       throw new Error('You must have at lease three icons')
 
-    // This is a hacky work-around because posX gets updated after we need it...
-    // resulting in handleAnimationComplete returning the wrong icon index / name
-    let _x = 0
-
     const handleDragSlider = () => {
       if (isMounted) {
         setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
-        _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
       }
     }
 
@@ -105,7 +99,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     }
 
     const handleAnimationComplete = () => {
-      const index = Math.abs(_x / SPACER)
+      const index = Math.abs(posX / SPACER)
       const name = iconsToUse[Math.abs(index)].name
       if (isMounted) {
         setIsAnimating(false)
@@ -215,9 +209,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         })
       })
 
-      setStateIconPaths(
-        iconsToUse.map((icon: any, index: number) => icon.paths)
-      )
       setIsMounted(true)
       setIsAnimating(false)
     }, [])
@@ -307,21 +298,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
               minWidth: 280,
             }}
           >
-            <defs>
-              <filter id="goo" colorInterpolationFilters="sRGB">
-                <feGaussianBlur
-                  in="SourceGraphic"
-                  stdDeviation="8"
-                  result="blur"
-                />
-                <feColorMatrix
-                  in="blur"
-                  mode="matrix"
-                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 31 -12"
-                  result="cm"
-                />
-              </filter>
-            </defs>
+            <Defs />
             {showSpeechBubble && isMounted && (
               <Fragment>
                 <PopLines

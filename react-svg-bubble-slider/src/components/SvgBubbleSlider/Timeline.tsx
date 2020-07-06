@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useRef,
   useState,
+  useMemo,
   Fragment,
 } from 'react'
 
@@ -20,7 +21,7 @@ import { iconPaths } from './iconPaths'
 import { PopLines } from './PopLines'
 import { SpeechBubble } from './SpeechBubble'
 
-import { createIconPathsMarkup } from '../utils'
+import { Path } from './Path'
 
 const ICON_SIZE = 32
 
@@ -42,25 +43,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     scale,
     iconSet,
   }: TimelineProps) => {
-    const iconsToUse = icons
-      ? iconPaths[iconSet]
-          .map((icon) => icon)
-          .filter((icon) => icons.includes(icon.name))
-          .sort((a, b) => icons.indexOf(a.name) - icons.indexOf(b.name))
-      : iconPaths[iconSet]
-
-    const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
-    const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE
-
-    const VIEWBOX_HEIGHT = showSpeechBubble ? 290 : 120
-    const START_Y = showSpeechBubble ? 215 : 45
-
-    const SIZE_WIDTH = VIEWBOX_WIDTH * scale
-    const SIZE_HEIGHT = VIEWBOX_HEIGHT * scale
-
-    if (iconsToUse.length < 3)
-      throw new Error('You must have at lease three icons')
-
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
@@ -68,6 +50,14 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     const iconRefs: RefObject<SVGPathElement>[] = []
     const dotRefs: RefObject<SVGCircleElement>[] = []
 
+    const [iconsToUse] = useState(
+      icons
+        ? iconPaths[iconSet]
+            .map((icon) => icon)
+            .filter((icon) => icons.includes(icon.name))
+            .sort((a, b) => icons.indexOf(a.name) - icons.indexOf(b.name))
+        : iconPaths[iconSet]
+    )
     const [isMounted, setIsMounted] = useState(false)
     const [isAnimating, setIsAnimating] = useState(true)
 
@@ -80,6 +70,20 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
       index: 0,
       name: '',
     })
+
+    const [stateIconPaths, setStateIconPaths] = useState([])
+
+    const MIN_DRAG_X = -(iconsToUse.length - 1) * SPACER
+    const VIEWBOX_WIDTH = SPACER * iconsToUse.length - ICON_SIZE
+
+    const VIEWBOX_HEIGHT = showSpeechBubble ? 290 : 120
+    const START_Y = showSpeechBubble ? 215 : 45
+
+    const SIZE_WIDTH = VIEWBOX_WIDTH * scale
+    const SIZE_HEIGHT = VIEWBOX_HEIGHT * scale
+
+    if (iconsToUse.length < 3)
+      throw new Error('You must have at lease three icons')
 
     // This is a hacky work-around because posX gets updated after we need it...
     // resulting in handleAnimationComplete returning the wrong icon index / name
@@ -171,7 +175,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         setMtl({
           timeline: (mtl.timeline as any).add(
             gsap
-
               .timeline()
               .to(dotRefs[index], {
                 duration: 1,
@@ -212,6 +215,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         })
       })
 
+      setStateIconPaths(
+        iconsToUse.map((icon: any, index: number) => icon.paths)
+      )
       setIsMounted(true)
       setIsAnimating(false)
     }, [])
@@ -385,6 +391,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
               <g ref={iconContainerRef as RefObject<SVGSVGElement>}>
                 {iconsToUse.map((icon: any, index: number) => {
                   const { name, paths } = icon
+
                   return (
                     <g
                       ref={(ref) => {
@@ -402,8 +409,10 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       style={{
                         pointerEvents: 'none',
                       }}
-                      dangerouslySetInnerHTML={createIconPathsMarkup(paths)}
-                    ></g>
+                    >
+                      {/* Paths are momoize to avoid expensive dangerouslySetInnerHTML re-render */}
+                      <Path paths={paths} />
+                    </g>
                   )
                 })}
               </g>

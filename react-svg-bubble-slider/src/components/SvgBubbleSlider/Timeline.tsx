@@ -84,9 +84,14 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     if (iconsToUse.length < 3)
       throw new Error('You must have at lease three icons')
 
+    // This is a hacky work-around because posX gets updated after we need it...
+    // resulting in handleAnimationComplete returning the wrong icon index / name
+    let _x = 0
+
     const handleDragSlider = () => {
       if (isMounted) {
         setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
+        _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
       }
     }
 
@@ -99,7 +104,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     }
 
     const handleAnimationComplete = () => {
-      const index = Math.abs(posX / SPACER)
+      const index = Math.abs(_x / SPACER)
       const name = iconsToUse[Math.abs(index)].name
       if (isMounted) {
         setIsAnimating(false)
@@ -351,6 +356,8 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       fill={primaryColor}
                       id={`dot-${name}-${index}`}
                       onClick={() => {
+                        // console.log(index)
+                        // console.log(currentReaction.index)
                         index !== currentReaction.index &&
                           handleAnimation(index, EVENT_DURATION, EVENT_EASE)
                       }}

@@ -48,9 +48,11 @@ icons.story = {
 export const iconSet = () => (
   <Box
     sx={{
-      '.svg-timeline': {
-        ':focus': {
-          outlineColor: 'gray',
+      '.react-svg-bubble-slider': {
+        '.svg-timeline': {
+          ':focus': {
+            outlineColor: 'gray',
+          },
         },
       },
       '.speech-bubble-stroke': {

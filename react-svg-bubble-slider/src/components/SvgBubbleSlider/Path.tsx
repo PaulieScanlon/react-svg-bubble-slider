@@ -6,8 +6,10 @@ interface PathProps {
   paths: string[]
 }
 
-export const Path: FunctionComponent<PathProps> = memo(({ paths }) => {
-  return <g dangerouslySetInnerHTML={createIconPathsMarkup(paths)} />
-})
+export const Path: FunctionComponent<PathProps> = memo(
+  ({ paths }: PathProps) => {
+    return <g dangerouslySetInnerHTML={createIconPathsMarkup(paths)} />
+  }
+)
 
 Path.displayName = 'Path'

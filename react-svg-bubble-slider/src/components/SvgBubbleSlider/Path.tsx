@@ -9,3 +9,5 @@ interface PathProps {
 export const Path: FunctionComponent<PathProps> = memo(({ paths }) => {
   return <g dangerouslySetInnerHTML={createIconPathsMarkup(paths)} />
 })
+
+Path.displayName = 'Path'

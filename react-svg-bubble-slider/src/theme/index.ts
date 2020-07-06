@@ -19,7 +19,6 @@ export default {
     mutedAccent: '#d1d8ec',
     darken: '#323442',
     emoji: '#ffcb4c',
-    brown: '#65471b',
   },
 
   shadows: [
@@ -48,7 +47,7 @@ export default {
       cursor: 'pointer',
       fontWeight: 'bold',
       color: 'white',
-      backgroundColor: 'brown',
+      backgroundColor: 'secondary',
       minWidth: 120,
       ':disabled': {
         color: 'darkGray',

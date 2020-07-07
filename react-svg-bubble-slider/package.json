@@ -1,6 +1,6 @@
 {
   "name": "react-svg-bubble-slider",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "A React version of Chris Gannon's SVG Bubble Slider",
   "main": "dist/main.js",
   "scripts": {

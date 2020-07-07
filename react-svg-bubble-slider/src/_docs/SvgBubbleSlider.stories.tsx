@@ -14,6 +14,9 @@ export default {
             '.svg-timeline': {
               ':focus': {
                 outlineColor: 'accent',
+                outlineWidth: '1px',
+                outlineStyle: 'solid',
+                boxShadow: 'none',
               },
             },
           }}
@@ -52,6 +55,9 @@ export const iconSet = () => (
         '.svg-timeline': {
           ':focus': {
             outlineColor: 'gray',
+            outlineWidth: '1px',
+            outlineStyle: 'solid',
+            boxShadow: 'none',
           },
         },
       },

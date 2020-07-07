@@ -13,7 +13,7 @@ export default {
     secondary: '#1EA7FD',
     muted: '#8394ca',
     highlight: '#50fa7b',
-    gray: '#F9F9F9',
+    gray: '#F2F2F2',
     darkGray: '#999999',
     accent: '#ffd5ea',
     mutedAccent: '#d1d8ec',

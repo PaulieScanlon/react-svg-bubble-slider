@@ -362,6 +362,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                           handleAnimation(index, EVENT_DURATION, EVENT_EASE)
                       }}
                       style={{
+                        WebkitTapHighlightColor: 'transparent',
                         cursor: isAnimating
                           ? 'not-allowed'
                           : currentReaction.index === index

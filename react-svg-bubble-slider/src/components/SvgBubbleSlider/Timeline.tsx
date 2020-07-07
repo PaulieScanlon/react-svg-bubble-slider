@@ -128,6 +128,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const handleKeydown = (event: KeyboardEvent) => {
       const { key } = event
+      event.preventDefault()
       if (
         (key === 'ArrowRight' &&
           currentReaction.index < iconsToUse.length - 1) ||
@@ -356,8 +357,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       fill={primaryColor}
                       id={`dot-${name}-${index}`}
                       onClick={() => {
-                        // console.log(index)
-                        // console.log(currentReaction.index)
                         index !== currentReaction.index &&
                           handleAnimation(index, EVENT_DURATION, EVENT_EASE)
                       }}

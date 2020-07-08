@@ -90,8 +90,17 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
 
     const handleDragSlider = () => {
       if (isMounted) {
-        setPosX(Number(gsap.getProperty(dotContainerRef.current, 'x')))
         _x = Number(gsap.getProperty(dotContainerRef.current, 'x'))
+
+        gsap.set(iconContainerRef.current, {
+          x: _x,
+        })
+
+        gsap.to(mtl.timeline, {
+          duration: 0.5,
+          time: (_x / MIN_DRAG_X) * (mtl.timeline.duration() - 2) + 1,
+          ease: 'elastic(2, 0.75)',
+        })
       }
     }
 
@@ -252,19 +261,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
         )
       }
     }, [isMounted])
-
-    useEffect(() => {
-      if (isMounted) {
-        gsap.to(mtl.timeline, {
-          duration: 0.5,
-          time: (posX / MIN_DRAG_X) * (mtl.timeline.duration() - 2) + 1,
-          ease: 'elastic(2, 0.75)',
-        })
-        gsap.set(iconContainerRef.current, {
-          x: posX,
-        })
-      }
-    }, [posX])
 
     useEffect(() => {
       return () => {

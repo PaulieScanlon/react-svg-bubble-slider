@@ -1,6 +1,9 @@
 version: 2.1
 orbs:
   node: circleci/node@4.5.1
+machine:
+  node:
+    version: v10.13.0
 jobs:
   build-and-test:
     executor:

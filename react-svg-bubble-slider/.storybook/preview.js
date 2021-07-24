@@ -3,7 +3,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { ThemeProvider } from 'emotion-theming'
 import * as ThemeUIComponents from 'theme-ui'
 import { addDecorator, addParameters } from '@storybook/react'
-import { DocsContainer } from '@storybook/addon-docs/blocks'
+import { DocsContainer } from '@storybook/addon-docs'
 
 import theme from '../src/theme'
 

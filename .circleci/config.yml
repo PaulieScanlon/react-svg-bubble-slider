@@ -5,7 +5,6 @@ jobs:
   build-and-test:
     executor:
       name: node/default
-      tag: '13'
     steps:
       - checkout
       - run: git clone --recursive https://github.com/PaulieScanlon/gsap-bonus

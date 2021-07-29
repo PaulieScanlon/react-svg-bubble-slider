@@ -3,17 +3,10 @@
 </a>
 
 <br />
+
+# SvgBubbleSlider [![circle-ci](https://circleci.com/gh/PaulieScanlon/react-svg-bubble-slider.svg?style=shield)](https://app.circleci.com/pipelines/github/PaulieScanlon) [![npm](https://img.shields.io/npm/dw/react-svg-bubble-slider)](https://img.shields.io/npm/dw/react-svg-bubble-slider) [![github-stars](https://img.shields.io/github/stars/pauliescanlon/react-svg-bubble-slider?style=social)](https://img.shields.io/github/stars/pauliescanlon/react-svg-bubble-slider?style=social) [![npm](https://img.shields.io/npm/v/react-svg-bubble-slider)](https://img.shields.io/npm/v/react-svg-bubble-slider)
+
 <br />
-
-[![circle-ci](https://circleci.com/gh/PaulieScanlon/react-svg-bubble-slider.svg?style=shield)](https://app.circleci.com/pipelines/github/PaulieScanlon)
-
-[![npm](https://img.shields.io/npm/dw/react-svg-bubble-slider)](https://img.shields.io/npm/dw/react-svg-bubble-slider)
-
-[![npm](https://img.shields.io/npm/v/react-svg-bubble-slider)](https://img.shields.io/npm/v/react-svg-bubble-slider)
-
-[![github-stars](https://img.shields.io/github/stars/pauliescanlon/react-svg-bubble-slider?style=social)](https://img.shields.io/github/stars/pauliescanlon/react-svg-bubble-slider?style=social)
-
-# SvgBubbleSlider
 
 SvgBubbleSlider is fun way to add reactions to your blog posts 😃 😠 😥 and comes equipped with 14 built in reactions, but you don't have to use them all, see the <a target="_blank" href='https://react-svg-bubble-slider.netlify.app//?path=/docs/svgbubbleslider--icons'>icons prop</a> to modify the icons list.
 

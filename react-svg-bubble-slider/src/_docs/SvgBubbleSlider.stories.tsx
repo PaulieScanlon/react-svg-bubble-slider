@@ -149,13 +149,24 @@ primaryColor.story = {
   },
 }
 
-export const secondaryColor = () => <SvgBubbleSlider secondaryColor="#114848" />
+export const secondaryColor = () => <SvgBubbleSlider secondaryColor="#131127" />
 
 secondaryColor.story = {
   parameters: {
     docs: {
       storyDescription:
         'The `secondaryColor` prop can be used to change the color of the reaction icons and the speech bubble fill',
+    },
+  },
+}
+
+export const isDisabled = () => <SvgBubbleSlider isDisabled={true} />
+
+isDisabled.story = {
+  parameters: {
+    docs: {
+      storyDescription:
+        'The `isDisabled` prop can be used to disable SvgBubbleSlider',
     },
   },
 }
@@ -167,29 +178,29 @@ export const ThemeUI = () => (
         ':focus': {
           outlineColor: 'mutedAccent',
         },
-      },
-      '.speech-bubble-stroke': {
-        stroke: 'muted',
-      },
-      '.speech-bubble-fill': {
-        fill: 'background',
-      },
-      '.speech-bubble-text': {
-        fill: 'muted',
-        fontSize: '24px',
-        textTransform: 'capitalize',
-      },
-      '.speech-bubble-pop-line': {
-        stroke: 'muted',
-      },
-      '.reaction-icon': {
-        fill: 'background',
-      },
-      '.reaction-dot': {
-        fill: 'muted',
-      },
-      '.svg-bubble-action': {
-        minHeight: 2,
+        '.speech-bubble-stroke': {
+          stroke: 'muted',
+        },
+        '.speech-bubble-fill': {
+          fill: 'background',
+        },
+        '.speech-bubble-text': {
+          fill: 'muted',
+          fontSize: '24px',
+          textTransform: 'capitalize',
+        },
+        '.speech-bubble-pop-line': {
+          stroke: 'muted',
+        },
+        '.reaction-icon': {
+          fill: 'background',
+        },
+        '.reaction-dot': {
+          fill: 'muted',
+        },
+        '.svg-bubble-action': {
+          minHeight: 2,
+        },
       },
     }}
   >
@@ -201,7 +212,7 @@ ThemeUI.story = {
   parameters: {
     docs: {
       storyDescription:
-        "If you're using Theme UI modify styles by referencing them by class name via the sx prop on a Theme UI enabled element",
+        "If you're using Theme UI modify styles by referencing them by class name via the sx prop on a Theme UI enabled element. CSS class selectors will work in the same way",
     },
   },
 }

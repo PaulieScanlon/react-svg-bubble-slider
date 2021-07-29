@@ -93,6 +93,7 @@ export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = memo(
           fill={primaryColor}
           style={{
             textAnchor: 'middle',
+            userSelect: 'none',
           }}
         >
           {currentReaction}

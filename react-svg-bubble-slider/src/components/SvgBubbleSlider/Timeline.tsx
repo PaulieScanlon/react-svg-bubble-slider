@@ -45,8 +45,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     iconSet,
     isDisabled,
   }: TimelineProps) => {
-    console.log({ isDisabled })
-
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)

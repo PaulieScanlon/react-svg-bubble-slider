@@ -14,6 +14,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
     showSpeechBubble = true,
     scale = 1,
     iconSet = IconSetOptions.chrisGannon,
+    isDisabled = false,
   }: SvgBubbleSliderProps) => {
     const [currentReaction, setCurrentReaction] = useState<any>('')
 
@@ -37,6 +38,7 @@ export const SvgBubbleSlider: FunctionComponent<SvgBubbleSliderProps> = memo(
             showSpeechBubble={showSpeechBubble}
             scale={scale}
             iconSet={iconSet}
+            isDisabled={isDisabled}
           />
         </div>
         <div className="svg-bubble-action">

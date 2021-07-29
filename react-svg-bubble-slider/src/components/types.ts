@@ -16,6 +16,8 @@ interface CoreProps {
   icons?: string[]
   /** The main scale */
   scale?: number
+  /** Disables mouse and key interactions */
+  isDisabled?: boolean
 }
 
 export interface IconSetProps {

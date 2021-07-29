@@ -43,7 +43,10 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     showSpeechBubble,
     scale,
     iconSet,
+    isDisabled,
   }: TimelineProps) => {
+    console.log({ isDisabled })
+
     const svgIconBubblesRef = useRef(null)
     const dotContainerRef = useRef(null)
     const iconContainerRef = useRef(null)
@@ -62,7 +65,6 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     const [isMounted, setIsMounted] = useState(false)
     const [isAnimating, setIsAnimating] = useState(true)
 
-    const [posX, setPosX] = useState(0)
     const [snapArray, setSnapArray] = useState([])
     const [mtl, setMtl] = useState({
       timeline: gsap.timeline({ paused: true }),
@@ -253,7 +255,9 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
       })[0].disable()
 
       if (isMounted) {
-        dragInstance.enable()
+        if (!isDisabled) {
+          dragInstance.enable()
+        }
         handleAnimation(
           Math.floor(iconsToUse.length / 2),
           2,
@@ -271,7 +275,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
     return (
       <div
         className="svg-timeline"
-        onKeyDown={(event: any) => handleKeydown(event)}
+        onKeyDown={(event: any) => (isDisabled ? null : handleKeydown(event))}
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -327,7 +331,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                 ref={dotContainerRef as RefObject<SVGSVGElement>}
                 filter="url(#goo)"
                 style={{
-                  cursor: isAnimating ? 'not-allowed' : 'move',
+                  cursor: isAnimating || isDisabled ? 'not-allowed' : 'move',
                   pointerEvents: isAnimating ? 'none' : 'initial',
                 }}
               >
@@ -339,6 +343,7 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                   style={{
                     fill: 'rgba(0, 0, 0, 0)',
                     height: '100%',
+                    cursor: isDisabled ? 'not-allowed' : 'move',
                   }}
                 />
                 {iconsToUse.map((icon: { name: string }, index: number) => {
@@ -356,16 +361,18 @@ export const Timeline: FunctionComponent<TimelineProps> = memo(
                       fill={primaryColor}
                       id={`dot-${name}-${index}`}
                       onClick={() => {
-                        index !== currentReaction.index &&
-                          handleAnimation(index, EVENT_DURATION, EVENT_EASE)
+                        index !== currentReaction.index && !isDisabled
+                          ? handleAnimation(index, EVENT_DURATION, EVENT_EASE)
+                          : null
                       }}
                       style={{
                         WebkitTapHighlightColor: 'transparent',
-                        cursor: isAnimating
-                          ? 'not-allowed'
-                          : currentReaction.index === index
-                          ? 'move'
-                          : 'pointer',
+                        cursor:
+                          isAnimating || isDisabled
+                            ? 'not-allowed'
+                            : currentReaction.index === index
+                            ? 'move'
+                            : 'pointer',
                       }}
                     />
                   )
